@@ -6,11 +6,11 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{849B81C7-6061-4CA5-A37D-0EAF45368AA7}</ProjectGuid>
+    <ProjectGuid>{1C32A6B0-7B6D-4362-864A-935DFAAD20C8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BlueManagementConsultingSystem.Tests</RootNamespace>
-    <AssemblyName>BlueManagementConsultingSystem.Tests</AssemblyName>
+    <RootNamespace>BlueConsultingManagementSystem.Tests</RootNamespace>
+    <AssemblyName>BlueConsultingManagementSystem.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -102,9 +102,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BlueManagementConsultingSystem\BlueManagementConsultingSystem.csproj">
-      <Project>{B5473FB3-56A0-4C55-BB6F-885CB14DF99A}</Project>
-      <Name>BlueManagementConsultingSystem</Name>
+    <ProjectReference Include="..\BlueConsultingManagementSystem\BlueConsultingManagementSystem.csproj">
+      <Project>{33A2B8FA-33CB-4DFB-8B69-C81FAB420C82}</Project>
+      <Name>BlueConsultingManagementSystem</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

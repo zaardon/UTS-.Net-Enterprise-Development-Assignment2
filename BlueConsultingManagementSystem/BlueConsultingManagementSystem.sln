@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueConsultingManagementSystem", "BlueConsultingManagementSystem\BlueConsultingManagementSystem.csproj", "{33A2B8FA-33CB-4DFB-8B69-C81FAB420C82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueConsultingManagementSystem.Tests", "BlueConsultingManagementSystem.Tests\BlueConsultingManagementSystem.Tests.csproj", "{1C32A6B0-7B6D-4362-864A-935DFAAD20C8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{33A2B8FA-33CB-4DFB-8B69-C81FAB420C82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33A2B8FA-33CB-4DFB-8B69-C81FAB420C82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33A2B8FA-33CB-4DFB-8B69-C81FAB420C82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33A2B8FA-33CB-4DFB-8B69-C81FAB420C82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C32A6B0-7B6D-4362-864A-935DFAAD20C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C32A6B0-7B6D-4362-864A-935DFAAD20C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C32A6B0-7B6D-4362-864A-935DFAAD20C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C32A6B0-7B6D-4362-864A-935DFAAD20C8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

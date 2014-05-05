@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("BlueManagementConsultingSystem")]
+[assembly: AssemblyTitle("BlueConsultingManagementSystem.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("BlueManagementConsultingSystem")]
+[assembly: AssemblyProduct("BlueConsultingManagementSystem.Tests")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("7975f056-0e14-40d4-883d-19701a6bacab")]
+[assembly: Guid("95c02194-7ae8-41fa-bad6-511b5012fa08")]
 
 // Version information for an assembly consists of the following four values:
 //
