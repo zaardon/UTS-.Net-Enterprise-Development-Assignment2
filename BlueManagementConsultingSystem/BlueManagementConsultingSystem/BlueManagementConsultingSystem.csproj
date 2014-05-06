@@ -198,6 +198,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BlueModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Budget.cs">
+      <DependentUpon>BlueModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Consultant.cs">
+      <DependentUpon>BlueModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Expense.cs">
@@ -210,6 +216,12 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Report.cs">
+      <DependentUpon>BlueModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Staff.cs">
+      <DependentUpon>BlueModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Supervisor.cs">
       <DependentUpon>BlueModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>

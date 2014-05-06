@@ -14,6 +14,11 @@ namespace BlueManagementConsultingSystem
     
     public partial class Report
     {
+        public Report()
+        {
+            this.Expenses = new HashSet<Expense>();
+        }
+    
         public int ReportId { get; set; }
         public string ReportName { get; set; }
         public string SupervisorName { get; set; }
@@ -22,5 +27,10 @@ namespace BlueManagementConsultingSystem
         public string StaffDate { get; set; }
         public string DepartmentName { get; set; }
         public string StaffApprovalDate { get; set; }
+    
+        public virtual ICollection<Expense> Expenses { get; set; }
+        public virtual Consultant Consultant { get; set; }
+        public virtual Supervisor Supervisor { get; set; }
+        public virtual Staff Staff { get; set; }
     }
 }

@@ -27,5 +27,9 @@ namespace BlueManagementConsultingSystem
     
         public DbSet<Expense> Expenses { get; set; }
         public DbSet<Report> Reports { get; set; }
+        public DbSet<Consultant> Consultants { get; set; }
+        public DbSet<Supervisor> Supervisors { get; set; }
+        public DbSet<Staff> Staffs { get; set; }
+        public DbSet<Budget> Budgets { get; set; }
     }
 }

@@ -15,6 +15,34 @@
         <EntityContainer Name="BlueModelContainer" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Expenses" EntityType="BlueModel.Expense" />
           <EntitySet Name="Reports" EntityType="BlueModel.Report" />
+          <AssociationSet Name="ReportExpense" Association="BlueModel.ReportExpense">
+            <End Role="Report" EntitySet="Reports" />
+            <End Role="Expense" EntitySet="Expenses" />
+          </AssociationSet>
+          <EntitySet Name="Consultants" EntityType="BlueModel.Consultant" />
+          <EntitySet Name="Supervisors" EntityType="BlueModel.Supervisor" />
+          <EntitySet Name="Staffs" EntityType="BlueModel.Staff" />
+          <AssociationSet Name="ConsultantReport" Association="BlueModel.ConsultantReport">
+            <End Role="Consultant" EntitySet="Consultants" />
+            <End Role="Report" EntitySet="Reports" />
+          </AssociationSet>
+          <AssociationSet Name="SupervisorReport" Association="BlueModel.SupervisorReport">
+            <End Role="Supervisor" EntitySet="Supervisors" />
+            <End Role="Report" EntitySet="Reports" />
+          </AssociationSet>
+          <AssociationSet Name="StaffReport" Association="BlueModel.StaffReport">
+            <End Role="Staff" EntitySet="Staffs" />
+            <End Role="Report" EntitySet="Reports" />
+          </AssociationSet>
+          <EntitySet Name="Budgets" EntityType="BlueModel.Budget" />
+          <AssociationSet Name="BudgetSupervisor" Association="BlueModel.BudgetSupervisor">
+            <End Role="Budget" EntitySet="Budgets" />
+            <End Role="Supervisor" EntitySet="Supervisors" />
+          </AssociationSet>
+          <AssociationSet Name="BudgetStaff" Association="BlueModel.BudgetStaff">
+            <End Role="Budget" EntitySet="Budgets" />
+            <End Role="Staff" EntitySet="Staffs" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Expense">
           <Key>
@@ -30,6 +58,7 @@
           <Property Type="DateTime" Name="Date" Nullable="false" />
           <Property Type="Byte" Name="PDFFile" Nullable="false" />
           <Property Type="Int32" Name="ReportId" Nullable="false" ConcurrencyMode="None" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Report" Relationship="BlueModel.ReportExpense" FromRole="Expense" ToRole="Report" />
         </EntityType>
         <EntityType Name="Report">
           <Key>
@@ -43,7 +72,72 @@
           <Property Type="String" Name="StaffDate" Nullable="false" />
           <Property Type="String" Name="DepartmentName" Nullable="false" />
           <Property Type="String" Name="StaffApprovalDate" Nullable="false" />
+          <NavigationProperty Name="Expenses" Relationship="BlueModel.ReportExpense" FromRole="Report" ToRole="Expense" />
+          <NavigationProperty Name="Consultant" Relationship="BlueModel.ConsultantReport" FromRole="Report" ToRole="Consultant" />
+          <NavigationProperty Name="Supervisor" Relationship="BlueModel.SupervisorReport" FromRole="Report" ToRole="Supervisor" />
+          <NavigationProperty Name="Staff" Relationship="BlueModel.StaffReport" FromRole="Report" ToRole="Staff" />
         </EntityType>
+        <Association Name="ReportExpense">
+          <End Type="BlueModel.Report" Role="Report" Multiplicity="1" />
+          <End Type="BlueModel.Expense" Role="Expense" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Consultant">
+          <Key>
+            <PropertyRef Name="ConsultantID" />
+          </Key>
+          <Property Type="Int32" Name="ConsultantID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Reports" Relationship="BlueModel.ConsultantReport" FromRole="Consultant" ToRole="Report" />
+          <Property Type="String" Name="ConsultantName" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Supervisor">
+          <Key>
+            <PropertyRef Name="SupervisorID" />
+          </Key>
+          <Property Type="Int32" Name="SupervisorID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Reports" Relationship="BlueModel.SupervisorReport" FromRole="Supervisor" ToRole="Report" />
+          <Property Type="String" Name="SupervisorName" Nullable="false" />
+          <Property Type="String" Name="DepartmentType" Nullable="false" />
+          <NavigationProperty Name="Budget" Relationship="BlueModel.BudgetSupervisor" FromRole="Supervisor" ToRole="Budget" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="StaffID" />
+          </Key>
+          <Property Type="Int32" Name="StaffID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Reports" Relationship="BlueModel.StaffReport" FromRole="Staff" ToRole="Report" />
+          <Property Type="String" Name="DepartmentTotal" Nullable="false" />
+          <NavigationProperty Name="Budget" Relationship="BlueModel.BudgetStaff" FromRole="Staff" ToRole="Budget" />
+        </EntityType>
+        <Association Name="ConsultantReport">
+          <End Type="BlueModel.Consultant" Role="Consultant" Multiplicity="1" />
+          <End Type="BlueModel.Report" Role="Report" Multiplicity="*" />
+        </Association>
+        <Association Name="SupervisorReport">
+          <End Type="BlueModel.Supervisor" Role="Supervisor" Multiplicity="1" />
+          <End Type="BlueModel.Report" Role="Report" Multiplicity="*" />
+        </Association>
+        <Association Name="StaffReport">
+          <End Type="BlueModel.Staff" Role="Staff" Multiplicity="1" />
+          <End Type="BlueModel.Report" Role="Report" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Budget">
+          <Key>
+            <PropertyRef Name="BudgetID" />
+          </Key>
+          <Property Type="Int32" Name="BudgetID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="DepartmentName" Nullable="false" />
+          <Property Type="String" Name="DepartmentTotal" Nullable="false" />
+          <NavigationProperty Name="Supervisors" Relationship="BlueModel.BudgetSupervisor" FromRole="Budget" ToRole="Supervisor" />
+          <NavigationProperty Name="Staffs" Relationship="BlueModel.BudgetStaff" FromRole="Budget" ToRole="Staff" />
+        </EntityType>
+        <Association Name="BudgetSupervisor">
+          <End Type="BlueModel.Budget" Role="Budget" Multiplicity="1" />
+          <End Type="BlueModel.Supervisor" Role="Supervisor" Multiplicity="*" />
+        </Association>
+        <Association Name="BudgetStaff">
+          <End Type="BlueModel.Budget" Role="Budget" Multiplicity="1" />
+          <End Type="BlueModel.Staff" Role="Staff" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

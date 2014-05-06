@@ -12,18 +12,16 @@ namespace BlueManagementConsultingSystem
     using System;
     using System.Collections.Generic;
     
-    public partial class Expense
+    public partial class Consultant
     {
-        public int ExpenseId { get; set; }
-        public string Location { get; set; }
-        public string Description { get; set; }
-        public double Amount { get; set; }
-        public string Currency { get; set; }
-        public string AmountInAud { get; set; }
-        public System.DateTime Date { get; set; }
-        public byte PDFFile { get; set; }
-        public int ReportId { get; set; }
+        public Consultant()
+        {
+            this.Reports = new HashSet<Report>();
+        }
     
-        public virtual Report Report { get; set; }
+        public int ConsultantID { get; set; }
+        public string ConsultantName { get; set; }
+    
+        public virtual ICollection<Report> Reports { get; set; }
     }
 }
