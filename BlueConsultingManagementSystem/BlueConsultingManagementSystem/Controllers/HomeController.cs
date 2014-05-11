@@ -10,26 +10,9 @@ namespace BlueConsultingManagementSystem.Controllers
     {
         public ActionResult Index()
         {
-            using (var db = new BCMSModelContainer())
-            {
-                Expense exp = new Expense { Description = "hotdogs for lunch", Amount = 37.37 };
-                db.Expenses.Add(exp);
-
-                Report rp = new Report { ReportName = "the big repofgbfdrt" };
-                db.Reports.Add(rp);
-                rp.Expenses.Add(exp);
-
-                try
-                {
-                    db.SaveChanges();
-                }
-                catch
-                {
-
-                }
-                showExpenses();
-            }
-            ViewBag.Title = "it's alive";
+            new Models.ConsultantModel().TogetherAdd("plz work", 13.37, "Rep it");
+            ViewBag.Title = "shiiiet";
+            showExpenses();
             return View();
         }
 
