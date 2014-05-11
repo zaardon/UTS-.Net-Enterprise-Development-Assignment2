@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BCMSModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="BCMSModelStoreContainer">
+          <EntitySet Name="Budgets" EntityType="BCMSModel.Store.Budgets" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Expenses" EntityType="BCMSModel.Store.Expenses" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Reports" EntityType="BCMSModel.Store.Reports" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_ReportExpense" Association="BCMSModel.Store.FK_ReportExpense">
+            <End Role="Reports" EntitySet="Reports" />
+            <End Role="Expenses" EntitySet="Expenses" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Budgets">
+          <Key>
+            <PropertyRef Name="BudgetPK" />
+          </Key>
+          <Property Name="BudgetPK" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DepartmentTotal" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Expenses">
+          <Key>
+            <PropertyRef Name="ExpensePK" />
+          </Key>
+          <Property Name="ExpensePK" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Amount" Type="float" />
+          <Property Name="Currency" Type="nvarchar(max)" />
+          <Property Name="Location" Type="nvarchar(max)" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="PDF" Type="tinyint" />
+          <Property Name="Report_ReportPK" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reports">
+          <Key>
+            <PropertyRef Name="ReportPK" />
+          </Key>
+          <Property Name="ReportPK" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ReportName" Type="nvarchar(max)" />
+          <Property Name="SuppervisorApproval" Type="nvarchar(max)" />
+          <Property Name="StaffApproval" Type="nvarchar(max)" />
+          <Property Name="DateOfApproval" Type="datetime" />
+          <Property Name="Department" Type="nvarchar(max)" />
+          <Property Name="SupervisorName" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_ReportExpense">
+          <End Role="Reports" Type="BCMSModel.Store.Reports" Multiplicity="1" />
+          <End Role="Expenses" Type="BCMSModel.Store.Expenses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reports">
+              <PropertyRef Name="ReportPK" />
+            </Principal>
+            <Dependent Role="Expenses">
+              <PropertyRef Name="Report_ReportPK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="BCMSModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="BCMSModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Expenses" EntityType="BCMSModel.Expense" />
+          <EntitySet Name="Reports" EntityType="BCMSModel.Report" />
+          <AssociationSet Name="ReportExpense" Association="BCMSModel.ReportExpense">
+            <End Role="Report" EntitySet="Reports" />
+            <End Role="Expense" EntitySet="Expenses" />
+          </AssociationSet>
+          <EntitySet Name="Budgets" EntityType="BCMSModel.Budget" />
+        </EntityContainer>
+        <EntityType Name="Expense">
+          <Key>
+            <PropertyRef Name="ExpensePK" />
+          </Key>
+          <Property Type="Int32" Name="ExpensePK" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Type="Double" Name="Amount" Nullable="true" />
+          <Property Type="String" Name="Currency" Unicode="true" FixedLength="false" MaxLength="Max" />
+          <Property Type="String" Name="Location" Unicode="true" FixedLength="false" MaxLength="Max" />
+          <Property Type="DateTime" Name="Date" Precision="3" />
+          <Property Type="Byte" Name="PDF" />
+          <NavigationProperty Name="Report" Relationship="BCMSModel.ReportExpense" FromRole="Expense" ToRole="Report" />
+        </EntityType>
+        <EntityType Name="Report">
+          <Key>
+            <PropertyRef Name="ReportPK" />
+          </Key>
+          <Property Type="Int32" Name="ReportPK" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="ReportName" Unicode="true" FixedLength="false" MaxLength="Max" />
+          <Property Type="String" Name="SuppervisorApproval" Unicode="true" FixedLength="false" MaxLength="Max" />
+          <Property Type="String" Name="StaffApproval" Unicode="true" FixedLength="false" MaxLength="Max" />
+          <Property Type="DateTime" Name="DateOfApproval" Precision="3" />
+          <Property Type="String" Name="Department" Unicode="true" FixedLength="false" MaxLength="Max" />
+          <Property Type="String" Name="SupervisorName" Unicode="true" FixedLength="false" MaxLength="Max" />
+          <NavigationProperty Name="Expenses" Relationship="BCMSModel.ReportExpense" FromRole="Report" ToRole="Expense" />
+        </EntityType>
+        <Association Name="ReportExpense">
+          <End Type="BCMSModel.Report" Role="Report" Multiplicity="1" />
+          <End Type="BCMSModel.Expense" Role="Expense" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Budget">
+          <Key>
+            <PropertyRef Name="BudgetPK" />
+          </Key>
+          <Property Type="Int32" Name="BudgetPK" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="DepartmentName" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Type="Double" Name="DepartmentTotal" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BCMSModelStoreContainer" CdmEntityContainer="BCMSModelContainer">
+    <EntitySetMapping Name="Expenses">
+      <EntityTypeMapping TypeName="IsTypeOf(BCMSModel.Expense)">
+        <MappingFragment StoreEntitySet="Expenses">
+          <ScalarProperty Name="ExpensePK" ColumnName="ExpensePK" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Currency" ColumnName="Currency" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="PDF" ColumnName="PDF" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reports">
+      <EntityTypeMapping TypeName="IsTypeOf(BCMSModel.Report)">
+        <MappingFragment StoreEntitySet="Reports">
+          <ScalarProperty Name="ReportPK" ColumnName="ReportPK" />
+          <ScalarProperty Name="ReportName" ColumnName="ReportName" />
+          <ScalarProperty Name="SuppervisorApproval" ColumnName="SuppervisorApproval" />
+          <ScalarProperty Name="StaffApproval" ColumnName="StaffApproval" />
+          <ScalarProperty Name="DateOfApproval" ColumnName="DateOfApproval" />
+          <ScalarProperty Name="Department" ColumnName="Department" />
+          <ScalarProperty Name="SupervisorName" ColumnName="SupervisorName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Budgets">
+      <EntityTypeMapping TypeName="IsTypeOf(BCMSModel.Budget)">
+        <MappingFragment StoreEntitySet="Budgets">
+          <ScalarProperty Name="BudgetPK" ColumnName="BudgetPK" />
+          <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+          <ScalarProperty Name="DepartmentTotal" ColumnName="DepartmentTotal" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="ReportExpense" TypeName="BCMSModel.ReportExpense" StoreEntitySet="Expenses">
+      <EndProperty Name="Report">
+        <ScalarProperty Name="ReportPK" ColumnName="Report_ReportPK" />
+      </EndProperty>
+      <EndProperty Name="Expense">
+        <ScalarProperty Name="ExpensePK" ColumnName="ExpensePK" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

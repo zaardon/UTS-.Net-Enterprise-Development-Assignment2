@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="BCMSModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="BCMSModelContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Expenses" EntityType="BCMSModel.Expense" />
+    <EntitySet Name="Reports" EntityType="BCMSModel.Report" />
+    <AssociationSet Name="ReportExpense" Association="BCMSModel.ReportExpense">
+      <End Role="Report" EntitySet="Reports" />
+      <End Role="Expense" EntitySet="Expenses" />
+    </AssociationSet>
+    <EntitySet Name="Budgets" EntityType="BCMSModel.Budget" />
+  </EntityContainer>
+  <EntityType Name="Expense">
+    <Key>
+      <PropertyRef Name="ExpensePK" />
+    </Key>
+    <Property Type="Int32" Name="ExpensePK" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Description" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Type="Double" Name="Amount" Nullable="true" />
+    <Property Type="String" Name="Currency" Unicode="true" FixedLength="false" MaxLength="Max" />
+    <Property Type="String" Name="Location" Unicode="true" FixedLength="false" MaxLength="Max" />
+    <Property Type="DateTime" Name="Date" Precision="3" />
+    <Property Type="Byte" Name="PDF" />
+    <NavigationProperty Name="Report" Relationship="BCMSModel.ReportExpense" FromRole="Expense" ToRole="Report" />
+  </EntityType>
+  <EntityType Name="Report">
+    <Key>
+      <PropertyRef Name="ReportPK" />
+    </Key>
+    <Property Type="Int32" Name="ReportPK" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="ReportName" Unicode="true" FixedLength="false" MaxLength="Max" />
+    <Property Type="String" Name="SuppervisorApproval" Unicode="true" FixedLength="false" MaxLength="Max" />
+    <Property Type="String" Name="StaffApproval" Unicode="true" FixedLength="false" MaxLength="Max" />
+    <Property Type="DateTime" Name="DateOfApproval" Precision="3" />
+    <Property Type="String" Name="Department" Unicode="true" FixedLength="false" MaxLength="Max" />
+    <Property Type="String" Name="SupervisorName" Unicode="true" FixedLength="false" MaxLength="Max" />
+    <NavigationProperty Name="Expenses" Relationship="BCMSModel.ReportExpense" FromRole="Report" ToRole="Expense" />
+  </EntityType>
+  <Association Name="ReportExpense">
+    <End Type="BCMSModel.Report" Role="Report" Multiplicity="1" />
+    <End Type="BCMSModel.Expense" Role="Expense" Multiplicity="*" />
+  </Association>
+  <EntityType Name="Budget">
+    <Key>
+      <PropertyRef Name="BudgetPK" />
+    </Key>
+    <Property Type="Int32" Name="BudgetPK" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="DepartmentName" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Type="Double" Name="DepartmentTotal" Nullable="false" />
+  </EntityType>
+</Schema>
