@@ -1,0 +1,21 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<form action="CreateNew">
+    <div>
+        <label for="Description">Description: </label>
+        <input id="Description" type="text" />
+    </div>
+    <div>
+        <label for="Amount">Amount: </label>
+        <input id="Amount" type="number"/>
+         
+    </div>
+    <div>
+        <label for="ReportName">Report Name: </label>
+        <input id="ReportName" type="text" />
+
+    </div>
+    <input type="submit" value="Add an expense" />
+</form>
+<a href="/Consultant/index.cshtml"

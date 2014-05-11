@@ -180,6 +180,7 @@
       <DependentUpon>BCMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ConsultantController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Expense.cs">
       <DependentUpon>BCMSModel.tt</DependentUpon>
@@ -264,6 +265,7 @@
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Consultant\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
