@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BCMSModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="BCMSModelStoreContainer">
+    <EntitySet Name="Budgets" EntityType="BCMSModel.Store.Budgets" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Expenses" EntityType="BCMSModel.Store.Expenses" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Reports" EntityType="BCMSModel.Store.Reports" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_ReportExpense" Association="BCMSModel.Store.FK_ReportExpense">
+      <End Role="Reports" EntitySet="Reports" />
+      <End Role="Expenses" EntitySet="Expenses" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Budgets">
+    <Key>
+      <PropertyRef Name="BudgetPK" />
+    </Key>
+    <Property Name="BudgetPK" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="DepartmentName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DepartmentTotal" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Expenses">
+    <Key>
+      <PropertyRef Name="ExpensePK" />
+    </Key>
+    <Property Name="ExpensePK" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="Amount" Type="float" />
+    <Property Name="Currency" Type="nvarchar(max)" />
+    <Property Name="Location" Type="nvarchar(max)" />
+    <Property Name="Date" Type="datetime" />
+    <Property Name="PDF" Type="tinyint" />
+    <Property Name="Report_ReportPK" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Reports">
+    <Key>
+      <PropertyRef Name="ReportPK" />
+    </Key>
+    <Property Name="ReportPK" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ReportName" Type="nvarchar(max)" />
+    <Property Name="SuppervisorApproval" Type="nvarchar(max)" />
+    <Property Name="StaffApproval" Type="nvarchar(max)" />
+    <Property Name="DateOfApproval" Type="datetime" />
+    <Property Name="Department" Type="nvarchar(max)" />
+    <Property Name="SupervisorName" Type="nvarchar(max)" />
+  </EntityType>
+  <Association Name="FK_ReportExpense">
+    <End Role="Reports" Type="BCMSModel.Store.Reports" Multiplicity="1" />
+    <End Role="Expenses" Type="BCMSModel.Store.Expenses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Reports">
+        <PropertyRef Name="ReportPK" />
+      </Principal>
+      <Dependent Role="Expenses">
+        <PropertyRef Name="Report_ReportPK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BCMSModelStoreContainer" CdmEntityContainer="BCMSModelContainer">
+    <EntitySetMapping Name="Expenses">
+      <EntityTypeMapping TypeName="IsTypeOf(BCMSModel.Expense)">
+        <MappingFragment StoreEntitySet="Expenses">
+          <ScalarProperty Name="ExpensePK" ColumnName="ExpensePK" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Currency" ColumnName="Currency" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="PDF" ColumnName="PDF" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reports">
+      <EntityTypeMapping TypeName="IsTypeOf(BCMSModel.Report)">
+        <MappingFragment StoreEntitySet="Reports">
+          <ScalarProperty Name="ReportPK" ColumnName="ReportPK" />
+          <ScalarProperty Name="ReportName" ColumnName="ReportName" />
+          <ScalarProperty Name="SuppervisorApproval" ColumnName="SuppervisorApproval" />
+          <ScalarProperty Name="StaffApproval" ColumnName="StaffApproval" />
+          <ScalarProperty Name="DateOfApproval" ColumnName="DateOfApproval" />
+          <ScalarProperty Name="Department" ColumnName="Department" />
+          <ScalarProperty Name="SupervisorName" ColumnName="SupervisorName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Budgets">
+      <EntityTypeMapping TypeName="IsTypeOf(BCMSModel.Budget)">
+        <MappingFragment StoreEntitySet="Budgets">
+          <ScalarProperty Name="BudgetPK" ColumnName="BudgetPK" />
+          <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+          <ScalarProperty Name="DepartmentTotal" ColumnName="DepartmentTotal" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="ReportExpense" TypeName="BCMSModel.ReportExpense" StoreEntitySet="Expenses">
+      <EndProperty Name="Report">
+        <ScalarProperty Name="ReportPK" ColumnName="Report_ReportPK" />
+      </EndProperty>
+      <EndProperty Name="Expense">
+        <ScalarProperty Name="ExpensePK" ColumnName="ExpensePK" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>
