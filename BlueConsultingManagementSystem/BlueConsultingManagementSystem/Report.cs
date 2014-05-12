@@ -26,6 +26,7 @@ namespace BlueConsultingManagementSystem
         public Nullable<System.DateTime> DateOfApproval { get; set; }
         public string Department { get; set; }
         public string SupervisorName { get; set; }
+        public string ConsultantName { get; set; }
     
         public virtual ICollection<Expense> Expenses { get; set; }
     }

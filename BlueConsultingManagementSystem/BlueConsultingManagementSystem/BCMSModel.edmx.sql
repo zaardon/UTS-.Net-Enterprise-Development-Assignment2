@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 05/11/2014 15:34:33
--- Generated from EDMX file: M:\BlueConsultingManagementSystem\BlueConsultingManagementSystem\BCMSModel.edmx
+-- Date Created: 05/13/2014 04:39:08
+-- Generated from EDMX file: M:\EntityMVCNET\BlueConsultingManagementSystem\BlueConsultingManagementSystem\BCMSModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -23,14 +23,14 @@ GO
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[Budgets]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Budgets];
+GO
 IF OBJECT_ID(N'[dbo].[Expenses]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Expenses];
 GO
 IF OBJECT_ID(N'[dbo].[Reports]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Reports];
-GO
-IF OBJECT_ID(N'[dbo].[Budgets]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Budgets];
 GO
 
 -- --------------------------------------------------
@@ -58,7 +58,8 @@ CREATE TABLE [dbo].[Reports] (
     [StaffApproval] nvarchar(max)  NULL,
     [DateOfApproval] datetime  NULL,
     [Department] nvarchar(max)  NULL,
-    [SupervisorName] nvarchar(max)  NULL
+    [SupervisorName] nvarchar(max)  NULL,
+    [ConsultantName] nvarchar(max)  NOT NULL
 );
 GO
 
