@@ -44,6 +44,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -52,6 +55,12 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -181,6 +190,8 @@
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ConsultantController.cs" />
+    <Compile Include="Controllers\StaffController.cs" />
+    <Compile Include="Controllers\SupervisorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Expense.cs">
       <DependentUpon>BCMSModel.tt</DependentUpon>
@@ -265,7 +276,18 @@
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Consultant\Index.cshtml" />
+    <Content Include="Views\Consultant\AddReportView.cshtml" />
+    <Content Include="Views\Consultant\AddExpenseView.cshtml" />
+    <Content Include="Views\Consultant\ViewReports.cshtml" />
+    <Content Include="Views\Consultant\ViewExpense.cshtml" />
+    <Content Include="Views\Shared\ViewPDF.cshtml" />
+    <Content Include="Views\Consultant\Main.cshtml" />
+    <Content Include="Views\Staff\ColouredReports.cshtml" />
+    <Content Include="Views\Shared\StaffAndSupervisorExpenseView.cshtml" />
+    <Content Include="Views\Supervisor\ViewRejectReports.cshtml" />
+    <Content Include="Views\Supervisor\ViewRejectedReportInfo.cshtml" />
+    <Content Include="Views\Shared\StaffAndSupervisorReportView.cshtml" />
+    <Content Include="Views\Shared\TotalExpenses.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

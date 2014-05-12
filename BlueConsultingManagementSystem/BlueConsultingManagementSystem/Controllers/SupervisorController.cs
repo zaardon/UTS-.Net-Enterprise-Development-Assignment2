@@ -6,15 +6,18 @@ using System.Web.Mvc;
 
 namespace BlueConsultingManagementSystem.Controllers
 {
-    public class ConsultantController : Controller
+    public class SupervisorController : Controller
     {
-        //
-        // GET: /Consultant/
-        public ActionResult ViewExpense()
+
+        public ActionResult StaffAndSupervisorExpenseView()
         {
             return View();
         }
-        public ActionResult ViewReport()
+        public ActionResult StaffAndSupervisorReportView()
+        {
+            return View();
+        }
+        public ActionResult TotalExpenses()
         {
             return View();
         }
@@ -22,15 +25,11 @@ namespace BlueConsultingManagementSystem.Controllers
         {
             return View();
         }
-        public ActionResult AddExpenseView()
+        public ActionResult ViewRejectedReportInfo()
         {
             return View();
         }
-        public ActionResult AddReportView()
-        {
-            return View();
-        }
-        public ActionResult Main()
+        public ActionResult ViewRejectReports()
         {
             return View();
         }

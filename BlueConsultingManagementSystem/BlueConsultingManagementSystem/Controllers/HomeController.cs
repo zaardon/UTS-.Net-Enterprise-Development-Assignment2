@@ -10,10 +10,7 @@ namespace BlueConsultingManagementSystem.Controllers
     {
         public ActionResult Index()
         {
-            new Models.ConsultantModel().TogetherAdd("plz work", 13.37, "Rep it");
-            ViewBag.Title = "shiiiet";
-            showExpenses();
-            return View();
+            return View(showExpenses());
         }
 
         public ActionResult About()
@@ -29,15 +26,15 @@ namespace BlueConsultingManagementSystem.Controllers
 
             return View();
         }
-        public void showExpenses()
+        public BCMSModelContainer showExpenses()
         {
             using (var db = new BCMSModelContainer())
             {
-                foreach (var xp in db.Expenses)
-                {
-                    Response.Write(xp.Description + " " + xp.Amount);
-                }
-
+                //foreach (var xp in db.Expenses)
+                //{
+                //    Response.Write(xp.Description + " " + xp.Amount);
+                //}
+                return db;
             }
         }
     }
