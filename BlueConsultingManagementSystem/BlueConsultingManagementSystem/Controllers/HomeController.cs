@@ -10,7 +10,8 @@ namespace BlueConsultingManagementSystem.Controllers
     {
         public ActionResult Index()
         {
-            return View(showExpenses());
+            ViewBag.ConsultantReports = showExpenses("currentUser");
+            return View();
         }
 
         public ActionResult About()
@@ -26,15 +27,17 @@ namespace BlueConsultingManagementSystem.Controllers
 
             return View();
         }
-        public BCMSModelContainer showExpenses()
+        public List<object> showExpenses(string user)
         {
+            List<object> ConsultantReportsMade = new List<object>();
             using (var db = new BCMSModelContainer())
             {
-                //foreach (var xp in db.Expenses)
-                //{
-                //    Response.Write(xp.Description + " " + xp.Amount);
-                //}
-                return db;
+                foreach (var xp in db.Reports)
+                {
+                    if(xp.ConsultantName == user)
+                    ConsultantReportsMade.Add(xp);
+                }
+                return ConsultantReportsMade;
             }
         }
     }
