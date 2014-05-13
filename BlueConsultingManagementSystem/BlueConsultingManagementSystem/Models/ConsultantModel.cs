@@ -7,6 +7,11 @@ namespace BlueConsultingManagementSystem.Models
 {
     public class ConsultantModel
     {
+
+        public ConsultantModel()
+        {
+
+        }
         public Expense AddExpense(string Des, double Amo)
         {
             using (var db = new BCMSModelContainer())
