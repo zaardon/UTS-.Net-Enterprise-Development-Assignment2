@@ -7,6 +7,11 @@ namespace BlueConsultingManagementSystem.Models
 {
     public class ConsultantModel
     {
+
+        public ConsultantModel()
+        {
+
+        }
         public Expense AddExpense(string Des, double Amo)
         {
             using (var db = new BCMSModelContainer())
@@ -39,6 +44,24 @@ namespace BlueConsultingManagementSystem.Models
                 rp.Expenses.Add(exp);
                 db.SaveChanges();
             }
+        }
+
+        public List<Report> ReturnReportsOnName(string consultantName)
+        {
+            using(var db = new BCMSModelContainer())
+            {
+                List<Report> reports = new List<Report>();
+
+                foreach(Report rp in db.Reports)
+                {
+                    if(rp.ConsultantName == consultantName)
+                    {
+                        reports.Add(rp);
+                    }
+                    //reports.Add(rp);
+                }
+                return reports;
+            }        
         }
     }
 }

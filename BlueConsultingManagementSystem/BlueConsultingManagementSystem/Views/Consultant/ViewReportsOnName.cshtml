@@ -1,0 +1,55 @@
+﻿@model IList<BlueConsultingManagementSystem.Report>
+
+@{
+    ViewBag.Title = "ViewReportsOnName";
+}
+
+<h2>ViewReportsOnName</h2>
+
+
+
+<div>
+    <h4>Report</h4>
+
+    <hr />
+</div>
+<table border="1" style="width:300px">
+    <tr>
+        <td>
+            Report Name
+        </td>
+
+
+        <td>
+            Department
+        </td>
+
+
+        <td>
+            Consultant Name
+        </td>
+    </tr>
+
+    
+        @foreach (Report rp in Model)
+        {
+            <tr>
+                <td>
+                    @rp.ReportName
+                </td>
+                <td>
+                    @rp.Department
+                </td>
+                <td>
+                    @rp.ConsultantName
+                </td>
+            </tr>
+        }
+    
+
+    </table>
+
+
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>

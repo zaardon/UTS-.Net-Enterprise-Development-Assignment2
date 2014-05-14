@@ -10,26 +10,50 @@ namespace BlueConsultingManagementSystem.Controllers
     {
         //
         // GET: /Consultant/
-        public ActionResult ViewExpense()
+        [HttpGet]
+        public ActionResult ViewExpense(string reportName)
+        {
+            
+            return View(new Models.ConsultantModel().ReturnReportsOnName("Bill"));
+        }
+        [HttpPost]
+        public ActionResult ViewExpense(object expense)
         {
             return View();
         }
-        public ActionResult ViewReport()
+        [HttpGet]
+        public ActionResult ViewReport(string consultantName)
         {
             return View();
         }
+
+        [HttpGet]
+        public ActionResult ViewReportsOnName(string consultantName)
+        {
+            return View(new Models.ConsultantModel().ReturnReportsOnName("Bill"));
+        }
+        [HttpPost]
+        public ActionResult ViewReport(object expense)
+        {
+            return View();
+        }
+        [HttpGet]
         public ActionResult ViewPDF()
         {
             return View();
         }
-        public ActionResult AddExpenseView()
+        [HttpPost]
+        public ActionResult AddExpenseView(object obj)
         {
+            
             return View();
         }
+        [HttpPost]
         public ActionResult AddReportView()
         {
             return View();
         }
+        [HttpGet]
         public ActionResult Main()
         {
             return View();

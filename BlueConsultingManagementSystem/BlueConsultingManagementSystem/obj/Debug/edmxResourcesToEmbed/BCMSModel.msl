@@ -24,6 +24,7 @@
           <ScalarProperty Name="DateOfApproval" ColumnName="DateOfApproval" />
           <ScalarProperty Name="Department" ColumnName="Department" />
           <ScalarProperty Name="SupervisorName" ColumnName="SupervisorName" />
+          <ScalarProperty Name="ConsultantName" ColumnName="ConsultantName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
