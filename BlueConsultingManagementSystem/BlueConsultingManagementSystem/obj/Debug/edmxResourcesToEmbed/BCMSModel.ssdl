@@ -1,19 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="BCMSModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityContainer Name="BCMSModelStoreContainer">
-    <EntitySet Name="Budgets" EntityType="BCMSModel.Store.Budgets" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Expenses" EntityType="BCMSModel.Store.Expenses" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Reports" EntityType="BCMSModel.Store.Reports" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="FK_ReportExpense" Association="BCMSModel.Store.FK_ReportExpense">
-      <End Role="Reports" EntitySet="Reports" />
-      <End Role="Expenses" EntitySet="Expenses" />
-    </AssociationSet>
-  </EntityContainer>
+<Schema Namespace="BCMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="Budgets">
     <Key>
       <PropertyRef Name="BudgetPK" />
     </Key>
-    <Property Name="BudgetPK" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="BudgetPK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="DepartmentName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="DepartmentTotal" Type="float" Nullable="false" />
   </EntityType>
@@ -21,7 +12,7 @@
     <Key>
       <PropertyRef Name="ExpensePK" />
     </Key>
-    <Property Name="ExpensePK" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ExpensePK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Description" Type="nvarchar(max)" />
     <Property Name="Amount" Type="float" />
     <Property Name="Currency" Type="nvarchar(max)" />
@@ -34,17 +25,18 @@
     <Key>
       <PropertyRef Name="ReportPK" />
     </Key>
-    <Property Name="ReportPK" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ReportPK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ReportName" Type="nvarchar(max)" />
     <Property Name="SuppervisorApproval" Type="nvarchar(max)" />
     <Property Name="StaffApproval" Type="nvarchar(max)" />
     <Property Name="DateOfApproval" Type="datetime" />
     <Property Name="Department" Type="nvarchar(max)" />
     <Property Name="SupervisorName" Type="nvarchar(max)" />
+    <Property Name="ConsultantName" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <Association Name="FK_ReportExpense">
-    <End Role="Reports" Type="BCMSModel.Store.Reports" Multiplicity="1" />
-    <End Role="Expenses" Type="BCMSModel.Store.Expenses" Multiplicity="*" />
+    <End Role="Reports" Type="Self.Reports" Multiplicity="1" />
+    <End Role="Expenses" Type="Self.Expenses" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Reports">
         <PropertyRef Name="ReportPK" />
@@ -54,4 +46,13 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityContainer Name="BCMSModelStoreContainer">
+    <EntitySet Name="Budgets" EntityType="Self.Budgets" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Expenses" EntityType="Self.Expenses" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Reports" EntityType="Self.Reports" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_ReportExpense" Association="Self.FK_ReportExpense">
+      <End Role="Reports" EntitySet="Reports" />
+      <End Role="Expenses" EntitySet="Expenses" />
+    </AssociationSet>
+  </EntityContainer>
 </Schema>

@@ -290,6 +290,7 @@
     <Content Include="Views\Supervisor\ViewRejectedReportInfo.cshtml" />
     <Content Include="Views\Shared\StaffAndSupervisorReportView.cshtml" />
     <Content Include="Views\Shared\TotalExpenses.cshtml" />
+    <Content Include="Views\Consultant\ViewReportsOnName.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

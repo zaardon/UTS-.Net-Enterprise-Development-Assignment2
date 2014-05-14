@@ -32,7 +32,7 @@ namespace BlueConsultingManagementSystem.Controllers
             List<object> ConsultantReportsMade = new List<object>();
             using (var db = new BCMSModelContainer())
             {
-                foreach (var xp in db.Reports)
+                foreach (Report xp in db.Reports)
                 {
                     if(xp.ConsultantName == user)
                     ConsultantReportsMade.Add(xp);

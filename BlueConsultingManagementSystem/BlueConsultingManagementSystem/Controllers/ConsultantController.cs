@@ -13,7 +13,8 @@ namespace BlueConsultingManagementSystem.Controllers
         [HttpGet]
         public ActionResult ViewExpense(string reportName)
         {
-            return View();
+            
+            return View(new Models.ConsultantModel().ReturnReportsOnName("Bill"));
         }
         [HttpPost]
         public ActionResult ViewExpense(object expense)
@@ -24,6 +25,12 @@ namespace BlueConsultingManagementSystem.Controllers
         public ActionResult ViewReport(string consultantName)
         {
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult ViewReportsOnName(string consultantName)
+        {
+            return View(new Models.ConsultantModel().ReturnReportsOnName("Bill"));
         }
         [HttpPost]
         public ActionResult ViewReport(object expense)

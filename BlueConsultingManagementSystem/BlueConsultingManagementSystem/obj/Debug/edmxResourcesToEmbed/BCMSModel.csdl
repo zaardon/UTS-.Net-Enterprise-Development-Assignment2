@@ -34,6 +34,7 @@
     <Property Type="String" Name="Department" Unicode="true" FixedLength="false" MaxLength="Max" />
     <Property Type="String" Name="SupervisorName" Unicode="true" FixedLength="false" MaxLength="Max" />
     <NavigationProperty Name="Expenses" Relationship="BCMSModel.ReportExpense" FromRole="Report" ToRole="Expense" />
+    <Property Type="String" Name="ConsultantName" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
   </EntityType>
   <Association Name="ReportExpense">
     <End Type="BCMSModel.Report" Role="Report" Multiplicity="1" />
