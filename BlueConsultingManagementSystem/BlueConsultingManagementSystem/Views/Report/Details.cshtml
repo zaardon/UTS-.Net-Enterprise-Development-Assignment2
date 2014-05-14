@@ -1,0 +1,57 @@
+﻿@model BlueConsultingManagementSystem.Models.Report
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Report</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ReportName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ReportName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ConsultantName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ConsultantName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.SupervisorApproved)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.SupervisorApproved)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.StaffApproval)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.StaffApproval)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DateOfApproval)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DateOfApproval)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.FullReport)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FullReport)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.ReportPK }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

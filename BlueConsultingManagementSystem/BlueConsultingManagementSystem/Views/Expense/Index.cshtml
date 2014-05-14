@@ -1,0 +1,45 @@
+﻿@model IEnumerable<BlueConsultingManagementSystem.Models.Expense>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FullReport)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Amount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FullReport)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ExpensePK }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ExpensePK }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ExpensePK })
+        </td>
+    </tr>
+}
+
+</table>
