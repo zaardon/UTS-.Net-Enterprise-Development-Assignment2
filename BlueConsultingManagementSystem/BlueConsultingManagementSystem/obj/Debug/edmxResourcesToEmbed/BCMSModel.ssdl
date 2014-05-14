@@ -1,24 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="BCMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityType Name="Budgets">
-    <Key>
-      <PropertyRef Name="BudgetPK" />
-    </Key>
-    <Property Name="BudgetPK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="DepartmentName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="DepartmentTotal" Type="float" Nullable="false" />
-  </EntityType>
+<Schema Namespace="BCMSModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="BCMSModelStoreContainer">
+    <EntitySet Name="Expenses" EntityType="BCMSModel.Store.Expenses" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Reports" EntityType="BCMSModel.Store.Reports" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="ReportExpense" Association="BCMSModel.Store.ReportExpense">
+      <End Role="Report" EntitySet="Reports" />
+      <End Role="Expense" EntitySet="Expenses" />
+    </AssociationSet>
+  </EntityContainer>
   <EntityType Name="Expenses">
     <Key>
       <PropertyRef Name="ExpensePK" />
     </Key>
     <Property Name="ExpensePK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Description" Type="nvarchar(max)" />
-    <Property Name="Amount" Type="float" />
-    <Property Name="Currency" Type="nvarchar(max)" />
-    <Property Name="Location" Type="nvarchar(max)" />
-    <Property Name="Date" Type="datetime" />
-    <Property Name="PDF" Type="tinyint" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Amount" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Currency" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Location" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Date" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PDF" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Report_ReportPK" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Reports">
@@ -26,33 +26,24 @@
       <PropertyRef Name="ReportPK" />
     </Key>
     <Property Name="ReportPK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ReportName" Type="nvarchar(max)" />
-    <Property Name="SuppervisorApproval" Type="nvarchar(max)" />
-    <Property Name="StaffApproval" Type="nvarchar(max)" />
-    <Property Name="DateOfApproval" Type="datetime" />
-    <Property Name="Department" Type="nvarchar(max)" />
-    <Property Name="SupervisorName" Type="nvarchar(max)" />
+    <Property Name="ReportName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="ConsultantName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SuppervisorApproval" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StaffApproval" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DateOfApproval" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Department" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SupervisorName" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
-  <Association Name="FK_ReportExpense">
-    <End Role="Reports" Type="Self.Reports" Multiplicity="1" />
-    <End Role="Expenses" Type="Self.Expenses" Multiplicity="*" />
+  <Association Name="ReportExpense">
+    <End Role="Report" Type="BCMSModel.Store.Reports" Multiplicity="1" />
+    <End Role="Expense" Type="BCMSModel.Store.Expenses" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Reports">
+      <Principal Role="Report">
         <PropertyRef Name="ReportPK" />
       </Principal>
-      <Dependent Role="Expenses">
+      <Dependent Role="Expense">
         <PropertyRef Name="Report_ReportPK" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="BCMSModelStoreContainer">
-    <EntitySet Name="Budgets" EntityType="Self.Budgets" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Expenses" EntityType="Self.Expenses" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Reports" EntityType="Self.Reports" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK_ReportExpense" Association="Self.FK_ReportExpense">
-      <End Role="Reports" EntitySet="Reports" />
-      <End Role="Expenses" EntitySet="Expenses" />
-    </AssociationSet>
-  </EntityContainer>
 </Schema>

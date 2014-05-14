@@ -21,12 +21,12 @@ namespace BlueConsultingManagementSystem
     
         public int ReportPK { get; set; }
         public string ReportName { get; set; }
+        public string ConsultantName { get; set; }
         public string SuppervisorApproval { get; set; }
         public string StaffApproval { get; set; }
-        public Nullable<System.DateTime> DateOfApproval { get; set; }
+        public string DateOfApproval { get; set; }
         public string Department { get; set; }
         public string SupervisorName { get; set; }
-        public string ConsultantName { get; set; }
     
         public virtual ICollection<Expense> Expenses { get; set; }
     }

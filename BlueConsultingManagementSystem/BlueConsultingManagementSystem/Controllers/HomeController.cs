@@ -10,13 +10,14 @@ namespace BlueConsultingManagementSystem.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.ConsultantReports = showExpenses("currentUser");
+            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
+
             return View();
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Your app description page.";
 
             return View();
         }
@@ -27,18 +28,23 @@ namespace BlueConsultingManagementSystem.Controllers
 
             return View();
         }
-        public List<object> showExpenses(string user)
+
+        public ActionResult ConsultantView()
         {
-            List<object> ConsultantReportsMade = new List<object>();
-            using (var db = new BCMSModelContainer())
-            {
-                foreach (Report xp in db.Reports)
-                {
-                    if(xp.ConsultantName == user)
-                    ConsultantReportsMade.Add(xp);
-                }
-                return ConsultantReportsMade;
-            }
+
+            return View();
+        }
+
+        public ActionResult SupervisorView()
+        {
+
+            return View();
+        }
+
+        public ActionResult StaffView()
+        {
+
+            return View();
         }
     }
 }

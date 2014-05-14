@@ -19,21 +19,12 @@
         <MappingFragment StoreEntitySet="Reports">
           <ScalarProperty Name="ReportPK" ColumnName="ReportPK" />
           <ScalarProperty Name="ReportName" ColumnName="ReportName" />
+          <ScalarProperty Name="ConsultantName" ColumnName="ConsultantName" />
           <ScalarProperty Name="SuppervisorApproval" ColumnName="SuppervisorApproval" />
           <ScalarProperty Name="StaffApproval" ColumnName="StaffApproval" />
           <ScalarProperty Name="DateOfApproval" ColumnName="DateOfApproval" />
           <ScalarProperty Name="Department" ColumnName="Department" />
           <ScalarProperty Name="SupervisorName" ColumnName="SupervisorName" />
-          <ScalarProperty Name="ConsultantName" ColumnName="ConsultantName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Budgets">
-      <EntityTypeMapping TypeName="IsTypeOf(BCMSModel.Budget)">
-        <MappingFragment StoreEntitySet="Budgets">
-          <ScalarProperty Name="BudgetPK" ColumnName="BudgetPK" />
-          <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
-          <ScalarProperty Name="DepartmentTotal" ColumnName="DepartmentTotal" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

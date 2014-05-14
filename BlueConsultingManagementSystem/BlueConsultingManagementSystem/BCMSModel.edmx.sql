@@ -1,12 +1,14 @@
 
 -- --------------------------------------------------
--- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
+-- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/13/2014 04:39:08
--- Generated from EDMX file: M:\EntityMVCNET\BlueConsultingManagementSystem\BlueConsultingManagementSystem\BCMSModel.edmx
+-- Date Created: 05/14/2014 22:03:58
+-- Generated from EDMX file: c:\users\alex\documents\visual studio 2013\Projects\BlueConsultingManagementSystem\BlueConsultingManagementSystem\BCMSModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
+GO
+USE [BCMSDB];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -15,23 +17,11 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_ReportExpense]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Expenses] DROP CONSTRAINT [FK_ReportExpense];
-GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[Budgets]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Budgets];
-GO
-IF OBJECT_ID(N'[dbo].[Expenses]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Expenses];
-GO
-IF OBJECT_ID(N'[dbo].[Reports]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Reports];
-GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -40,12 +30,12 @@ GO
 -- Creating table 'Expenses'
 CREATE TABLE [dbo].[Expenses] (
     [ExpensePK] int IDENTITY(1,1) NOT NULL,
-    [Description] nvarchar(max)  NULL,
-    [Amount] float  NULL,
-    [Currency] nvarchar(max)  NULL,
-    [Location] nvarchar(max)  NULL,
-    [Date] datetime  NULL,
-    [PDF] tinyint  NULL,
+    [Description] nvarchar(max)  NOT NULL,
+    [Amount] nvarchar(max)  NOT NULL,
+    [Currency] nvarchar(max)  NOT NULL,
+    [Location] nvarchar(max)  NOT NULL,
+    [Date] nvarchar(max)  NOT NULL,
+    [PDF] nvarchar(max)  NOT NULL,
     [Report_ReportPK] int  NOT NULL
 );
 GO
@@ -53,21 +43,13 @@ GO
 -- Creating table 'Reports'
 CREATE TABLE [dbo].[Reports] (
     [ReportPK] int IDENTITY(1,1) NOT NULL,
-    [ReportName] nvarchar(max)  NULL,
-    [SuppervisorApproval] nvarchar(max)  NULL,
-    [StaffApproval] nvarchar(max)  NULL,
-    [DateOfApproval] datetime  NULL,
-    [Department] nvarchar(max)  NULL,
-    [SupervisorName] nvarchar(max)  NULL,
-    [ConsultantName] nvarchar(max)  NOT NULL
-);
-GO
-
--- Creating table 'Budgets'
-CREATE TABLE [dbo].[Budgets] (
-    [BudgetPK] int IDENTITY(1,1) NOT NULL,
-    [DepartmentName] nvarchar(max)  NOT NULL,
-    [DepartmentTotal] float  NOT NULL
+    [ReportName] nvarchar(max)  NOT NULL,
+    [ConsultantName] nvarchar(max)  NOT NULL,
+    [SuppervisorApproval] nvarchar(max)  NOT NULL,
+    [StaffApproval] nvarchar(max)  NOT NULL,
+    [DateOfApproval] nvarchar(max)  NOT NULL,
+    [Department] nvarchar(max)  NOT NULL,
+    [SupervisorName] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -85,12 +67,6 @@ GO
 ALTER TABLE [dbo].[Reports]
 ADD CONSTRAINT [PK_Reports]
     PRIMARY KEY CLUSTERED ([ReportPK] ASC);
-GO
-
--- Creating primary key on [BudgetPK] in table 'Budgets'
-ALTER TABLE [dbo].[Budgets]
-ADD CONSTRAINT [PK_Budgets]
-    PRIMARY KEY CLUSTERED ([BudgetPK] ASC);
 GO
 
 -- --------------------------------------------------

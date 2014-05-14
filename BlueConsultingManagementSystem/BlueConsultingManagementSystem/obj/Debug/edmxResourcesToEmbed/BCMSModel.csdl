@@ -7,45 +7,36 @@
       <End Role="Report" EntitySet="Reports" />
       <End Role="Expense" EntitySet="Expenses" />
     </AssociationSet>
-    <EntitySet Name="Budgets" EntityType="BCMSModel.Budget" />
   </EntityContainer>
   <EntityType Name="Expense">
     <Key>
       <PropertyRef Name="ExpensePK" />
     </Key>
-    <Property Type="Int32" Name="ExpensePK" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Type="String" Name="Description" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
-    <Property Type="Double" Name="Amount" Nullable="true" />
-    <Property Type="String" Name="Currency" Unicode="true" FixedLength="false" MaxLength="Max" />
-    <Property Type="String" Name="Location" Unicode="true" FixedLength="false" MaxLength="Max" />
-    <Property Type="DateTime" Name="Date" Precision="3" />
-    <Property Type="Byte" Name="PDF" />
+    <Property Name="ExpensePK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" Nullable="false" />
+    <Property Name="Amount" Type="String" Nullable="false" />
+    <Property Name="Currency" Type="String" Nullable="false" />
+    <Property Name="Location" Type="String" Nullable="false" />
+    <Property Name="Date" Type="String" Nullable="false" />
+    <Property Name="PDF" Type="String" Nullable="false" />
     <NavigationProperty Name="Report" Relationship="BCMSModel.ReportExpense" FromRole="Expense" ToRole="Report" />
   </EntityType>
   <EntityType Name="Report">
     <Key>
       <PropertyRef Name="ReportPK" />
     </Key>
-    <Property Type="Int32" Name="ReportPK" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Type="String" Name="ReportName" Unicode="true" FixedLength="false" MaxLength="Max" />
-    <Property Type="String" Name="SuppervisorApproval" Unicode="true" FixedLength="false" MaxLength="Max" />
-    <Property Type="String" Name="StaffApproval" Unicode="true" FixedLength="false" MaxLength="Max" />
-    <Property Type="DateTime" Name="DateOfApproval" Precision="3" />
-    <Property Type="String" Name="Department" Unicode="true" FixedLength="false" MaxLength="Max" />
-    <Property Type="String" Name="SupervisorName" Unicode="true" FixedLength="false" MaxLength="Max" />
+    <Property Name="ReportPK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ReportName" Type="String" Nullable="false" />
+    <Property Name="ConsultantName" Type="String" Nullable="false" />
+    <Property Name="SuppervisorApproval" Type="String" Nullable="false" />
+    <Property Name="StaffApproval" Type="String" Nullable="false" />
+    <Property Name="DateOfApproval" Type="String" Nullable="false" />
+    <Property Name="Department" Type="String" Nullable="false" />
+    <Property Name="SupervisorName" Type="String" Nullable="false" />
     <NavigationProperty Name="Expenses" Relationship="BCMSModel.ReportExpense" FromRole="Report" ToRole="Expense" />
-    <Property Type="String" Name="ConsultantName" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
   </EntityType>
   <Association Name="ReportExpense">
     <End Type="BCMSModel.Report" Role="Report" Multiplicity="1" />
     <End Type="BCMSModel.Expense" Role="Expense" Multiplicity="*" />
   </Association>
-  <EntityType Name="Budget">
-    <Key>
-      <PropertyRef Name="BudgetPK" />
-    </Key>
-    <Property Type="Int32" Name="BudgetPK" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Type="String" Name="DepartmentName" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-    <Property Type="Double" Name="DepartmentTotal" Nullable="false" />
-  </EntityType>
 </Schema>

@@ -16,11 +16,11 @@ namespace BlueConsultingManagementSystem
     {
         public int ExpensePK { get; set; }
         public string Description { get; set; }
-        public Nullable<double> Amount { get; set; }
+        public string Amount { get; set; }
         public string Currency { get; set; }
         public string Location { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
-        public Nullable<byte> PDF { get; set; }
+        public string Date { get; set; }
+        public string PDF { get; set; }
     
         public virtual Report Report { get; set; }
     }
