@@ -20,6 +20,9 @@
         <th>
             @Html.DisplayNameFor(model => model.CType)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfExpense)
+        </th>
         <th></th>
     </tr>
 
@@ -34,6 +37,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.CType)
         </td>
+        <th>
+            @Html.DisplayFor(modelItem => item.DateOfExpense)
+        </th>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ExpensePK }) |
             @Html.ActionLink("Details", "Details", new { id=item.ExpensePK }) |
