@@ -52,7 +52,7 @@ namespace BCMS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="ExpensePK,Description,Amount,CType")] Expense expense, int ReportID)
+        public ActionResult Create([Bind(Include="ExpensePK,Description,Amount,CType,DateOfExpense")] Expense expense, int ReportID)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace BCMS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="ExpensePK,Description,Amount,CType")] Expense expense)
+        public ActionResult Edit([Bind(Include="ExpensePK,Description,Amount,CType,DateOfExpense")] Expense expense)
         {
             if (ModelState.IsValid)
             {

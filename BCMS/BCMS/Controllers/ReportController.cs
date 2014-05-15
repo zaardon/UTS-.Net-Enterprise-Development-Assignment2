@@ -18,7 +18,8 @@ namespace BCMS.Controllers
         // GET: /Report/
         public ActionResult Index()
         {
-            return View(db.Reports.ToList());
+            return View(db.Reports.Where(r => r.ConsultantName == User.Identity.Name).ToList());
+            //return View(db.Reports.ToList());
         }
 
         // GET: /Report/Details/5
