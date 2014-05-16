@@ -28,12 +28,12 @@
                         <li>@Html.ActionLink("View Unapproved Reports", "ConsultantAwaiting", "Report")</li>
                     }
                     @if (User.IsInRole("Supervisor")){
-                        <li>@Html.ActionLink("View Unapproved Reports", "ViewReports", "Report")</li>
+                        <li>@Html.ActionLink("View Unapproved Reports", "SupervisorReports", "Report")</li>
                         <li>@Html.ActionLink("View Rejected Reports", "SupervisorRejects", "Report")</li>
                         <li>@Html.ActionLink("View Department Budget", "SupervisorBudget", "Report")</li>
                     }
                     @if (User.IsInRole("Staff")){
-                        <li>@Html.ActionLink("View Unapproved Reports", "ViewReports", "Report")</li>
+                        <li>@Html.ActionLink("View Unapproved Reports", "StaffReports", "Report")</li>
                         <li>@Html.ActionLink("View Approved Reports", "StaffApproved", "Report")</li>
                         <li>@Html.ActionLink("View Company Budget", "StaffBudget", "Report")</li>                       
                     }

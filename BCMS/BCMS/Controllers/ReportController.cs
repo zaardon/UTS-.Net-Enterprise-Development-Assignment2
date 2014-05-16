@@ -161,7 +161,7 @@ namespace BCMS.Controllers
         }
 
         //for supervisor/staff
-        public ActionResult ViewReports()
+        public ActionResult SupervisorReports()
         {
             DepartmentType dept = DepartmentType.HigherEducation;
             if(User.IsInRole("HigherEducation"))
@@ -177,41 +177,62 @@ namespace BCMS.Controllers
                 dept = DepartmentType.State;
             }
 
-            if(User.IsInRole("Supervisor"))
-            {
-                return View(db.Reports.Where(r => r.type == dept).Where(r => r.SupervisorApproved == "Submitted").ToList());
-
-            }
-                //if staff member...
-            else
-            {
-                return View(db.Reports.Where(r => r.StaffApproval == "").ToList());
-            }
-            
+            return View(db.Reports.Where(r => r.type == dept).Where(r => r.SupervisorApproved == "Submitted").ToList());
+           
         }
+
+
 
         public ActionResult SupervisorRejects()
         {
-            //supervisor only
-            return View();
+            DepartmentType dept = DepartmentType.HigherEducation;
+            if (User.IsInRole("HigherEducation"))
+            {
+                dept = DepartmentType.HigherEducation;
+            }
+            else if (User.IsInRole("Logistic"))
+            {
+                dept = DepartmentType.Logistics;
+            }
+            else if (User.IsInRole("State"))
+            {
+                dept = DepartmentType.State;
+            }
+
+            return View(db.Reports.Where(r => r.type == dept).Where(r => r.StaffApproval == "Rejected").ToList());
         }
 
         public ActionResult SupervisorBudget()
         {
-            //staff only
+            //NOT WORKING YET
+            DepartmentType dept = DepartmentType.HigherEducation;
+            if (User.IsInRole("HigherEducation"))
+            {
+                dept = DepartmentType.HigherEducation;
+            }
+            else if (User.IsInRole("Logistic"))
+            {
+                dept = DepartmentType.Logistics;
+            }
+            else if (User.IsInRole("State"))
+            {
+                dept = DepartmentType.State;
+            }
+
             return View();
         }
 
         public ActionResult StaffBudget()
         {
+            //NOT DONE YET
             return View();
 
         }
 
-        public ActionResult StaffApproved()
+        public ActionResult StaffReports()
         {
-
-            return View();
+            //I think this is for that colour thing
+            return View(db.Reports.Where(r => r.StaffApproval == "").ToList());
         }
 
 
