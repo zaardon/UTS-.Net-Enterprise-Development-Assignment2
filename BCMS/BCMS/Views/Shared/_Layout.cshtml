@@ -17,13 +17,27 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", null, new { @class = "navbar-brand" })
+                @Html.ActionLink("BC Management", "Index", "Home", null, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @if(User.IsInRole("Consultant")){
+                    <li>@Html.ActionLink("Create a Report", "Index", "Report")</li>
+                    <li>@Html.ActionLink("View Submitted Reports", "Submitted", "Report")</li>
+                    <li>@Html.ActionLink("View Approved Reports", "Approved", "Report")</li>
+                    <li>@Html.ActionLink("View Unapproved Reports", "Unapproved", "Report")</li>
+                    }
+                    @if (User.IsInRole("Supervisor")){
+                        <li>@Html.ActionLink("Create a Report", "Index", "Report")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    }
+                    @if (User.IsInRole("Staff"))
+                    {
+                        <li>@Html.ActionLink("Create a Report", "Index", "Report")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
