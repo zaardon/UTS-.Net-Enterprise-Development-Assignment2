@@ -18,7 +18,7 @@ namespace BCMS.Controllers
         // GET: /Report/
         public ActionResult Index()
         {
-            return View(db.Reports.Where(r => r.ConsultantName == User.Identity.Name).ToList());
+            return View(db.Reports.Where(r => r.ConsultantName == User.Identity.Name).Where(r => r.SupervisorApproved == "Submitted").ToList());
             //return View(db.Reports.ToList());
         }
 
@@ -125,5 +125,61 @@ namespace BCMS.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+        public ActionResult ConsultantSubmissions()
+        {
+
+            return View(db.Reports.Where(r => r.ConsultantName == User.Identity.Name).ToList());
+        }
+
+        public ActionResult ConsultantApprovals()
+        {
+
+            return View(db.Reports.Where(r => r.ConsultantName == User.Identity.Name).Where(r => r.StaffApproval == "Approved").ToList());
+        }
+
+        public ActionResult ConsultantAwaiting()
+        {
+
+            return View(db.Reports.Where(r => r.ConsultantName == User.Identity.Name).Where(r => r.StaffApproval != "Approved").ToList());
+        }
+
+        //for supervisor/staff
+        public ActionResult ViewReports()
+        {
+            //    List<Report> reports = new List<Report>();
+
+            //    foreach(Report rp in Report)
+
+            //    return reports;
+            return View();
+        }
+
+        public ActionResult SupervisorRejects()
+        {
+            //supervisor only
+            return View();
+        }
+
+        public ActionResult SupervisorBudget()
+        {
+            //staff only
+            return View();
+        }
+
+        public ActionResult StaffBudget()
+        {
+            return View();
+
+        }
+
+        public ActionResult StaffApproved()
+        {
+
+            return View();
+        }
+
+
     }
 }

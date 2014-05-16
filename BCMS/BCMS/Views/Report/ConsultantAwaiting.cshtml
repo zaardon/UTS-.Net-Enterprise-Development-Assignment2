@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<BlueConsultingManagementSystem.Models.Report>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "ConsultantAwaiting";
 }
 
-<h2>Index</h2>
+<h2>ConsultantAwaiting</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -15,7 +15,16 @@
             @Html.DisplayNameFor(model => model.ReportName)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.ConsultantName)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SupervisorApproved)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StaffApproval)
         </th>
         <th></th>
     </tr>
@@ -26,7 +35,16 @@
             @Html.DisplayFor(modelItem => item.ReportName)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.ConsultantName)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SupervisorApproved)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StaffApproval)
         </td>
         <td>
             @Html.ActionLink("Details", "Details", new { id=item.ReportPK }) |

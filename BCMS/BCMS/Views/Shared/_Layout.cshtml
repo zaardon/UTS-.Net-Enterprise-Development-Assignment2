@@ -22,21 +22,20 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @if(User.IsInRole("Consultant")){
-                    <li>@Html.ActionLink("Create a Report", "Index", "Report")</li>
-                    <li>@Html.ActionLink("View Submitted Reports", "Submitted", "Report")</li>
-                    <li>@Html.ActionLink("View Approved Reports", "Approved", "Report")</li>
-                    <li>@Html.ActionLink("View Unapproved Reports", "Unapproved", "Report")</li>
+                        <li>@Html.ActionLink("Create a Report", "Index", "Report")</li>
+                        <li>@Html.ActionLink("View Submitted Reports", "ConsultantSubmissions", "Report")</li>
+                        <li>@Html.ActionLink("View Approved Reports", "ConsultantApprovals", "Report")</li>
+                        <li>@Html.ActionLink("View Unapproved Reports", "ConsultantAwaiting", "Report")</li>
                     }
                     @if (User.IsInRole("Supervisor")){
-                        <li>@Html.ActionLink("Create a Report", "Index", "Report")</li>
-                        <li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        <li>@Html.ActionLink("View Unapproved Reports", "ViewReports", "Report")</li>
+                        <li>@Html.ActionLink("View Rejected Reports", "SupervisorRejects", "Report")</li>
+                        <li>@Html.ActionLink("View Department Budget", "SupervisorBudget", "Report")</li>
                     }
-                    @if (User.IsInRole("Staff"))
-                    {
-                        <li>@Html.ActionLink("Create a Report", "Index", "Report")</li>
-                        <li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @if (User.IsInRole("Staff")){
+                        <li>@Html.ActionLink("View Unapproved Reports", "Index", "Report")</li>
+                        <li>@Html.ActionLink("View Approved Reports", "StaffApproved", "Report")</li>
+                        <li>@Html.ActionLink("View Company Budget", "StaffBudget", "Report")</li>                       
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
