@@ -37,6 +37,21 @@ namespace BCMS.Controllers
             return View(report);
         }
 
+        // GET: /Report/Details/5
+        public ActionResult DetailsOnly(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Report report = db.Reports.Find(id);
+            if (report == null)
+            {
+                return HttpNotFound();
+            }
+            return View(report);
+        }
+
         // GET: /Report/Create
         public ActionResult Create()
         {
@@ -142,7 +157,7 @@ namespace BCMS.Controllers
         public ActionResult ConsultantAwaiting()
         {
 
-            return View(db.Reports.Where(r => r.ConsultantName == User.Identity.Name).Where(r => r.StaffApproval != "Approved").ToList());
+            return View(db.Reports.Where(r => r.ConsultantName == User.Identity.Name).Where(r => r.SupervisorApproved == "Submitted").ToList());
         }
 
         //for supervisor/staff
