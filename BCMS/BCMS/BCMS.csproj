@@ -239,6 +239,7 @@
     <Content Include="Views\Report\ConsultantApprovals.cshtml" />
     <Content Include="Views\Report\ConsultantAwaiting.cshtml" />
     <Content Include="Views\Report\DetailsOnly.cshtml" />
+    <Content Include="Views\Report\ViewReports.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

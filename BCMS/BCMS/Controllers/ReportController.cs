@@ -163,12 +163,31 @@ namespace BCMS.Controllers
         //for supervisor/staff
         public ActionResult ViewReports()
         {
-            //    List<Report> reports = new List<Report>();
+            DepartmentType dept = DepartmentType.HigherEducation;
+            if(User.IsInRole("HigherEducation"))
+            {
+                dept = DepartmentType.HigherEducation;
+            }
+            else if(User.IsInRole("Logistic"))
+            {
+                dept = DepartmentType.Logistics;
+            }
+            else if(User.IsInRole("State"))
+            {
+                dept = DepartmentType.State;
+            }
 
-            //    foreach(Report rp in Report)
+            if(User.IsInRole("Supervisor"))
+            {
+                return View(db.Reports.Where(r => r.type == dept).Where(r => r.SupervisorApproved == "Submitted").ToList());
 
-            //    return reports;
-            return View();
+            }
+                //if staff member...
+            else
+            {
+                return View(db.Reports.Where(r => r.StaffApproval == "").ToList());
+            }
+            
         }
 
         public ActionResult SupervisorRejects()

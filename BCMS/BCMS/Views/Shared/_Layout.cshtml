@@ -33,7 +33,7 @@
                         <li>@Html.ActionLink("View Department Budget", "SupervisorBudget", "Report")</li>
                     }
                     @if (User.IsInRole("Staff")){
-                        <li>@Html.ActionLink("View Unapproved Reports", "Index", "Report")</li>
+                        <li>@Html.ActionLink("View Unapproved Reports", "ViewReports", "Report")</li>
                         <li>@Html.ActionLink("View Approved Reports", "StaffApproved", "Report")</li>
                         <li>@Html.ActionLink("View Company Budget", "StaffBudget", "Report")</li>                       
                     }
