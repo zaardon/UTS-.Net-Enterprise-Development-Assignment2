@@ -24,13 +24,7 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ConsultantName, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ConsultantName)
-                @Html.ValidationMessageFor(model => model.ConsultantName)
-            </div>
-        </div>
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.type, new { @class = "control-label col-md-2" })
@@ -39,31 +33,6 @@
                 @Html.ValidationMessageFor(model => model.type)
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SupervisorApproved, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SupervisorApproved)
-                @Html.ValidationMessageFor(model => model.SupervisorApproved)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.StaffApproval, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.StaffApproval)
-                @Html.ValidationMessageFor(model => model.StaffApproval)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateOfApproval, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateOfApproval)
-                @Html.ValidationMessageFor(model => model.DateOfApproval)
-            </div>
-        </div>
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />

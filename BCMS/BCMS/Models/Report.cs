@@ -18,7 +18,7 @@ namespace BlueConsultingManagementSystem.Models
         [Required]
         public string ReportName { get; set; }
 
-        [Required]
+        //[Required]
         public string ConsultantName { get; set; }
 
         [Required]

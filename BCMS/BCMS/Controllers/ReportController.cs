@@ -55,6 +55,7 @@ namespace BCMS.Controllers
         // GET: /Report/Create
         public ActionResult Create()
         {
+            
             return View();
         }
 
@@ -67,6 +68,8 @@ namespace BCMS.Controllers
         {
             if (ModelState.IsValid)
             {
+                report.ConsultantName = User.Identity.Name;
+                report.SupervisorApproved = "Submitted";
                 db.Reports.Add(report);
                 db.SaveChanges();
                 return RedirectToAction("Index");

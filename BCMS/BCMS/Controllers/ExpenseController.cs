@@ -131,5 +131,10 @@ namespace BCMS.Controllers
             }
             base.Dispose(disposing);
         }
+        [HttpGet]
+        public ActionResult ExpenseView(int ReportID)
+        {
+            return View(db.Expenses.ToList().Where(x => x.Report.ReportPK == ReportID));
+        }
     }
 }
