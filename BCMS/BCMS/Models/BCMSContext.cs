@@ -19,6 +19,8 @@ namespace BCMS.Models
         {
         }
 
+
+
         public System.Data.Entity.DbSet<BlueConsultingManagementSystem.Models.Report> Reports { get; set; }
 
         public System.Data.Entity.DbSet<BlueConsultingManagementSystem.Models.Expense> Expenses { get; set; }

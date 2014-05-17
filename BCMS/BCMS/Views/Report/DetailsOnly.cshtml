@@ -1,0 +1,29 @@
+﻿@model BlueConsultingManagementSystem.Models.Report
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Report: @Model.ReportName</h4>
+	
+    @if(Model.Expenses !=null && Model.Expenses.Count() > 0)
+    {
+        <ul>
+            @foreach (var exp in Model.Expenses)
+            {
+                <li>@Html.ActionLink(exp.Description, "Details", "Expense", new {id = exp.ExpensePK}, null) </li>
+            }
+        </ul>
+    }
+    else
+    {
+        @: No EXPENSES IN THIS REPORT GET REKT
+    }
+
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

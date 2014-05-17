@@ -18,7 +18,7 @@ namespace BCMS.Controllers
         // GET: /Report/
         public ActionResult Index()
         {
-            return View(db.Reports.Where(r => r.ConsultantName == User.Identity.Name).ToList());
+            return View(db.Reports.Where(r => r.ConsultantName == User.Identity.Name).Where(r => r.SupervisorApproved == "Submitted").ToList());
             //return View(db.Reports.ToList());
         }
 
@@ -37,9 +37,25 @@ namespace BCMS.Controllers
             return View(report);
         }
 
+        // GET: /Report/Details/5
+        public ActionResult DetailsOnly(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Report report = db.Reports.Find(id);
+            if (report == null)
+            {
+                return HttpNotFound();
+            }
+            return View(report);
+        }
+
         // GET: /Report/Create
         public ActionResult Create()
         {
+            
             return View();
         }
 
@@ -52,6 +68,8 @@ namespace BCMS.Controllers
         {
             if (ModelState.IsValid)
             {
+                report.ConsultantName = User.Identity.Name;
+                report.SupervisorApproved = "Submitted";
                 db.Reports.Add(report);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -125,5 +143,101 @@ namespace BCMS.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+        public ActionResult ConsultantSubmissions()
+        {
+
+            return View(db.Reports.Where(r => r.ConsultantName == User.Identity.Name).ToList());
+        }
+
+        public ActionResult ConsultantApprovals()
+        {
+
+            return View(db.Reports.Where(r => r.ConsultantName == User.Identity.Name).Where(r => r.StaffApproval == "Approved").ToList());
+        }
+
+        public ActionResult ConsultantAwaiting()
+        {
+
+            return View(db.Reports.Where(r => r.ConsultantName == User.Identity.Name).Where(r => r.SupervisorApproved == "Submitted").ToList());
+        }
+
+        //for supervisor/staff
+        public ActionResult SupervisorReports()
+        {
+            DepartmentType dept = DepartmentType.HigherEducation;
+            if(User.IsInRole("HigherEducation"))
+            {
+                dept = DepartmentType.HigherEducation;
+            }
+            else if(User.IsInRole("Logistic"))
+            {
+                dept = DepartmentType.Logistics;
+            }
+            else if(User.IsInRole("State"))
+            {
+                dept = DepartmentType.State;
+            }
+
+            return View(db.Reports.Where(r => r.type == dept).Where(r => r.SupervisorApproved == "Submitted").ToList());
+           
+        }
+
+
+
+        public ActionResult SupervisorRejects()
+        {
+            DepartmentType dept = DepartmentType.HigherEducation;
+            if (User.IsInRole("HigherEducation"))
+            {
+                dept = DepartmentType.HigherEducation;
+            }
+            else if (User.IsInRole("Logistic"))
+            {
+                dept = DepartmentType.Logistics;
+            }
+            else if (User.IsInRole("State"))
+            {
+                dept = DepartmentType.State;
+            }
+
+            return View(db.Reports.Where(r => r.type == dept).Where(r => r.StaffApproval == "Rejected").ToList());
+        }
+
+        public ActionResult SupervisorBudget()
+        {
+            //NOT WORKING YET
+            DepartmentType dept = DepartmentType.HigherEducation;
+            if (User.IsInRole("HigherEducation"))
+            {
+                dept = DepartmentType.HigherEducation;
+            }
+            else if (User.IsInRole("Logistic"))
+            {
+                dept = DepartmentType.Logistics;
+            }
+            else if (User.IsInRole("State"))
+            {
+                dept = DepartmentType.State;
+            }
+
+            return View();
+        }
+
+        public ActionResult StaffBudget()
+        {
+            //NOT DONE YET
+            return View();
+
+        }
+
+        public ActionResult StaffReports()
+        {
+            //I think this is for that colour thing
+            return View(db.Reports.Where(r => r.StaffApproval == "").ToList());
+        }
+
+
     }
 }

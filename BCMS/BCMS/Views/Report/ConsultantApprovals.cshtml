@@ -1,14 +1,11 @@
 ﻿@model IEnumerable<BlueConsultingManagementSystem.Models.Report>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "ConsultantApprovals";
 }
 
-<h2>Index</h2>
+<h2>ConsultantApprovals</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -17,19 +14,26 @@
         <th>
             @Html.DisplayNameFor(model => model.type)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfApproval)
+        </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink(item.ReportName, "Details", new { id=item.ReportPK })
-            
+            @Html.DisplayFor(modelItem => item.ReportName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.type)
         </td>
-        
+        <td>
+            @Html.DisplayFor(modelItem => item.SupervisorApproved)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "DetailsOnly", new { id=item.ReportPK }) |
+        </td>
     </tr>
 }
 
