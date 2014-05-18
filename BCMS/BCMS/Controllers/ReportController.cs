@@ -245,6 +245,26 @@ namespace BCMS.Controllers
              return RedirectToAction("Index");
         }
 
-
+        public void budgetcheck()
+        {
+            //find all reports with Department = HIGHEReducation (1)
+            //get all approved(supervisor level) total cost (2)
+            // if that (1) + (2) is > 10,000 (webconfig shit)
+            // provide warning --- know how to do
+            //DepartmentType dept = DepartmentType.HigherEducation;
+            //if (User.IsInRole("HigherEducation"))
+            //{
+            //    dept = DepartmentType.HigherEducation;
+            //}
+            //else if (User.IsInRole("Logistic"))
+            //{
+            //    dept = DepartmentType.Logistics;
+            //}
+            //else if (User.IsInRole("State"))
+            //{
+            //    dept = DepartmentType.State;
+            //}
+            //db.Reports.Where(x=> x.type == dept).Sum(x=> x.Expenses.Find(e=>e.Amount))
+        }
     }
 }
