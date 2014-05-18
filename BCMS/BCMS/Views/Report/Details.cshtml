@@ -11,12 +11,33 @@
 	
     @if(Model.Expenses !=null && Model.Expenses.Count() > 0)
     {
-        <ul>
+        <table class="table">
+    <tr>
+        <th>
+            Description
+        </th>
+        <th>
+            Amount
+        </th>
+        <th>
+            Currency
+                </th>
+            </tr>
             @foreach (var exp in Model.Expenses)
             {
-                <li>@Html.ActionLink(exp.Description, "Details", "Expense", new {id = exp.ExpensePK}, null) </li>
+                <tr>
+                    <td>
+                        @Html.ActionLink(exp.Description, "Details", "Expense", new {id = exp.ExpensePK}, null)
+                    </td>
+                    <td>
+                        @exp.Amount
+                    </td>
+                    <td>
+                        @exp.CType
+                    </td>
+                </tr>
             }
-        </ul>
+            </table>
     }
     else
     {
