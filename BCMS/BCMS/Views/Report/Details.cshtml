@@ -5,7 +5,18 @@
 }
 
 <h2>Details</h2>
+@{
+    if (Model.Expenses != null && Model.Expenses.Count() > 0)
+    {
+        double totalCurrency = 0;
+        foreach (var exp in Model.Expenses)
+        {
+            totalCurrency = exp.Amount + totalCurrency;
+        }
+        ViewBag.total = totalCurrency;
+    }
 
+}
 <div>
     <h4>Report: @Model.ReportName</h4>
 	
@@ -37,6 +48,7 @@
                     </td>
                 </tr>
             }
+            <tr><td></td><td>Total Amount : @ViewBag.total</td><td></td></tr>
             </table>
     }
     else
@@ -44,6 +56,7 @@
         @: No EXPENSES IN THIS REPORT GET REKT
     }
     @Html.ActionLink("Add Expense", "Create", "Expense", new {ReportId = Model.ReportPK}, null)
+     @Html.ActionLink("Approve Report", "Approve", "Report", new { id = Model.ReportPK }, null) 
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ReportPK }) |

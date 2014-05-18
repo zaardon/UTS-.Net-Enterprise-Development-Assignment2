@@ -238,6 +238,13 @@ namespace BCMS.Controllers
             return View(db.Reports.Where(r => r.StaffApproval == "").ToList());
         }
 
+        public ActionResult Approve(int? id)
+        {
+             db.Reports.Find(id).SupervisorApproved = "Approved";
+             db.SaveChanges();
+             return RedirectToAction("Index");
+        }
+
 
     }
 }
