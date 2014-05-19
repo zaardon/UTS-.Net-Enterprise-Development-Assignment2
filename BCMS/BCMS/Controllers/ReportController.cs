@@ -221,9 +221,19 @@ namespace BCMS.Controllers
             {
                 dept = DepartmentType.State;
             }
-
-            return View();
+            double totalCurrency = 0;
+            //Add a 'for this month' part to the where part
+           foreach(var report in (db.Reports.Where(x => x.type == dept)))
+           {
+               foreach(var expense in report.Expenses)
+               {
+                   totalCurrency = expense.Amount + totalCurrency;
+               }             
+           }
+           string budgetMessage = dept + " department expenses are: " + totalCurrency +"\n" + dept + "department budget remaning is:" + (10000.00 - totalCurrency);
+           return View((object)budgetMessage);
         }
+    
 
         public ActionResult StaffBudget()
         {
@@ -242,7 +252,7 @@ namespace BCMS.Controllers
         {
              db.Reports.Find(id).SupervisorApproved = "Approved";
              db.SaveChanges();
-             return RedirectToAction("Index");
+             return RedirectToAction("SupervisorReports");
         }
 
         public void budgetcheck()
