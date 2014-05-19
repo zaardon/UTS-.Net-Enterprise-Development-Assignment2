@@ -247,11 +247,21 @@ namespace BCMS.Controllers
             //I think this is for that colour thing
             return View(db.Reports.Where(r => r.StaffApproval == "").ToList());
         }
-
+        [HttpGet]
         public ActionResult Approve(int? id)
         {
+<<<<<<< HEAD
             db.Reports.Find(id).SupervisorName = User.Identity.Name;
              db.Reports.Find(id).SupervisorApproved = "Approved";
+=======
+            Report report = db.Reports.Find(id);
+            return View(report);
+        }
+        
+        public ActionResult ApproveCon(int? ReportID)
+        {
+             db.Reports.Find(ReportID).SupervisorApproved = "Approved";
+>>>>>>> 54c67d22a819ef996150cd027669bf3461f8c174
              db.SaveChanges();
              return RedirectToAction("SupervisorReports");
         }
