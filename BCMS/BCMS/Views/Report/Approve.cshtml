@@ -1,0 +1,68 @@
+﻿@model BlueConsultingManagementSystem.Models.Report
+
+@{
+    ViewBag.Title = "Approve";
+}
+
+
+
+
+<h2>Details</h2>
+@{
+    if (Model.Expenses != null && Model.Expenses.Count() > 0)
+    {
+        double totalCurrency = 0;
+        foreach (var exp in Model.Expenses)
+        {
+            totalCurrency = exp.Amount + totalCurrency;
+        }
+        ViewBag.total = totalCurrency;
+    }
+
+}
+<div>
+    <h4>Report: @Model.ReportName</h4>
+
+    @if (Model.Expenses != null && Model.Expenses.Count() > 0)
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Amount
+                </th>
+                <th>
+                    Currency
+                </th>
+            </tr>
+            @foreach (var exp in Model.Expenses)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(exp.Description, "Details", "Expense", new { id = exp.ExpensePK }, null)
+                    </td>
+                    <td>
+                        @exp.Amount
+                        
+                    </td>
+                    <td>
+                        @exp.CType
+                        
+                    </td>
+                </tr>
+            }
+            <tr><td></td><td>Total Amount : @ViewBag.total</td><td></td></tr>
+        </table>
+    }
+@if (ViewBag.total > 10000)
+{
+    <h2> Are you sure you wish to confirm this report </h2>
+    <p> it's over the @Model.type.ToString() total budget  of 10,000</p>
+    <p> this report is worth @ViewBag.total and would be over budget</p>
+}
+    
+    @Html.ActionLink("Confirm approval", "ApproveCon", "Report", new { ReportID = Model.ReportPK }, null)
+</div>
+
