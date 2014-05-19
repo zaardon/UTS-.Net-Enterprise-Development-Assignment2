@@ -55,10 +55,11 @@
     {
         @: No EXPENSES IN THIS REPORT GET REKT
     }
+    @if(User.IsInRole("Consultant")){
     @Html.ActionLink("Add Expense", "Create", "Expense", new {ReportId = Model.ReportPK}, null)
+    }
+    @if(User.IsInRole("Supervisor")){
      @Html.ActionLink("Approve Report", "Approve", "Report", new { id = Model.ReportPK }, null) 
+    }
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ReportPK }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+

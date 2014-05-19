@@ -221,9 +221,19 @@ namespace BCMS.Controllers
             {
                 dept = DepartmentType.State;
             }
-
-            return View();
+            double totalCurrency = 0;
+            //Add a 'for this month' part to the where part
+           foreach(var report in (db.Reports.Where(x => x.type == dept)))
+           {
+               foreach(var expense in report.Expenses)
+               {
+                   totalCurrency = expense.Amount + totalCurrency;
+               }             
+           }
+           string budgetMessage = dept + " department expenses are: " + totalCurrency +"\n" + dept + "department budget remaning is:" + (10000.00 - totalCurrency);
+           return View((object)budgetMessage);
         }
+    
 
         public ActionResult StaffBudget()
         {
@@ -248,9 +258,29 @@ namespace BCMS.Controllers
         {
              db.Reports.Find(ReportID).SupervisorApproved = "Approved";
              db.SaveChanges();
-             return RedirectToAction("Index");
+             return RedirectToAction("SupervisorReports");
         }
 
-
+        public void budgetcheck()
+        {
+            //find all reports with Department = HIGHEReducation (1)
+            //get all approved(supervisor level) total cost (2)
+            // if that (1) + (2) is > 10,000 (webconfig shit)
+            // provide warning --- know how to do
+            //DepartmentType dept = DepartmentType.HigherEducation;
+            //if (User.IsInRole("HigherEducation"))
+            //{
+            //    dept = DepartmentType.HigherEducation;
+            //}
+            //else if (User.IsInRole("Logistic"))
+            //{
+            //    dept = DepartmentType.Logistics;
+            //}
+            //else if (User.IsInRole("State"))
+            //{
+            //    dept = DepartmentType.State;
+            //}
+            //db.Reports.Where(x=> x.type == dept).Sum(x=> x.Expenses.Find(e=>e.Amount))
+        }
     }
 }
