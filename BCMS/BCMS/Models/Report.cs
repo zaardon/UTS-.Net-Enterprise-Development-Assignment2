@@ -18,11 +18,13 @@ namespace BlueConsultingManagementSystem.Models
         [Required]
         public string ReportName { get; set; }
 
-        //[Required]
+        [Required]
         public string ConsultantName { get; set; }
 
         [Required]
         public DepartmentType type { get; set; }
+
+        public string SupervisorName { get; set; }
 
         //This is the name of the supervisor. fix later
         //[Required]

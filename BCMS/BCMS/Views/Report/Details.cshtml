@@ -50,16 +50,18 @@
             }
             <tr><td></td><td>Total Amount : @ViewBag.total</td><td></td></tr>
             </table>
+        
+     if(User.IsInRole("Supervisor")){
+     @Html.ActionLink("Approve Report", "Approve", "Report", new { id = Model.ReportPK }, null) 
+    }
     }
     else
     {
-        @: No EXPENSES IN THIS REPORT GET REKT
+        @: No expenses to approve
     }
     @if(User.IsInRole("Consultant")){
     @Html.ActionLink("Add Expense", "Create", "Expense", new {ReportId = Model.ReportPK}, null)
     }
-    @if(User.IsInRole("Supervisor")){
-     @Html.ActionLink("Approve Report", "Approve", "Report", new { id = Model.ReportPK }, null) 
-    }
+
 </div>
 

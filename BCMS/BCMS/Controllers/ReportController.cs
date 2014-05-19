@@ -230,7 +230,7 @@ namespace BCMS.Controllers
                    totalCurrency = expense.Amount + totalCurrency;
                }             
            }
-           string budgetMessage = dept + " department expenses are: " + totalCurrency +"\n" + dept + "department budget remaning is:" + (10000.00 - totalCurrency);
+           string budgetMessage = dept + " department expenses are: " + totalCurrency +"\n" + dept + " department budget remaning is:" + (10000.00 - totalCurrency);
            return View((object)budgetMessage);
         }
     
@@ -250,6 +250,7 @@ namespace BCMS.Controllers
 
         public ActionResult Approve(int? id)
         {
+            db.Reports.Find(id).SupervisorName = User.Identity.Name;
              db.Reports.Find(id).SupervisorApproved = "Approved";
              db.SaveChanges();
              return RedirectToAction("SupervisorReports");
