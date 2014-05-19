@@ -64,7 +64,7 @@ namespace BCMS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="ReportPK,ReportName,ConsultantName,type,SupervisorApproved,StaffApproval,DateOfApproval")] Report report)
+        public ActionResult Create([Bind(Include = "ReportPK,ReportName,ConsultantName,type,SupervisorName,SupervisorApproved,StaffApproval,DateOfApproval")] Report report)
         {
             if (ModelState.IsValid)
             {
@@ -250,17 +250,25 @@ namespace BCMS.Controllers
         [HttpGet]
         public ActionResult Approve(int? id)
         {
-            db.Reports.Find(id).SupervisorName = User.Identity.Name;
-             db.Reports.Find(id).SupervisorApproved = "Approved";
+
             Report report = db.Reports.Find(id);
+            GetBudget();
             return View(report);
         }
         
         public ActionResult ApproveCon(int? ReportID)
         {
-             db.Reports.Find(ReportID).SupervisorApproved = "Approved";
+            db.Reports.Find(ReportID).SupervisorName = User.Identity.Name;
+            db.Reports.Find(ReportID).SupervisorApproved = "Approved";
              db.SaveChanges();
              return RedirectToAction("SupervisorReports");
+        }
+         public ActionResult Reject(int? id)
+        {
+            db.Reports.Find(id).SupervisorName = User.Identity.Name;
+            db.Reports.Find(id).SupervisorApproved = "Rejected";
+            db.SaveChanges();
+            return RedirectToAction("SupervisorReports");
         }
 
         public void budgetcheck()
@@ -283,6 +291,32 @@ namespace BCMS.Controllers
             //    dept = DepartmentType.State;
             //}
             //db.Reports.Where(x=> x.type == dept).Sum(x=> x.Expenses.Find(e=>e.Amount))
+        }
+        public void GetBudget()
+        {
+            DepartmentType dept = DepartmentType.HigherEducation;
+            if (User.IsInRole("HigherEducation"))
+            {
+                dept = DepartmentType.HigherEducation;
+            }
+            else if (User.IsInRole("Logistic"))
+            {
+                dept = DepartmentType.Logistics;
+            }
+            else if (User.IsInRole("State"))
+            {
+                dept = DepartmentType.State;
+            }
+            double totalCurrency = 0;
+            //Add a 'for this month' part to the where part
+            foreach (var report in (db.Reports.Where(x => x.type == dept).Where(x => x.SupervisorApproved == "Approved" && x.StaffApproval != "Rejected")))
+            {
+                foreach (var expense in report.Expenses)
+                {
+                    totalCurrency = expense.Amount + totalCurrency;
+                }
+            }
+            ViewBag.Totalbudget = totalCurrency;
         }
     }
 }
