@@ -160,7 +160,7 @@ namespace BCMS.Controllers
         public ActionResult ConsultantAwaiting()
         {
 
-            return View(db.Reports.Where(r => r.ConsultantName == User.Identity.Name).Where(r => r.SupervisorApproved == "Submitted").ToList());
+            return View(db.Reports.Where(r => r.ConsultantName == User.Identity.Name && ( r.StaffApproval == null && r.SupervisorApproved != "Rejected")).ToList());
         }
 
         //for supervisor/staff
@@ -221,23 +221,37 @@ namespace BCMS.Controllers
             {
                 dept = DepartmentType.State;
             }
-            double totalCurrency = 0;
-            //Add a 'for this month' part to the where part
-           foreach(var report in (db.Reports.Where(x => x.type == dept)))
-           {
-               foreach(var expense in report.Expenses)
-               {
-                   totalCurrency = expense.Amount + totalCurrency;
-               }             
-           }
-           string budgetMessage = dept + " department expenses are: " + totalCurrency +"\n" + dept + " department budget remaning is:" + (10000.00 - totalCurrency);
-           return View((object)budgetMessage);
+              double totalCurrency = 0;
+              //Add a 'for this month' part to the where part
+              foreach (var report in (db.Reports.Where(x => x.type == dept).Where(x => x.SupervisorApproved == "Approved" && x.StaffApproval != "Rejected")))
+             {
+                   foreach(var expense in report.Expenses)
+                 {
+                     totalCurrency = expense.Amount + totalCurrency;
+                 }             
+            }
+            string budgetMessage = dept + " department expenses are: " + totalCurrency +"\n" + dept + " department budget remaning is:" + (10000.00 - totalCurrency);
+           
+            return View((object)budgetMessage);
         }
     
 
         public ActionResult StaffBudget()
         {
-            //NOT DONE YET
+
+            double totalCurrency = 0;
+            //Add a 'for this month' part to the where part
+            foreach (var report in (db.Reports.Where(x => x.StaffApproval == "Approved")))
+            {
+                foreach (var expense in report.Expenses)
+                {
+                    totalCurrency = expense.Amount + totalCurrency;
+                }
+            }
+            ViewBag.CompanyBudget = totalCurrency;
+
+            
+
             return View();
 
         }
@@ -245,7 +259,7 @@ namespace BCMS.Controllers
         public ActionResult StaffReports()
         {
             //I think this is for that colour thing
-            return View(db.Reports.Where(r => r.StaffApproval == "").ToList());
+            return View(db.Reports.Where(r => r.StaffApproval == null).Where(r => r.SupervisorApproved == "Approved").ToList());
         }
         [HttpGet]
         public ActionResult Approve(int? id)
