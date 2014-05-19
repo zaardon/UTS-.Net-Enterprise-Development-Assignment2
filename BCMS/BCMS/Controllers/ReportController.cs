@@ -250,10 +250,8 @@ namespace BCMS.Controllers
         [HttpGet]
         public ActionResult Approve(int? id)
         {
-<<<<<<< HEAD
             db.Reports.Find(id).SupervisorName = User.Identity.Name;
              db.Reports.Find(id).SupervisorApproved = "Approved";
-=======
             Report report = db.Reports.Find(id);
             return View(report);
         }
@@ -261,7 +259,6 @@ namespace BCMS.Controllers
         public ActionResult ApproveCon(int? ReportID)
         {
              db.Reports.Find(ReportID).SupervisorApproved = "Approved";
->>>>>>> 54c67d22a819ef996150cd027669bf3461f8c174
              db.SaveChanges();
              return RedirectToAction("SupervisorReports");
         }
