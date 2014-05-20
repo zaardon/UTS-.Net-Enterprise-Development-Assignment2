@@ -238,19 +238,22 @@ namespace BCMS.Controllers
 
         public ActionResult StaffBudget()
         {
-
+            //string[,] supervisorSpending = new string[10,10];
+            //int i = 0, j = 0;
             double totalCurrency = 0;
             //Add a 'for this month' part to the where part
             foreach (var report in (db.Reports.Where(x => x.StaffApproval == "Approved")))
             {
+                //supervisorSpending[i, j] = "";
                 foreach (var expense in report.Expenses)
                 {
                     totalCurrency = expense.Amount + totalCurrency;
+                    //j++;
                 }
+                //i++;
             }
-            ViewBag.CompanyBudget = totalCurrency;
-
-            
+            ViewBag.SpentCompanyBudget = totalCurrency;
+            ViewBag.RemainingCompanyBudget = 30000.00 - totalCurrency;
 
             return View();
 
@@ -266,7 +269,7 @@ namespace BCMS.Controllers
         {
 
             Report report = db.Reports.Find(id);
-            GetBudget();
+            ViewBag.TotalBudget = GetBudgetForSupervisor();
             return View(report);
         }
         
@@ -306,7 +309,7 @@ namespace BCMS.Controllers
             //}
             //db.Reports.Where(x=> x.type == dept).Sum(x=> x.Expenses.Find(e=>e.Amount))
         }
-        public void GetBudget()
+        public double GetBudgetForSupervisor()
         {
             DepartmentType dept = DepartmentType.HigherEducation;
             if (User.IsInRole("HigherEducation"))
@@ -330,7 +333,7 @@ namespace BCMS.Controllers
                     totalCurrency = expense.Amount + totalCurrency;
                 }
             }
-            ViewBag.Totalbudget = totalCurrency;
+            return totalCurrency;
         }
     }
 }
