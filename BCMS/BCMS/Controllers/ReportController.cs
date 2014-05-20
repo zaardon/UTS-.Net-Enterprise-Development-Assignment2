@@ -259,6 +259,7 @@ namespace BCMS.Controllers
         public ActionResult StaffReports()
         {
             //I think this is for that colour thing
+            
             return View(db.Reports.Where(r => r.StaffApproval == null).Where(r => r.SupervisorApproved == "Approved").ToList());
         }
         [HttpGet]
@@ -332,5 +333,53 @@ namespace BCMS.Controllers
             }
             ViewBag.Totalbudget = totalCurrency;
         }
+        public void GetBudgetForStaff()
+        {
+            DepartmentType dept = DepartmentType.HigherEducation;
+            if (User.IsInRole("HigherEducation"))
+            {
+                dept = DepartmentType.HigherEducation;
+            }
+            else if (User.IsInRole("Logistic"))
+            {
+                dept = DepartmentType.Logistics;
+            }
+            else if (User.IsInRole("State"))
+            {
+                dept = DepartmentType.State;
+            }
+            double totalCurrency = 0;
+            //Add a 'for this month' part to the where part
+            foreach (var report in (db.Reports.Where(x => x.type == dept).Where(x => x.StaffApproval == "Approved")))
+            {
+                foreach (var expense in report.Expenses)
+                {
+                    totalCurrency = expense.Amount + totalCurrency;
+                }
+            }
+            ViewBag.Totalbudget = totalCurrency;
+        }
+        [HttpGet]
+        public ActionResult StaffApprovalCon(int? id)
+        {
+            Report report = db.Reports.Find(id);
+            GetBudgetForStaff();
+            return View(report);
+        }
+        public ActionResult StaffApproval(int? id)
+        {
+            db.Reports.Find(id).StaffApproval = "Approved";
+            db.Reports.Find(id).DateOfApproval = DateTime.Now.Date;
+            db.SaveChanges();
+            return RedirectToAction("StaffReports");
+        }
+        public ActionResult StaffReject(int? id)
+        {
+            db.Reports.Find(id).StaffApproval = "Rejcted";
+            db.Reports.Find(id).DateOfApproval = DateTime.Now.Date;
+            db.SaveChanges();
+            return RedirectToAction("StaffReports");
+        }
+
     }
 }

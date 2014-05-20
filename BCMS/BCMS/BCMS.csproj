@@ -246,6 +246,7 @@
     <Content Include="Views\Report\SupervisorBudget.cshtml" />
     <Content Include="Views\Report\StaffBudget.cshtml" />
     <Content Include="Views\Report\Approve.cshtml" />
+    <Content Include="Views\Report\StaffApprovalCon.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
