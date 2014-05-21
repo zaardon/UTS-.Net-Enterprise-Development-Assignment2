@@ -268,10 +268,32 @@ namespace BCMS.Controllers
         [HttpGet]
         public ActionResult Approve(int? id)
         {
+            if (GetReportCost(id) <= (10000 - GetSpentBudgetForSupervisor()))
+            {
+                db.Reports.Find(id).SupervisorName = User.Identity.Name;
+                db.Reports.Find(id).SupervisorApproved = "Approved";
+                return RedirectToAction("ApproveCon", new {reportID = id});
+            }
+            else
+            {
+                Report report = db.Reports.Find(id);
+                ViewBag.TotalForReport = GetReportCost(id);
+                ViewBag.TotalBudgetRemaining = (10000 - GetSpentBudgetForSupervisor());
+                return View(report);
+            }
 
-            Report report = db.Reports.Find(id);
-            ViewBag.TotalBudget = GetBudgetForSupervisor();
-            return View(report);
+        }
+
+        public double GetReportCost(int? reportID)
+        {
+            double amount = 0;
+
+            foreach(Expense exp in db.Reports.Find(reportID).Expenses)
+            {
+                amount = amount + exp.Amount;
+            }
+
+            return amount;
         }
         
         public ActionResult ApproveCon(int? ReportID)
@@ -310,7 +332,7 @@ namespace BCMS.Controllers
             //}
             //db.Reports.Where(x=> x.type == dept).Sum(x=> x.Expenses.Find(e=>e.Amount))
         }
-        public double GetBudgetForSupervisor()
+        public double GetSpentBudgetForSupervisor()
         {
             DepartmentType dept = DepartmentType.HigherEducation;
             if (User.IsInRole("HigherEducation"))

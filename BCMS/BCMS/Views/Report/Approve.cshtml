@@ -3,20 +3,6 @@
 @{
     ViewBag.Title = "Approve";
 }
-@{
-    if(Model.Expenses != null && Model.Expenses.Count() > 0)
-    {
-        double  totalCurrency = 0;
-        foreach(var exp in Model.Expenses)
-        {
-            totalCurrency = exp.Amount + totalCurrency;
-        }
-        ViewBag.total = totalCurrency;
-    }
-}
-
-
-
 <h2>Details</h2>
 <div>
     <h4>Report: @Model.ReportName</h4>
@@ -54,15 +40,11 @@
             <tr><td></td><td>Total Amount : @ViewBag.total</td><td></td></tr>
         </table>
     }
-    @{
-        double minus = 10000.00 - ViewBag.Totalbudget;
-if (ViewBag.total > minus)
-{
+    
     <h2> Are you sure you wish to confirm this report </h2>
-    <p> it's over the @Model.type.ToString() total budget  of @minus</p>
-    <p> this report is worth @ViewBag.total and would be over budget</p>
-}
-}
+    <p> it's over the @Model.type.ToString() total budget  of @ViewBag.TotalBudgetRemaining</p>
+    <p> this report is worth @ViewBag.TotalForReport and would be over budget</p>
+
     @Html.ActionLink("Confirm approval", "ApproveCon", "Report", new { ReportID = Model.ReportPK }, null)
     @Html.ActionLink("Reject Report", "Reject", "Report", new { id = Model.ReportPK }, null)
 </div>
