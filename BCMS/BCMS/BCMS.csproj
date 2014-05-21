@@ -172,6 +172,8 @@
     <Compile Include="Models\Expense.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Report.cs" />
+    <Compile Include="Models\Supervisor.cs" />
+    <Compile Include="Models\SupervisorList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

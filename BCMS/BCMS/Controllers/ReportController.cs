@@ -238,24 +238,24 @@ namespace BCMS.Controllers
 
         public ActionResult StaffBudget()
         {
-            //string[,] supervisorSpending = new string[10,10];
-            //int i = 0, j = 0;
+            SupervisorList list = new SupervisorList();
             double totalCurrency = 0;
+            double supervisorCurrency = 0;
             //Add a 'for this month' part to the where part
             foreach (var report in (db.Reports.Where(x => x.StaffApproval == "Approved")))
             {
-                //supervisorSpending[i, j] = "";
                 foreach (var expense in report.Expenses)
                 {
                     totalCurrency = expense.Amount + totalCurrency;
-                    //j++;
+                    supervisorCurrency = expense.Amount + supervisorCurrency;
                 }
-                //i++;
+                list.AddToList(report.SupervisorName, supervisorCurrency);
+                supervisorCurrency = 0;
             }
             ViewBag.SpentCompanyBudget = totalCurrency;
             ViewBag.RemainingCompanyBudget = 30000.00 - totalCurrency;
 
-            return View();
+            return View((object)list.ReturnSupervisors());
 
         }
 

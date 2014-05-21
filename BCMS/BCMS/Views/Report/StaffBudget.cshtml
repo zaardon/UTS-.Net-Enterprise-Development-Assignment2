@@ -1,5 +1,4 @@
-﻿@model IEnumerable<BlueConsultingManagementSystem.Models.Report>
-
+﻿@model List<BCMS.Models.Supervisor>
 @{
     ViewBag.Title = "StaffBudget";
 }
@@ -12,38 +11,26 @@
     Total budget remaining = @ViewBag.RemainingCompanyBudget
 </p>
 
-@*<table class="table">
+<table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ReportName)
+            Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ConsultantName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.type)
+            Amount
         </th>
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (BCMS.Models.Supervisor item in Model)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ReportName)
+                @item.ReturnName()
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ConsultantName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.type)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ReportPK }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ReportPK }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ReportPK })
+                @item.ReturnAmount()
             </td>
         </tr>
-    }*@
-
+    }
 </table>
