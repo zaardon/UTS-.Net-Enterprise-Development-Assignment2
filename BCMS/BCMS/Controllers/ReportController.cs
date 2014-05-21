@@ -262,16 +262,19 @@ namespace BCMS.Controllers
         public ActionResult StaffReports()
         {
             //I think this is for that colour thing
-            
+            ViewBag.HigherBudgetRemaining = (10000 - GetSpentBudgetForStaff(DepartmentType.HigherEducation));
+            ViewBag.StateBudgetRemaining = (10000 - GetSpentBudgetForStaff(DepartmentType.State));
+            ViewBag.LogisticsBudgetRemaining = (10000 - GetSpentBudgetForStaff(DepartmentType.Logistics));
             return View(db.Reports.Where(r => r.StaffApproval == null).Where(r => r.SupervisorApproved == "Approved").ToList());
+
         }
         [HttpGet]
         public ActionResult Approve(int? id)
         {
             if (GetReportCost(id) <= (10000 - GetSpentBudgetForSupervisor()))
             {
-                db.Reports.Find(id).SupervisorName = User.Identity.Name;
-                db.Reports.Find(id).SupervisorApproved = "Approved";
+                //db.Reports.Find(id).SupervisorName = User.Identity.Name;
+                //db.Reports.Find(id).SupervisorApproved = "Approved";
                 return RedirectToAction("ApproveCon", new {reportID = id});
             }
             else
@@ -311,27 +314,7 @@ namespace BCMS.Controllers
             return RedirectToAction("SupervisorReports");
         }
 
-        public void budgetcheck()
-        {
-            //find all reports with Department = HIGHEReducation (1)
-            //get all approved(supervisor level) total cost (2)
-            // if that (1) + (2) is > 10,000 (webconfig shit)
-            // provide warning --- know how to do
-            //DepartmentType dept = DepartmentType.HigherEducation;
-            //if (User.IsInRole("HigherEducation"))
-            //{
-            //    dept = DepartmentType.HigherEducation;
-            //}
-            //else if (User.IsInRole("Logistic"))
-            //{
-            //    dept = DepartmentType.Logistics;
-            //}
-            //else if (User.IsInRole("State"))
-            //{
-            //    dept = DepartmentType.State;
-            //}
-            //db.Reports.Where(x=> x.type == dept).Sum(x=> x.Expenses.Find(e=>e.Amount))
-        }
+
         public double GetSpentBudgetForSupervisor()
         {
             DepartmentType dept = DepartmentType.HigherEducation;
@@ -358,21 +341,27 @@ namespace BCMS.Controllers
             }
             return totalCurrency;
         }
-        public void GetBudgetForStaff()
+
+        [HttpGet]
+        public ActionResult StaffApproval(int? id)
         {
-            DepartmentType dept = DepartmentType.HigherEducation;
-            if (User.IsInRole("HigherEducation"))
+            if (GetReportCost(id) <= (10000 - GetSpentBudgetForStaff(db.Reports.Find(id).type)))
             {
-                dept = DepartmentType.HigherEducation;
+                //db.Reports.Find(id).SupervisorName = User.Identity.Name;
+                //db.Reports.Find(id).SupervisorApproved = "Approved";
+                return RedirectToAction("StaffApprovalCon", new { id = id });
             }
-            else if (User.IsInRole("Logistic"))
+            else
             {
-                dept = DepartmentType.Logistics;
+                Report report = db.Reports.Find(id);
+                ViewBag.TotalForReport = GetReportCost(id);
+                ViewBag.TotalBudgetRemaining = (10000 - GetSpentBudgetForStaff(db.Reports.Find(id).type));
+                return View(report);
             }
-            else if (User.IsInRole("State"))
-            {
-                dept = DepartmentType.State;
-            }
+        }
+
+        public double GetSpentBudgetForStaff(DepartmentType dept)
+        {
             double totalCurrency = 0;
             //Add a 'for this month' part to the where part
             foreach (var report in (db.Reports.Where(x => x.type == dept).Where(x => x.StaffApproval == "Approved")))
@@ -382,16 +371,9 @@ namespace BCMS.Controllers
                     totalCurrency = expense.Amount + totalCurrency;
                 }
             }
-            ViewBag.Totalbudget = totalCurrency;
+            return totalCurrency;
         }
-        [HttpGet]
         public ActionResult StaffApprovalCon(int? id)
-        {
-            Report report = db.Reports.Find(id);
-            GetBudgetForStaff();
-            return View(report);
-        }
-        public ActionResult StaffApproval(int? id)
         {
             db.Reports.Find(id).StaffApproval = "Approved";
             db.Reports.Find(id).DateOfApproval = DateTime.Now.Date;

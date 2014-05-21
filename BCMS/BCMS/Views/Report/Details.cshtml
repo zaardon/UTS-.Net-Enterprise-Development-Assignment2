@@ -58,7 +58,7 @@
     }
      else if (User.IsInRole("Staff"))
      {
-         @Html.ActionLink("Approve Report", "StaffApprovalCon", "Report", new { id = Model.ReportPK }, null)
+         @Html.ActionLink("Approve Report", "StaffApproval", "Report", new { id = Model.ReportPK }, null)
         @Html.ActionLink("Reject Report", "StaffReject", "Report", new { id = Model.ReportPK }, null)
      }
     }

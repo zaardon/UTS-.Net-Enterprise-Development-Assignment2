@@ -17,24 +17,59 @@
         <th>
             @Html.DisplayNameFor(model => model.type)
         </th>
+        <th>
+            Approved by
+        </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink(item.ReportName, "Details", new { id = item.ReportPK })
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ConsultantName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.type)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id=item.ReportPK }) |
-        </td>
-    </tr>
+@foreach (var item in Model)
+{
+    double totalOfReport = 0;
+    foreach (var exp in item.Expenses)
+    {
+        totalOfReport = exp.Amount + totalOfReport;
+    }
+    if (((totalOfReport > @ViewBag.HigherBudgetRemaining) && (item.type == BCMS.Models.DepartmentType.HigherEducation)) || ((totalOfReport > @ViewBag.StateBudgetRemaining) && (item.type == BCMS.Models.DepartmentType.State)) || ((totalOfReport > @ViewBag.LogisticsBudgetRemaining) && (item.type == BCMS.Models.DepartmentType.Logistics)))
+    {
+        <tr bgcolor="#BFEFFF">
+            <td>
+                @Html.ActionLink(item.ReportName, "Details", new { id = item.ReportPK })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConsultantName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupervisorName)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.ReportPK }) |
+            </td>
+        </tr>}
+    else
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.ReportName, "Details", new { id = item.ReportPK })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConsultantName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupervisorName)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.ReportPK }) |
+            </td>
+        </tr>
+    }
+    totalOfReport = 0;
 }
 
 </table>
