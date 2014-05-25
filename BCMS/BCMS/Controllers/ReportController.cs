@@ -75,7 +75,7 @@ namespace BCMS.Controllers
                 report.SupervisorApproved = "Submitted";
                 db.Reports.Add(report);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = report.ReportPK });
             }
 
             return View(report);
