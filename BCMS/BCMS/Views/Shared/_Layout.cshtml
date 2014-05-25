@@ -34,7 +34,6 @@
                     }
                     @if (User.IsInRole("Staff")){
                         <li>@Html.ActionLink("View Unapproved Reports", "StaffReports", "Report")</li>
-                        @*<li>@Html.ActionLink("View Approved Reports", "StaffApproved", "Report")</li>*@
                         <li>@Html.ActionLink("View Company Budget", "StaffBudget", "Report")</li>                       
                     }
                 </ul>

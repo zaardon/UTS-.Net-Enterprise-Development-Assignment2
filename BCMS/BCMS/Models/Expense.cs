@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Globalization;
 using System.Web.Security;
+
      
     namespace BlueConsultingManagementSystem.Models
     {
@@ -37,6 +38,19 @@ using System.Web.Security;
                     return Description + " " + Amount + "" + CType;
                 }
             }
+
+            [NotMapped]
+            public double ConvertedAmount
+            { 
+                get
+                {
+                    CurrencyConverter converter = new CurrencyConverter();
+                    return converter.ConvertCurrencyToAUD(this.CType.ToString(), this.Amount);
+                }
+                
+            
+            }
+
      
             //currency code here somewhere
         }  

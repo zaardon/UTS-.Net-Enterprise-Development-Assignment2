@@ -167,6 +167,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BCMSContext.cs" />
+    <Compile Include="Models\CurrencyConverter.cs" />
     <Compile Include="Models\CurrencyType.cs" />
     <Compile Include="Models\DepartmentType.cs" />
     <Compile Include="Models\Expense.cs" />

@@ -35,8 +35,10 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CType, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CType)
-                @Html.ValidationMessageFor(model => model.CType)
+                @Html.DropDownListFor(model => model.CType, new[]{
+           new SelectListItem {Text = "AUD", Value = "AUD"},
+           new SelectListItem {Text = "CNY", Value = "CNY"},
+           new SelectListItem {Text = "EUR", Value = "EUR"}})
             </div>
         </div>
 

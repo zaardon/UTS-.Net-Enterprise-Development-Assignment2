@@ -5,25 +5,52 @@
 }
 
 <h2>Details</h2>
-
 <div>
     <h4>Report: @Model.ReportName</h4>
-	
-    @if(Model.Expenses !=null && Model.Expenses.Count() > 0)
+
+    @if (Model.Expenses != null && Model.Expenses.Count() > 0)
     {
-        <ul>
+        <table class="table">
+            <tr>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Amount
+                </th>
+                <th>
+                    Currency
+                </th>
+                <th>
+                    Date of Expense
+                </th>
+            </tr>
             @foreach (var exp in Model.Expenses)
             {
-                <li>@Html.ActionLink(exp.Description, "Details", "Expense", new {id = exp.ExpensePK}, null) </li>
+                <tr>
+                    <td>
+                        @exp.Description
+                    </td>
+                    <td>
+                        @exp.Amount
+                    </td>
+                    <td>
+                        @exp.CType
+                    </td>
+                    <td>
+                        @exp.DateOfExpense
+                    </td>
+                </tr>
             }
-        </ul>
+            <tr><td></td><td></td><td>Total Amount : $AUD @ViewBag.TotalReportCost</td><td></td></tr>
+        </table>
     }
     else
     {
-        @: No EXPENSES IN THIS REPORT GET REKT
+        @: No expenses to approve
     }
 
 </div>
 <p>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to Home", "Index", "Home")
 </p>

@@ -34,6 +34,8 @@ namespace BCMS.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.TotalReportCost = GetReportCost(id);
             return View(report);
         }
 
@@ -49,6 +51,7 @@ namespace BCMS.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.TotalReportCost = GetReportCost(id);
             return View(report);
         }
 
@@ -207,7 +210,7 @@ namespace BCMS.Controllers
 
         public ActionResult SupervisorBudget()
         {
-            //NOT WORKING YET
+            CurrencyConverter converter = new CurrencyConverter();
             DepartmentType dept = DepartmentType.HigherEducation;
             if (User.IsInRole("HigherEducation"))
             {
@@ -227,10 +230,11 @@ namespace BCMS.Controllers
              {
                    foreach(var expense in report.Expenses)
                  {
-                     totalCurrency = expense.Amount + totalCurrency;
+                     
+                     totalCurrency = converter.ConvertCurrencyToAUD(expense.CType.ToString(), expense.Amount) + totalCurrency;
                  }             
             }
-            string budgetMessage = dept + " department expenses are: " + totalCurrency +"\n" + dept + " department budget remaning is:" + (10000.00 - totalCurrency);
+            string budgetMessage = dept + " department expenses are: $" + totalCurrency +", with a remaining " + dept + " department budget of: $" + (10000.00 - totalCurrency);
            
             return View((object)budgetMessage);
         }
@@ -238,6 +242,7 @@ namespace BCMS.Controllers
 
         public ActionResult StaffBudget()
         {
+            CurrencyConverter converter = new CurrencyConverter();
             SupervisorList list = new SupervisorList();
             double totalCurrency = 0;
             double supervisorCurrency = 0;
@@ -246,8 +251,8 @@ namespace BCMS.Controllers
             {
                 foreach (var expense in report.Expenses)
                 {
-                    totalCurrency = expense.Amount + totalCurrency;
-                    supervisorCurrency = expense.Amount + supervisorCurrency;
+                    totalCurrency = converter.ConvertCurrencyToAUD(expense.CType.ToString(), expense.Amount) + totalCurrency;
+                    supervisorCurrency = converter.ConvertCurrencyToAUD(expense.CType.ToString(), expense.Amount) + supervisorCurrency;
                 }
                 list.AddToList(report.SupervisorName, supervisorCurrency);
                 supervisorCurrency = 0;
@@ -290,10 +295,10 @@ namespace BCMS.Controllers
         public double GetReportCost(int? reportID)
         {
             double amount = 0;
-
+            CurrencyConverter converter= new CurrencyConverter();
             foreach(Expense exp in db.Reports.Find(reportID).Expenses)
             {
-                amount = amount + exp.Amount;
+                amount = amount + converter.ConvertCurrencyToAUD(exp.CType.ToString(), exp.Amount);
             }
 
             return amount;
@@ -317,6 +322,7 @@ namespace BCMS.Controllers
 
         public double GetSpentBudgetForSupervisor()
         {
+            CurrencyConverter converter = new CurrencyConverter();
             DepartmentType dept = DepartmentType.HigherEducation;
             if (User.IsInRole("HigherEducation"))
             {
@@ -336,7 +342,7 @@ namespace BCMS.Controllers
             {
                 foreach (var expense in report.Expenses)
                 {
-                    totalCurrency = expense.Amount + totalCurrency;
+                    totalCurrency = converter.ConvertCurrencyToAUD(expense.CType.ToString(), expense.Amount) + totalCurrency;
                 }
             }
             return totalCurrency;
@@ -362,13 +368,14 @@ namespace BCMS.Controllers
 
         public double GetSpentBudgetForStaff(DepartmentType dept)
         {
+            CurrencyConverter converter = new CurrencyConverter();
             double totalCurrency = 0;
             //Add a 'for this month' part to the where part
             foreach (var report in (db.Reports.Where(x => x.type == dept).Where(x => x.StaffApproval == "Approved")))
             {
                 foreach (var expense in report.Expenses)
                 {
-                    totalCurrency = expense.Amount + totalCurrency;
+                    totalCurrency = converter.ConvertCurrencyToAUD(expense.CType.ToString(), expense.Amount) + totalCurrency;
                 }
             }
             return totalCurrency;

@@ -5,18 +5,7 @@
 }
 
 <h2>Details</h2>
-@{
-    if (Model.Expenses != null && Model.Expenses.Count() > 0)
-    {
-        double totalCurrency = 0;
-        foreach (var exp in Model.Expenses)
-        {
-            totalCurrency = exp.Amount + totalCurrency;
-        }
-        ViewBag.total = totalCurrency;
-    }
 
-}
 <div>
     <h4>Report: @Model.ReportName</h4>
 	
@@ -32,13 +21,16 @@
         </th>
         <th>
             Currency
-                </th>
+        </th>
+        <th>
+            Date of Expense
+        </th>
             </tr>
             @foreach (var exp in Model.Expenses)
             {
                 <tr>
                     <td>
-                        @Html.ActionLink(exp.Description, "Details", "Expense", new {id = exp.ExpensePK}, null)
+                        @exp.Description
                     </td>
                     <td>
                         @exp.Amount
@@ -46,9 +38,12 @@
                     <td>
                         @exp.CType
                     </td>
+                    <td>
+                        @exp.DateOfExpense
+                    </td>
                 </tr>
             }
-            <tr><td></td><td>Total Amount : @ViewBag.total</td><td></td></tr>
+            <tr><td></td><td></td><td>Total Amount : $AUD @ViewBag.TotalReportCost</td><td></td></tr>
             </table>
         
      if(User.IsInRole("Supervisor")){
