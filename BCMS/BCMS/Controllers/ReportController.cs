@@ -384,7 +384,7 @@ namespace BCMS.Controllers
         }
         public ActionResult StaffReject(int? id)
         {
-            db.Reports.Find(id).StaffApproval = "Rejcted";
+            db.Reports.Find(id).StaffApproval = "Rejected";
             db.Reports.Find(id).DateOfApproval = DateTime.Now.Date;
             db.SaveChanges();
             return RedirectToAction("StaffReports");
