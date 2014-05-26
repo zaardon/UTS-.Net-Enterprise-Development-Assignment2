@@ -17,6 +17,9 @@
             Description
         </th>
         <th>
+            Location
+        </th>
+        <th>
             Amount
         </th>
         <th>
@@ -31,6 +34,9 @@
                 <tr>
                     <td>
                         @exp.Description
+                    </td>
+                    <td>
+                        @exp.Location
                     </td>
                     <td>
                         @exp.Amount
@@ -49,7 +55,7 @@
      if(User.IsInRole("Supervisor")){
      @Html.ActionLink("Approve Report", "Approve", "Report", new { id = Model.ReportPK }, null) 
      @Html.ActionLink("Reject Report", "Reject", "Report", new { id = Model.ReportPK }, null)
-       
+        
     }
      else if (User.IsInRole("Staff"))
      {
@@ -57,10 +63,11 @@
         @Html.ActionLink("Reject Report", "StaffReject", "Report", new { id = Model.ReportPK }, null)
      }
     }
-    else
+    else if (User.IsInRole("Staff") || User.IsInRole("Supervisor"))
     {
         @: No expenses to approve
     }
+
     @if(User.IsInRole("Consultant")){
     @Html.ActionLink("Add Expense", "Create", "Expense", new {ReportId = Model.ReportPK}, null)
     }
