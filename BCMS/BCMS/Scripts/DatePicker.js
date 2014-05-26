@@ -1,5 +1,5 @@
 ﻿if (!Modernizr.inputtypes.date) {
     $(function () {
-        $(".datefield").datepicker();
+        $(".datefield").datepicker({ maxDate: '0' });
     });
 }
