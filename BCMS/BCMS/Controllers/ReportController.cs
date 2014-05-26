@@ -11,6 +11,19 @@ using BCMS.Models;
 
 namespace BCMS.Controllers
 {
+
+    /*
+     * ADD SECURITY ABOVE EACH INDIVIDUAL METHOD
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * */
     public class ReportController : Controller
     {
         private BCMSContext db = new BCMSContext();
@@ -174,7 +187,7 @@ namespace BCMS.Controllers
             {
                 dept = DepartmentType.HigherEducation;
             }
-            else if(User.IsInRole("Logistic"))
+            else if(User.IsInRole("Logistics"))
             {
                 dept = DepartmentType.Logistics;
             }
@@ -196,7 +209,7 @@ namespace BCMS.Controllers
             {
                 dept = DepartmentType.HigherEducation;
             }
-            else if (User.IsInRole("Logistic"))
+            else if (User.IsInRole("Logistics"))
             {
                 dept = DepartmentType.Logistics;
             }
@@ -215,7 +228,7 @@ namespace BCMS.Controllers
             {
                 dept = DepartmentType.HigherEducation;
             }
-            else if (User.IsInRole("Logistic"))
+            else if (User.IsInRole("Logistics"))
             {
                 dept = DepartmentType.Logistics;
             }
@@ -324,7 +337,7 @@ namespace BCMS.Controllers
             {
                 dept = DepartmentType.HigherEducation;
             }
-            else if (User.IsInRole("Logistic"))
+            else if (User.IsInRole("Logistics"))
             {
                 dept = DepartmentType.Logistics;
             }
