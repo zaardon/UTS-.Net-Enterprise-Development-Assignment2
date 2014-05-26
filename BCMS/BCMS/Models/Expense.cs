@@ -26,6 +26,7 @@ using System.Web.Security;
             public CurrencyType CType { get; set; }
 
             [Required]
+            [DataType(DataType.Date)]
             public DateTime DateOfExpense { get; set; }
      
             public virtual Report Report { get; set; }
