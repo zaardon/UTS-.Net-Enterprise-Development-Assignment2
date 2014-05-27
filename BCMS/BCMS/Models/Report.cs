@@ -7,6 +7,7 @@ using System.Data.Entity;
 using System.Globalization;
 using System.Web.Security;
 
+
 namespace BlueConsultingManagementSystem.Models
 {
     public class Report

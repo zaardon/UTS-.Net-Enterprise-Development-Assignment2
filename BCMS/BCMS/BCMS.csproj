@@ -167,15 +167,10 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BCMSContext.cs" />
-    <Compile Include="Models\CurrencyConverter.cs" />
-    <Compile Include="Models\CurrencyType.cs" />
-    <Compile Include="Models\DepartmentType.cs" />
     <Compile Include="Models\Expense.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="LOGIC\logic.cs" />
     <Compile Include="Models\Report.cs" />
-    <Compile Include="Models\Supervisor.cs" />
-    <Compile Include="Models\SupervisorList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -261,6 +256,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BCMSLogic\BCMSLogic.csproj">
+      <Project>{385f8889-f730-4a66-a096-9c87f4575109}</Project>
+      <Name>BCMSLogic</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

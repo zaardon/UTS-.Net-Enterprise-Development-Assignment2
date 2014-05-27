@@ -1,0 +1,5 @@
+C:\Users\asmith\Documents\GitHub\DotNetAssign2\BCMS\BCMSTests\bin\Debug\BCMSTests.dll
+C:\Users\asmith\Documents\GitHub\DotNetAssign2\BCMS\BCMSTests\bin\Debug\BCMSTests.pdb
+C:\Users\asmith\Documents\GitHub\DotNetAssign2\BCMS\BCMSTests\obj\Debug\BCMSTests.csprojResolveAssemblyReference.cache
+C:\Users\asmith\Documents\GitHub\DotNetAssign2\BCMS\BCMSTests\obj\Debug\BCMSTests.dll
+C:\Users\asmith\Documents\GitHub\DotNetAssign2\BCMS\BCMSTests\obj\Debug\BCMSTests.pdb
