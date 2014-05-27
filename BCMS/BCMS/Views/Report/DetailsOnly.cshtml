@@ -16,6 +16,9 @@
                     Description
                 </th>
                 <th>
+                    Location
+                </th>
+                <th>
                     Amount
                 </th>
                 <th>
@@ -32,6 +35,9 @@
                         @exp.Description
                     </td>
                     <td>
+                        @exp.Location
+                    </td>
+                    <td>
                         @exp.Amount
                     </td>
                     <td>
@@ -45,7 +51,7 @@
             <tr><td></td><td></td><td>Total Amount : $AUD @ViewBag.TotalReportCost</td><td></td></tr>
         </table>
     }
-    else
+    else if (User.IsInRole("Staff") || User.IsInRole("Supervisor"))
     {
         @: No expenses to approve
     }
