@@ -172,6 +172,7 @@
     <Compile Include="Models\DepartmentType.cs" />
     <Compile Include="Models\Expense.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="LOGIC\logic.cs" />
     <Compile Include="Models\Report.cs" />
     <Compile Include="Models\Supervisor.cs" />
     <Compile Include="Models\SupervisorList.cs" />

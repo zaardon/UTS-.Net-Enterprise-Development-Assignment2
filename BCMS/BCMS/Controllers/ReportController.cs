@@ -14,7 +14,7 @@ namespace BCMS.Controllers
     public class ReportController : Controller
     {
         private BCMSContext db = new BCMSContext();
-
+        private logic lg = new logic();
         // GET: /Report/
         public ActionResult Index()
         {
@@ -71,73 +71,16 @@ namespace BCMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                report.ConsultantName = User.Identity.Name;
-                report.SupervisorApproved = "Submitted";
-                db.Reports.Add(report);
-                db.SaveChanges();
+                lg.AddReport(report, User.Identity.Name.ToString());
                 return RedirectToAction("Details", new { id = report.ReportPK });
             }
 
             return View(report);
         }
 
-        // GET: /Report/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Report report = db.Reports.Find(id);
-            if (report == null)
-            {
-                return HttpNotFound();
-            }
-            return View(report);
-        }
 
-        // POST: /Report/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="ReportPK,ReportName,ConsultantName,type,SupervisorApproved,StaffApproval,DateOfApproval")] Report report)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(report).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(report);
-        }
 
-        // GET: /Report/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Report report = db.Reports.Find(id);
-            if (report == null)
-            {
-                return HttpNotFound();
-            }
-            return View(report);
-        }
-
-        // POST: /Report/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Report report = db.Reports.Find(id);
-            db.Reports.Remove(report);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
+        //wtf is this ?
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -169,19 +112,7 @@ namespace BCMS.Controllers
         //for supervisor/staff
         public ActionResult SupervisorReports()
         {
-            DepartmentType dept = DepartmentType.HigherEducation;
-            if(User.IsInRole("HigherEducation"))
-            {
-                dept = DepartmentType.HigherEducation;
-            }
-            else if(User.IsInRole("Logistic"))
-            {
-                dept = DepartmentType.Logistics;
-            }
-            else if(User.IsInRole("State"))
-            {
-                dept = DepartmentType.State;
-            }
+            DepartmentType dept = DeptCheck();
 
             return View(db.Reports.Where(r => r.type == dept).Where(r => r.SupervisorApproved == "Submitted").ToList());
            
@@ -191,38 +122,14 @@ namespace BCMS.Controllers
 
         public ActionResult SupervisorRejects()
         {
-            DepartmentType dept = DepartmentType.HigherEducation;
-            if (User.IsInRole("HigherEducation"))
-            {
-                dept = DepartmentType.HigherEducation;
-            }
-            else if (User.IsInRole("Logistic"))
-            {
-                dept = DepartmentType.Logistics;
-            }
-            else if (User.IsInRole("State"))
-            {
-                dept = DepartmentType.State;
-            }
+            DepartmentType dept = DeptCheck();
 
             return View(db.Reports.Where(r => r.type == dept).Where(r => r.StaffApproval == "Rejected").ToList());
         }
 
         public ActionResult SupervisorBudget()
         {
-            DepartmentType dept = DepartmentType.HigherEducation;
-            if (User.IsInRole("HigherEducation"))
-            {
-                dept = DepartmentType.HigherEducation;
-            }
-            else if (User.IsInRole("Logistic"))
-            {
-                dept = DepartmentType.Logistics;
-            }
-            else if (User.IsInRole("State"))
-            {
-                dept = DepartmentType.State;
-            }
+            DepartmentType dept = DeptCheck();
               double totalCurrency = 0;
               //Add a 'for this month' part to the where part
               foreach (var report in (db.Reports.Where(x => x.type == dept).Where(x => x.SupervisorApproved == "Approved" && x.StaffApproval != "Rejected")))
@@ -236,6 +143,24 @@ namespace BCMS.Controllers
             string budgetMessage = dept + " department expenses are: $" + totalCurrency +", with a remaining " + dept + " department budget of: $" + (10000.00 - totalCurrency);
            
             return View((object)budgetMessage);
+        }
+
+        private DepartmentType DeptCheck()
+        {
+            DepartmentType dept = DepartmentType.HigherEducation;
+            if (User.IsInRole("HigherEducation"))
+            {
+                dept = DepartmentType.HigherEducation;
+            }
+            else if (User.IsInRole("Logistic"))
+            {
+                dept = DepartmentType.Logistics;
+            }
+            else if (User.IsInRole("State"))
+            {
+                dept = DepartmentType.State;
+            }
+            return dept;
         }
     
 
@@ -290,7 +215,7 @@ namespace BCMS.Controllers
 
         }
 
-        public double GetReportCost(int? reportID)
+        private double GetReportCost(int? reportID)
         {
             double amount = 0;
             foreach(Expense exp in db.Reports.Find(reportID).Expenses)
@@ -303,35 +228,23 @@ namespace BCMS.Controllers
         
         public ActionResult ApproveCon(int? ReportID)
         {
-            db.Reports.Find(ReportID).SupervisorName = User.Identity.Name;
-            db.Reports.Find(ReportID).SupervisorApproved = "Approved";
-             db.SaveChanges();
+            lg.SupAppCon(ReportID, User.Identity.Name.ToString());
              return RedirectToAction("SupervisorReports");
         }
+
+
          public ActionResult Reject(int? id)
         {
-            db.Reports.Find(id).SupervisorName = User.Identity.Name;
-            db.Reports.Find(id).SupervisorApproved = "Rejected";
-            db.SaveChanges();
+            lg.SupRej(id, User.Identity.Name.ToString());
             return RedirectToAction("SupervisorReports");
         }
 
+ 
 
-        public double GetSpentBudgetForSupervisor()
+        
+        private double GetSpentBudgetForSupervisor()
         {
-            DepartmentType dept = DepartmentType.HigherEducation;
-            if (User.IsInRole("HigherEducation"))
-            {
-                dept = DepartmentType.HigherEducation;
-            }
-            else if (User.IsInRole("Logistic"))
-            {
-                dept = DepartmentType.Logistics;
-            }
-            else if (User.IsInRole("State"))
-            {
-                dept = DepartmentType.State;
-            }
+            DepartmentType dept = DeptCheck();
             double totalCurrency = 0;
             //Add a 'for this month' part to the where part
             foreach (var report in (db.Reports.Where(x => x.type == dept).Where(x => x.SupervisorApproved == "Approved" && x.StaffApproval != "Rejected")))
@@ -362,7 +275,7 @@ namespace BCMS.Controllers
             }
         }
 
-        public double GetSpentBudgetForStaff(DepartmentType dept)
+        private double GetSpentBudgetForStaff(DepartmentType dept)
         {
             double totalCurrency = 0;
             //Add a 'for this month' part to the where part
@@ -377,16 +290,12 @@ namespace BCMS.Controllers
         }
         public ActionResult StaffApprovalCon(int? id)
         {
-            db.Reports.Find(id).StaffApproval = "Approved";
-            db.Reports.Find(id).DateOfApproval = DateTime.Now.Date;
-            db.SaveChanges();
+            lg.StaffAppCon(id);
             return RedirectToAction("StaffReports");
         }
         public ActionResult StaffReject(int? id)
         {
-            db.Reports.Find(id).StaffApproval = "Rejcted";
-            db.Reports.Find(id).DateOfApproval = DateTime.Now.Date;
-            db.SaveChanges();
+            lg.StaffRej(id);
             return RedirectToAction("StaffReports");
         }
 
