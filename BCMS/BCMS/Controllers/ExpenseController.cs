@@ -52,7 +52,7 @@ namespace BCMS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="ExpensePK,Description,Location,Amount,CType,DateOfExpense")] Expense expense, int ReportID)
+        public ActionResult Create([Bind(Include="ExpensePK,Description,Location,Amount,CType,DateOfExpense,PDFFile")] Expense expense, int ReportID)
         {
             if (ModelState.IsValid)
             {

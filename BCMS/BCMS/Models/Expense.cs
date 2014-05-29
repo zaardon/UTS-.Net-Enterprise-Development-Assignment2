@@ -31,6 +31,8 @@ using System.Web.Security;
             [Required]
             [DataType(DataType.Date)]
             public DateTime DateOfExpense { get; set; }
+
+            public byte[] PDFFile { get; set; }
      
             public virtual Report Report { get; set; }
      
