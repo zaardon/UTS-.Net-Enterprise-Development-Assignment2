@@ -53,6 +53,46 @@ namespace BlueConsultingManagementSystem.Models
             }
         }
 
+        public virtual void SetConsultantName(string name)
+        {
+            ConsultantName = name; 
+        }
+
+        public virtual void SetSupervisorName(string name)
+        {
+            SupervisorName = name;
+        }
+
+        public virtual void SetSupervisorStatusToSubmitted()
+        {
+            SupervisorApproved = "Submitted";
+        }
+
+        public virtual void SetSupervisorStatusToRejected()
+        {
+            SupervisorApproved = "Rejected";
+        }
+
+        public virtual void SetSupervisorStatusToApproved()
+        {
+            SupervisorApproved = "Approved";
+        }
+
+        public virtual void SetStaffStatusToRejected()
+        {
+            StaffApproval = "Rejected";
+        }
+
+        public virtual void SetStaffStatusToApproved()
+        {
+            StaffApproval = "Approved";
+        }
+
+        public virtual void SetDateOfApproval()
+        {
+            DateOfApproval = DateTime.Now.Date;
+        }
+
         //[NotMapped]
         //public List<Report> GenerateSupervisorReportList()
         //{

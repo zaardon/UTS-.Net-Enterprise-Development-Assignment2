@@ -169,7 +169,7 @@
     <Compile Include="Models\BCMSContext.cs" />
     <Compile Include="Models\Expense.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="LOGIC\logic.cs" />
+    <Compile Include="LOGIC\DBLogic.cs" />
     <Compile Include="Models\Report.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

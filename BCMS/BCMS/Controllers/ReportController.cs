@@ -14,7 +14,7 @@ namespace BCMS.Controllers
     public class ReportController : Controller
     {
         private BCMSContext db = new BCMSContext();
-        private logic lg = new logic();
+        private DBLogic DBL = new DBLogic();
         // GET: /Report/
         public ActionResult Index()
         {
@@ -71,7 +71,7 @@ namespace BCMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                lg.AddReport(report, User.Identity.Name.ToString());
+                DBL.AddReport(report, User.Identity.Name.ToString());
                 return RedirectToAction("Details", new { id = report.ReportPK });
             }
 
@@ -228,14 +228,14 @@ namespace BCMS.Controllers
         
         public ActionResult ApproveCon(int? ReportID)
         {
-            lg.SupAppCon(ReportID, User.Identity.Name.ToString());
+            DBL.SupAppCon(ReportID, User.Identity.Name.ToString());
              return RedirectToAction("SupervisorReports");
         }
 
 
          public ActionResult Reject(int? id)
         {
-            lg.SupRej(id, User.Identity.Name.ToString());
+            DBL.SupRej(id, User.Identity.Name.ToString());
             return RedirectToAction("SupervisorReports");
         }
 
@@ -290,12 +290,12 @@ namespace BCMS.Controllers
         }
         public ActionResult StaffApprovalCon(int? id)
         {
-            lg.StaffAppCon(id);
+            DBL.StaffAppCon(id);
             return RedirectToAction("StaffReports");
         }
         public ActionResult StaffReject(int? id)
         {
-            lg.StaffRej(id);
+            DBL.StaffRej(id);
             return RedirectToAction("StaffReports");
         }
 
