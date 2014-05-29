@@ -8,18 +8,20 @@ using System.Web;
 using System.Web.Mvc;
 using BlueConsultingManagementSystem.Models;
 using BCMS.Models;
+using System.Configuration;
 
 namespace BCMS.Controllers
 {
     public class ReportController : Controller
     {
+        readonly double DEFAULT_DEPT_BUDGET = Convert.ToDouble(ConfigurationManager.AppSettings["DefaultDepartmentBudget"]);
+        readonly double DEFAULT_TOTAL_BUDGET = Convert.ToDouble(ConfigurationManager.AppSettings["DefaultTotalBudget"]);
         private BCMSContext db = new BCMSContext();
         private DBLogic DBL = new DBLogic();
         // GET: /Report/
         public ActionResult Index()
         {
             return View(db.Reports.Where(r => r.ConsultantName == User.Identity.Name).Where(r => r.SupervisorApproved == "Submitted").ToList());
-            //return View(db.Reports.ToList());
         }
 
         // GET: /Report/Details/5
@@ -114,11 +116,8 @@ namespace BCMS.Controllers
         {
             DepartmentType dept = DeptCheck();
 
-            return View(db.Reports.Where(r => r.type == dept).Where(r => r.SupervisorApproved == "Submitted").ToList());
-           
+            return View(db.Reports.Where(r => r.type == dept).Where(r => r.SupervisorApproved == "Submitted").ToList());         
         }
-
-
 
         public ActionResult SupervisorRejects()
         {
@@ -135,8 +134,7 @@ namespace BCMS.Controllers
               foreach (var report in (db.Reports.Where(x => x.type == dept).Where(x => x.SupervisorApproved == "Approved" && x.StaffApproval != "Rejected")))
              {
                    foreach(var expense in report.Expenses)
-                 {
-                     
+                 {                    
                      totalCurrency = expense.ConvertedAmount + totalCurrency;
                  }             
             }
@@ -181,25 +179,26 @@ namespace BCMS.Controllers
                 supervisorCurrency = 0;
             }
             ViewBag.SpentCompanyBudget = totalCurrency;
-            ViewBag.RemainingCompanyBudget = 30000.00 - totalCurrency;
-
+            ViewBag.RemainingCompanyBudget = DEFAULT_TOTAL_BUDGET - totalCurrency;
             return View((object)list.ReturnSupervisors());
-
         }
 
         public ActionResult StaffReports()
         {
+            //double defaultBudget = Convert.ToDouble(ConfigurationManager.AppSettings["DefaultDepartmentBudget"]);
             //I think this is for that colour thing
-            ViewBag.HigherBudgetRemaining = (10000 - GetSpentBudgetForStaff(DepartmentType.HigherEducation));
-            ViewBag.StateBudgetRemaining = (10000 - GetSpentBudgetForStaff(DepartmentType.State));
-            ViewBag.LogisticsBudgetRemaining = (10000 - GetSpentBudgetForStaff(DepartmentType.Logistics));
-            return View(db.Reports.Where(r => r.StaffApproval == null).Where(r => r.SupervisorApproved == "Approved").ToList());
+            ViewBag.HigherBudgetRemaining = (DEFAULT_DEPT_BUDGET - GetSpentBudgetForStaff(DepartmentType.HigherEducation));
+            ViewBag.StateBudgetRemaining = (DEFAULT_DEPT_BUDGET - GetSpentBudgetForStaff(DepartmentType.State));
+            ViewBag.LogisticsBudgetRemaining = (DEFAULT_DEPT_BUDGET - GetSpentBudgetForStaff(DepartmentType.Logistics));
 
+            //Convert.ToDouble(System.Configuration.ConfigurationManager.AppSettings["DefaultDepartmentBudget"].ToString());
+
+            return View(db.Reports.Where(r => r.StaffApproval == null).Where(r => r.SupervisorApproved == "Approved").ToList());
         }
         [HttpGet]
         public ActionResult Approve(int? id)
         {
-            if (GetReportCost(id) <= (10000 - GetSpentBudgetForSupervisor()))
+            if (GetReportCost(id) <= (DEFAULT_DEPT_BUDGET - GetSpentBudgetForSupervisor()))
             {
                 //db.Reports.Find(id).SupervisorName = User.Identity.Name;
                 //db.Reports.Find(id).SupervisorApproved = "Approved";
@@ -209,10 +208,9 @@ namespace BCMS.Controllers
             {
                 Report report = db.Reports.Find(id);
                 ViewBag.TotalForReport = GetReportCost(id);
-                ViewBag.TotalBudgetRemaining = (10000 - GetSpentBudgetForSupervisor());
+                ViewBag.TotalBudgetRemaining = (DEFAULT_DEPT_BUDGET - GetSpentBudgetForSupervisor());
                 return View(report);
             }
-
         }
 
         private double GetReportCost(int? reportID)
@@ -232,16 +230,12 @@ namespace BCMS.Controllers
              return RedirectToAction("SupervisorReports");
         }
 
-
          public ActionResult Reject(int? id)
         {
             DBL.SupRej(id, User.Identity.Name.ToString());
             return RedirectToAction("SupervisorReports");
         }
-
- 
-
-        
+    
         private double GetSpentBudgetForSupervisor()
         {
             DepartmentType dept = DeptCheck();
@@ -260,7 +254,7 @@ namespace BCMS.Controllers
         [HttpGet]
         public ActionResult StaffApproval(int? id)
         {
-            if (GetReportCost(id) <= (10000 - GetSpentBudgetForStaff(db.Reports.Find(id).type)))
+            if (GetReportCost(id) <= (DEFAULT_DEPT_BUDGET - GetSpentBudgetForStaff(db.Reports.Find(id).type)))
             {
                 //db.Reports.Find(id).SupervisorName = User.Identity.Name;
                 //db.Reports.Find(id).SupervisorApproved = "Approved";
@@ -270,7 +264,7 @@ namespace BCMS.Controllers
             {
                 Report report = db.Reports.Find(id);
                 ViewBag.TotalForReport = GetReportCost(id);
-                ViewBag.TotalBudgetRemaining = (10000 - GetSpentBudgetForStaff(db.Reports.Find(id).type));
+                ViewBag.TotalBudgetRemaining = (DEFAULT_DEPT_BUDGET - GetSpentBudgetForStaff(db.Reports.Find(id).type));
                 return View(report);
             }
         }
@@ -288,12 +282,12 @@ namespace BCMS.Controllers
             }
             return totalCurrency;
         }
-        public ActionResult StaffApprovalCon(int? id)
+        private ActionResult StaffApprovalCon(int? id)
         {
             DBL.StaffAppCon(id);
             return RedirectToAction("StaffReports");
         }
-        public ActionResult StaffReject(int? id)
+        private ActionResult StaffReject(int? id)
         {
             DBL.StaffRej(id);
             return RedirectToAction("StaffReports");

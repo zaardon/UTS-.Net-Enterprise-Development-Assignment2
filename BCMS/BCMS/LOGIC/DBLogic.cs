@@ -56,7 +56,5 @@ namespace BCMS.Models
             db.Reports.Add(report);
             db.SaveChanges();
         }
-
-        
     }
 }
