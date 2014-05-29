@@ -172,8 +172,10 @@ namespace BCMS.Controllers
             {
                 foreach (var expense in report.Expenses)
                 {
-                    totalCurrency = expense.ConvertedAmount + totalCurrency;
-                    supervisorCurrency = expense.ConvertedAmount + supervisorCurrency;
+                    //totalCurrency = expense.ConvertedAmount + totalCurrency;
+                    totalCurrency += expense.ConvertedAmount;
+                    //supervisorCurrency = expense.ConvertedAmount + supervisorCurrency;
+                    supervisorCurrency += expense.ConvertedAmount;
                 }
                 list.AddToList(report.SupervisorName, supervisorCurrency);
                 supervisorCurrency = 0;
@@ -190,8 +192,6 @@ namespace BCMS.Controllers
             ViewBag.HigherBudgetRemaining = (DEFAULT_DEPT_BUDGET - GetSpentBudgetForStaff(DepartmentType.HigherEducation));
             ViewBag.StateBudgetRemaining = (DEFAULT_DEPT_BUDGET - GetSpentBudgetForStaff(DepartmentType.State));
             ViewBag.LogisticsBudgetRemaining = (DEFAULT_DEPT_BUDGET - GetSpentBudgetForStaff(DepartmentType.Logistics));
-
-            //Convert.ToDouble(System.Configuration.ConfigurationManager.AppSettings["DefaultDepartmentBudget"].ToString());
 
             return View(db.Reports.Where(r => r.StaffApproval == null).Where(r => r.SupervisorApproved == "Approved").ToList());
         }
@@ -245,7 +245,8 @@ namespace BCMS.Controllers
             {
                 foreach (var expense in report.Expenses)
                 {
-                    totalCurrency = expense.ConvertedAmount + totalCurrency;
+                    //totalCurrency = expense.ConvertedAmount + totalCurrency;
+                    totalCurrency += expense.ConvertedAmount;
                 }
             }
             return totalCurrency;
@@ -277,7 +278,8 @@ namespace BCMS.Controllers
             {
                 foreach (var expense in report.Expenses)
                 {
-                    totalCurrency = expense.ConvertedAmount + totalCurrency;
+                    //totalCurrency = expense.ConvertedAmount + totalCurrency;
+                    totalCurrency += expense.ConvertedAmount;
                 }
             }
             return totalCurrency;
