@@ -51,13 +51,13 @@
                         @exp.DateOfExpense
                     </td>
                     <td>
-                    @if (exp.pdffile != null)
+                    @if (exp.PDFFile != null)
                     {
                         @Html.ActionLink("PDF", "PDFView", "Expense", new {id = exp.ExpensePK}, null)
-                    {
+                    }
                     else
                     {
-                        No Pdf
+                        
                     }
                     </td>
                 </tr>
