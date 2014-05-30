@@ -28,6 +28,9 @@
         <th>
             Date of Expense
         </th>
+        <th>
+            PDF receipt
+        </th>
             </tr>
             @foreach (var exp in Model.Expenses)
             {
@@ -46,6 +49,16 @@
                     </td>
                     <td>
                         @exp.DateOfExpense
+                    </td>
+                    <td>
+                    @if (exp.pdffile != null)
+                    {
+                        @Html.ActionLink("PDF", "PDFView", "Expense", new {id = exp.ExpensePK}, null)
+                    {
+                    else
+                    {
+                        No Pdf
+                    }
                     </td>
                 </tr>
             }

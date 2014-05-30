@@ -40,30 +40,48 @@ namespace BCMS.Controllers
             return View(expense);
         }
 
-        // GET: /Expense/Create
+// GET: /Expense/Create
         public ActionResult Create(int ReportID)
         {
             ViewBag.ReportName = db.Reports.Find(ReportID).ReportName;
+
+            if (Session["ReportID"] == null)
+            {
+                Session["ReportID"] = ReportID;
+            }
             return View();
         }
-
+ 
         // POST: /Expense/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="ExpensePK,Description,Location,Amount,CType,DateOfExpense,PDFFile")] Expense expense, int ReportID)
+        public ActionResult Create([Bind(Include = "ExpensePK,Description,Location,Amount,CType,DateOfExpense")] Expense expense, HttpPostedFileBase PdfUpload )
         {
             if (ModelState.IsValid)
             {
-                expense.Report = db.Reports.Find(ReportID);
+                if (PdfUpload != null)
+                {
+
+                        // file stuff
+                        string filetype = PdfUpload.ContentType;
+                        expense.PDFFile = new byte[PdfUpload.ContentLength];
+                        PdfUpload.InputStream.Read(expense.PDFFile, 0, PdfUpload.ContentLength);
+                        // more processing
+
+
+                }
+                expense.Report = db.Reports.Find(Session["ReportID"]);
+
                 db.Expenses.Add(expense);
                 db.SaveChanges();
-                Report report = db.Reports.Find(ReportID);
-                return RedirectToAction("../Report/Details/"+ReportID);
-            }
 
-            return View(expense);
+                Report report = db.Reports.Find(Session["ReportID"]);
+                return RedirectToAction("../Report/Details/" + Session["ReportID"]);
+                
+            }
+            return RedirectToAction("index");
         }
 
         // GET: /Expense/Edit/5
@@ -135,6 +153,10 @@ namespace BCMS.Controllers
         public ActionResult ExpenseView(int ReportID)
         {
             return View(db.Expenses.ToList().Where(x => x.Report.ReportPK == ReportID));
+        }
+        public FileContentResult  PDFView(int? id)
+        {
+                return File(db.Expenses.Find(id).PDFFile, "application/pdf");
         }
     }
 }
