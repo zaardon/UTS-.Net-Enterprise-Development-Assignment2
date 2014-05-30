@@ -56,7 +56,7 @@ namespace BCMS.Controllers
             ViewBag.TotalReportCost = GetReportCost(id);
             return View(report);
         }
-
+                [Authorize(Roles = "Consultant")]
         // GET: /Report/Create
         public ActionResult Create()
         {
@@ -67,6 +67,7 @@ namespace BCMS.Controllers
         // POST: /Report/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Consultant")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ReportPK,ReportName,ConsultantName,type,SupervisorName,SupervisorApproved,StaffApproval,DateOfApproval")] Report report)
@@ -92,19 +93,20 @@ namespace BCMS.Controllers
             base.Dispose(disposing);
         }
 
-
+        [Authorize(Roles="Consultant")]
         public ActionResult ConsultantSubmissions()
         {
 
             return View(db.Reports.Where(r => r.ConsultantName == User.Identity.Name).ToList());
         }
 
+        [Authorize(Roles = "Consultant")]
         public ActionResult ConsultantApprovals()
         {
 
             return View(db.Reports.Where(r => r.ConsultantName == User.Identity.Name).Where(r => r.StaffApproval == "Approved").ToList());
         }
-
+        [Authorize(Roles = "Consultant")]
         public ActionResult ConsultantAwaiting()
         {
 
@@ -112,20 +114,21 @@ namespace BCMS.Controllers
         }
 
         //for supervisor/staff
+        [Authorize(Roles = "Supervisor")]
         public ActionResult SupervisorReports()
         {
             DepartmentType dept = DeptCheck();
 
             return View(db.Reports.Where(r => r.type == dept).Where(r => r.SupervisorApproved == "Submitted").ToList());         
         }
-
+        [Authorize(Roles = "Supervisor")]
         public ActionResult SupervisorRejects()
         {
             DepartmentType dept = DeptCheck();
 
             return View(db.Reports.Where(r => r.type == dept).Where(r => r.StaffApproval == "Rejected").ToList());
         }
-
+        [Authorize(Roles = "Supervisor")]
         public ActionResult SupervisorBudget()
         {
             DepartmentType dept = DeptCheck();
@@ -160,8 +163,8 @@ namespace BCMS.Controllers
             }
             return dept;
         }
-    
 
+        [Authorize(Roles = "Staff")]
         public ActionResult StaffBudget()
         {
             SupervisorList list = new SupervisorList();
@@ -184,7 +187,7 @@ namespace BCMS.Controllers
             ViewBag.RemainingCompanyBudget = DEFAULT_TOTAL_BUDGET - totalCurrency;
             return View((object)list.ReturnSupervisors());
         }
-
+        [Authorize(Roles = "Staff")]
         public ActionResult StaffReports()
         {
             //double defaultBudget = Convert.ToDouble(ConfigurationManager.AppSettings["DefaultDepartmentBudget"]);
@@ -195,6 +198,7 @@ namespace BCMS.Controllers
 
             return View(db.Reports.Where(r => r.StaffApproval == null).Where(r => r.SupervisorApproved == "Approved").ToList());
         }
+        [Authorize(Roles = "Supervisor")]
         [HttpGet]
         public ActionResult Approve(int? id)
         {
@@ -223,19 +227,19 @@ namespace BCMS.Controllers
 
             return amount;
         }
-        
+        [Authorize(Roles = "Supervisor")]
         public ActionResult ApproveCon(int? ReportID)
         {
             DBL.SupAppCon(ReportID, User.Identity.Name.ToString());
              return RedirectToAction("SupervisorReports");
         }
-
+        [Authorize(Roles = "Supervisor")]
          public ActionResult Reject(int? id)
         {
             DBL.SupRej(id, User.Identity.Name.ToString());
             return RedirectToAction("SupervisorReports");
         }
-    
+        [Authorize(Roles = "Supervisor")]
         private double GetSpentBudgetForSupervisor()
         {
             DepartmentType dept = DeptCheck();
@@ -251,7 +255,7 @@ namespace BCMS.Controllers
             }
             return totalCurrency;
         }
-
+        [Authorize(Roles = "Staff")]
         [HttpGet]
         public ActionResult StaffApproval(int? id)
         {
@@ -269,7 +273,7 @@ namespace BCMS.Controllers
                 return View(report);
             }
         }
-
+                [Authorize(Roles = "Staff")]
         private double GetSpentBudgetForStaff(DepartmentType dept)
         {
             double totalCurrency = 0;
@@ -284,11 +288,13 @@ namespace BCMS.Controllers
             }
             return totalCurrency;
         }
+                [Authorize(Roles = "Staff")]
         private ActionResult StaffApprovalCon(int? id)
         {
             DBL.StaffAppCon(id);
             return RedirectToAction("StaffReports");
         }
+                [Authorize(Roles = "Staff")]
         private ActionResult StaffReject(int? id)
         {
             DBL.StaffRej(id);
