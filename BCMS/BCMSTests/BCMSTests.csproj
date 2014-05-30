@@ -50,8 +50,21 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="BCMSUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BCMSLogic\BCMSLogic.csproj">
+      <Project>{385f8889-f730-4a66-a096-9c87f4575109}</Project>
+      <Name>BCMSLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BCMS\BCMS.csproj">
+      <Project>{cf31c442-c36e-4114-a581-35758a558aee}</Project>
+      <Name>BCMS</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
