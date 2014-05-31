@@ -278,3 +278,5 @@ C:\Users\Alex\Documents\GitHub\DotNetAssign2\BCMS\BCMS\obj\Debug\BCMS.dll
 C:\Users\Alex\Documents\GitHub\DotNetAssign2\BCMS\BCMS\obj\Debug\BCMS.pdb
 M:\EntityMVCNET\BCMS\BCMS\bin\BCMSLogic.dll
 M:\EntityMVCNET\BCMS\BCMS\bin\BCMSLogic.pdb
+C:\Users\James\Desktop\Ent2\DotNetAssign2\BCMS\BCMS\bin\BCMSLogic.dll
+C:\Users\James\Desktop\Ent2\DotNetAssign2\BCMS\BCMS\bin\BCMSLogic.pdb

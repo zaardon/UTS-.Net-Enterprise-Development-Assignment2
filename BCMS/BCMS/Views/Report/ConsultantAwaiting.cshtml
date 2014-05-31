@@ -15,7 +15,7 @@
             @Html.DisplayNameFor(model => model.ConsultantName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.type)
+            Department
         </th>
         <th>
             @Html.DisplayNameFor(model => model.SupervisorApproved)
@@ -29,7 +29,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.ReportName)
+           @Html.ActionLink(item.ReportName, "Details", new { id = item.ReportPK })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ConsultantName)
@@ -42,9 +42,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.StaffApproval)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "DetailsOnly", new { id=item.ReportPK }) |
         </td>
     </tr>
 }

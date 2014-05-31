@@ -64,11 +64,16 @@
             }
             <tr><td></td><td></td><td>Total Amount : $AUD @ViewBag.TotalReportCost</td><td></td></tr>
             </table>
-        
-     if(User.IsInRole("Supervisor")){
-     @Html.ActionLink("Approve Report", "Approve", "Report", new { id = Model.ReportPK }, null) 
-     @Html.ActionLink("Reject Report", "Reject", "Report", new { id = Model.ReportPK }, null)
-        
+
+        if (User.IsInRole("Supervisor"))
+        {
+            <div class="btn btn-info">
+                @Html.ActionLink("Approve Report", "Approve", "Report", new { id = Model.ReportPK }, null)
+            </div>
+    <div class="btn btn-danger">
+        @Html.ActionLink("Reject Report", "Reject", "Report", new { id = Model.ReportPK }, null)
+    </div>
+      <p>@Html.ActionLink("Back to reports list", "SupervisorReports", "Report")</p>  
     }
      else if (User.IsInRole("Staff"))
      {
@@ -79,11 +84,12 @@
     else if (User.IsInRole("Staff") || User.IsInRole("Supervisor"))
     {
         @: No expenses to approve
+
     }
 
     @if(User.IsInRole("Consultant")){
     @Html.ActionLink("Add Expense", "Create", "Expense", new {ReportId = Model.ReportPK}, null)
     }
-
+    
 </div>
 

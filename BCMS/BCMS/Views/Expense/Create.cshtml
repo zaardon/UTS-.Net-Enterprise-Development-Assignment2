@@ -11,7 +11,7 @@
 {
        
         @Html.AntiForgeryToken()
-        <h2>@Session["ReportID"]</h2>
+  
         <div class="form-horizontal">
             <h4>Expense</h4>
             <hr />
@@ -76,7 +76,7 @@
     }
      
     <div>
-        @Html.ActionLink("Back to List", "Index")
+       @Html.ActionLink("Back to Report", "Details", "Report", new { id = @Session["ReportID"] }, null) 
     </div>
      
     @section Scripts {

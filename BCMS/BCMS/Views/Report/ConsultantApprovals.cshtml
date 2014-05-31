@@ -12,7 +12,7 @@
             @Html.DisplayNameFor(model => model.ReportName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.type)
+            Department
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DateOfApproval)
@@ -23,16 +23,13 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.ReportName)
+            @Html.ActionLink(item.ReportName, "Details", new { id = item.ReportPK })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.type)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DateOfApproval)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "DetailsOnly", new { id=item.ReportPK }) |
         </td>
     </tr>
 }
