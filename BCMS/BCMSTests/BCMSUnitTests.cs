@@ -69,6 +69,7 @@ namespace BCMSTests
         public void ReportTest()
         {
             BlueConsultingManagementSystem.Models.Report report = new BlueConsultingManagementSystem.Models.Report();
+            BlueConsultingManagementSystem.Models.Expense expense = new BlueConsultingManagementSystem.Models.Expense();
             report.ReportPK = 999;
             Assert.AreEqual(999, report.ReportPK);
             report.ReportName = "The test report";
@@ -91,28 +92,32 @@ namespace BCMSTests
             Assert.AreEqual("Rejected", report.StaffApproval);
             report.SetDateOfApproval();
             Assert.AreEqual(DateTime.Now.Date, report.DateOfApproval);
-
-
-
-            //Why wont this work???
-
-            //BlueConsultingManagementSystem.Models.Expense expense = new BlueConsultingManagementSystem.Models.Expense();
-            //expense.ExpensePK = 100;
-            //expense.CType = BCMS.Models.CurrencyType.AUD;
-            //expense.Amount =555.5;
-            //expense.Description = "gdfgfd";
-            //expense.Report = report;
-            //expense.Location = "dfgd";
             //report.Expenses.Add(expense);
-
-            //Assert.AreEqual(1, report.Expenses.Count);
+            //Assert.IsNotNull(report.Expenses);
+            //Havent added an expense
         }
 
         [TestMethod]
         public void ExpenseTest()
         {
             BlueConsultingManagementSystem.Models.Expense expense = new BlueConsultingManagementSystem.Models.Expense();
-            //expense.
+            BlueConsultingManagementSystem.Models.Report report = new BlueConsultingManagementSystem.Models.Report();
+            expense.ExpensePK = 999;
+            Assert.AreEqual(999, expense.ExpensePK);
+            expense.CType = BCMS.Models.CurrencyType.CNY;
+            Assert.AreEqual("CNY", expense.CType.ToString());
+            expense.Amount = 555.5;
+            Assert.AreEqual(555.5, expense.Amount);
+            Assert.AreEqual(95.64,Convert.ToDouble(expense.ConvertedAmount.ToString("#.##")));
+            expense.Description = "To the shops";
+            Assert.AreEqual("To the shops", expense.Description);
+            expense.Location = "Sydney";
+            Assert.AreEqual("Sydney", expense.Location);
+            expense.Report = report;
+            Assert.IsNotNull(expense.Report);
+            expense.DateOfExpense = DateTime.Now.Date;
+            Assert.AreEqual(DateTime.Now.Date, expense.DateOfExpense);
+            
         }
 
         [TestMethod]
