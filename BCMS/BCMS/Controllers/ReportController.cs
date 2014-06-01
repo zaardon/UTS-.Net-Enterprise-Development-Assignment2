@@ -36,7 +36,7 @@ namespace BCMS.Controllers
             {
                 return HttpNotFound();
             }
-
+            Session["ReportID"] = null;
             ViewBag.TotalReportCost = GetReportCost(id);
             return View(report);
         }
@@ -53,6 +53,7 @@ namespace BCMS.Controllers
             {
                 return HttpNotFound();
             }
+            Session["ReportID"] = null;
             ViewBag.TotalReportCost = GetReportCost(id);
             return View(report);
         }
@@ -153,7 +154,7 @@ namespace BCMS.Controllers
             {
                 dept = DepartmentType.HigherEducation;
             }
-            else if (User.IsInRole("Logistic"))
+            else if (User.IsInRole("Logistics"))
             {
                 dept = DepartmentType.Logistics;
             }
@@ -239,7 +240,7 @@ namespace BCMS.Controllers
             DBL.SupRej(id, User.Identity.Name.ToString());
             return RedirectToAction("SupervisorReports");
         }
-        [Authorize(Roles = "Supervisor")]
+
         private double GetSpentBudgetForSupervisor()
         {
             DepartmentType dept = DeptCheck();
@@ -255,6 +256,7 @@ namespace BCMS.Controllers
             }
             return totalCurrency;
         }
+
         [Authorize(Roles = "Staff")]
         [HttpGet]
         public ActionResult StaffApproval(int? id)
@@ -273,7 +275,8 @@ namespace BCMS.Controllers
                 return View(report);
             }
         }
-                [Authorize(Roles = "Staff")]
+
+        [Authorize(Roles = "Staff")]
         private double GetSpentBudgetForStaff(DepartmentType dept)
         {
             double totalCurrency = 0;
@@ -288,14 +291,16 @@ namespace BCMS.Controllers
             }
             return totalCurrency;
         }
-                [Authorize(Roles = "Staff")]
-        private ActionResult StaffApprovalCon(int? id)
+
+        [Authorize(Roles = "Staff")]
+        public ActionResult StaffApprovalCon(int? id)
         {
             DBL.StaffAppCon(id);
             return RedirectToAction("StaffReports");
         }
-                [Authorize(Roles = "Staff")]
-        private ActionResult StaffReject(int? id)
+
+        [Authorize(Roles = "Staff")]
+        public ActionResult StaffReject(int? id)
         {
             DBL.StaffRej(id);
             return RedirectToAction("StaffReports");

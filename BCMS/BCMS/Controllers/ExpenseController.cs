@@ -37,6 +37,7 @@ namespace BCMS.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(expense);
         }
 
@@ -48,6 +49,7 @@ namespace BCMS.Controllers
             if (Session["ReportID"] == null)
             {
                 Session["ReportID"] = ReportID;
+                
             }
             return View();
         }
@@ -78,6 +80,7 @@ namespace BCMS.Controllers
                 db.SaveChanges();
 
                 Report report = db.Reports.Find(Session["ReportID"]);
+                
                 return RedirectToAction("../Report/Details/" + Session["ReportID"]);
                 
             }
