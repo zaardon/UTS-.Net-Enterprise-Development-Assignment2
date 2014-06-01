@@ -16,8 +16,10 @@ namespace BCMS.Controllers
     {
         readonly double DEFAULT_DEPT_BUDGET = Convert.ToDouble(ConfigurationManager.AppSettings["DefaultDepartmentBudget"]);
         readonly double DEFAULT_TOTAL_BUDGET = Convert.ToDouble(ConfigurationManager.AppSettings["DefaultTotalBudget"]);
+        private DateTime START_OF_THIS_MONTH = DateTime.Today.AddDays(1 - DateTime.Today.Day);
         private BCMSContext db = new BCMSContext();
         private DBLogic DBL = new DBLogic();
+
         // GET: /Report/
         public ActionResult Index()
         {
@@ -78,13 +80,9 @@ namespace BCMS.Controllers
                 DBL.AddReport(report, User.Identity.Name.ToString());
                 return RedirectToAction("Details", new { id = report.ReportPK });
             }
-
             return View(report);
         }
 
-
-
-        //wtf is this ?
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -114,7 +112,6 @@ namespace BCMS.Controllers
             return View(db.Reports.Where(r => r.ConsultantName == User.Identity.Name && ( r.StaffApproval == null && r.SupervisorApproved != "Rejected")).ToList());
         }
 
-        //for supervisor/staff
         [Authorize(Roles = "Supervisor")]
         public ActionResult SupervisorReports()
         {
@@ -122,6 +119,7 @@ namespace BCMS.Controllers
 
             return View(db.Reports.Where(r => r.type == dept).Where(r => r.SupervisorApproved == "Submitted").ToList());         
         }
+
         [Authorize(Roles = "Supervisor")]
         public ActionResult SupervisorRejects()
         {
@@ -129,13 +127,14 @@ namespace BCMS.Controllers
 
             return View(db.Reports.Where(r => r.type == dept).Where(r => r.StaffApproval == "Rejected").ToList());
         }
+
         [Authorize(Roles = "Supervisor")]
         public ActionResult SupervisorBudget()
         {
             DepartmentType dept = DeptCheck();
               double totalCurrency = 0;
               //Add a 'for this month' part to the where part
-              foreach (var report in (db.Reports.Where(x => x.type == dept).Where(x => x.SupervisorApproved == "Approved" && x.StaffApproval != "Rejected")))
+              foreach (var report in (db.Reports.Where(x => x.type == dept).Where(x => x.SupervisorApproved == "Approved" && x.StaffApproval != "Rejected").Where(x => x.DateOfApproval >= START_OF_THIS_MONTH || x.DateOfApproval == null)))
              {
                    foreach(var expense in report.Expenses)
                  {                    
@@ -172,7 +171,7 @@ namespace BCMS.Controllers
             double totalCurrency = 0;
             double supervisorCurrency = 0;
             //Add a 'for this month' part to the where part
-            foreach (var report in (db.Reports.Where(x => x.StaffApproval == "Approved")))
+            foreach (var report in (db.Reports.Where(x => x.StaffApproval == "Approved").Where(x => x.DateOfApproval >= START_OF_THIS_MONTH)))
             {
                 foreach (var expense in report.Expenses)
                 {
@@ -246,7 +245,7 @@ namespace BCMS.Controllers
             DepartmentType dept = DeptCheck();
             double totalCurrency = 0;
             //Add a 'for this month' part to the where part
-            foreach (var report in (db.Reports.Where(x => x.type == dept).Where(x => x.SupervisorApproved == "Approved" && x.StaffApproval != "Rejected")))
+            foreach (var report in (db.Reports.Where(x => x.type == dept).Where(x => x.SupervisorApproved == "Approved" && x.StaffApproval != "Rejected").Where(x => x.DateOfApproval >= START_OF_THIS_MONTH || x.DateOfApproval == null)))
             {
                 foreach (var expense in report.Expenses)
                 {
@@ -281,7 +280,7 @@ namespace BCMS.Controllers
         {
             double totalCurrency = 0;
             //Add a 'for this month' part to the where part
-            foreach (var report in (db.Reports.Where(x => x.type == dept).Where(x => x.StaffApproval == "Approved")))
+            foreach (var report in (db.Reports.Where(x => x.type == dept).Where(x => x.StaffApproval == "Approved").Where(x => x.DateOfApproval >= START_OF_THIS_MONTH)))
             {
                 foreach (var expense in report.Expenses)
                 {

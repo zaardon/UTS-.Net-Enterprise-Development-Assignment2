@@ -130,6 +130,7 @@ namespace BCMSTests
         public void DBLogicTests()
         {
             BCMS.Models.DBLogic DBL = new BCMS.Models.DBLogic();
+
         }
     }
 }
