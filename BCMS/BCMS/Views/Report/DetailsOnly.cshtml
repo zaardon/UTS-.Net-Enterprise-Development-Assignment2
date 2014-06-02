@@ -1,10 +1,10 @@
 ﻿@model BlueConsultingManagementSystem.Models.Report
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Report Expense Details";
 }
 
-<h2>Details</h2>
+<h2>Report Expense Details</h2>
 <div>
     <h4>Report: @Model.ReportName</h4>
 
@@ -27,6 +27,9 @@
                 <th>
                     Date of Expense
                 </th>
+                <th>
+                    PDF Receipt
+                </th>
             </tr>
             @foreach (var exp in Model.Expenses)
             {
@@ -46,9 +49,19 @@
                     <td>
                         @exp.DateOfExpense
                     </td>
+                    <td>
+                        @if (exp.PDFFile != null)
+                        {
+                            @Html.ActionLink("PDF", "PDFView", "Expense", new { id = exp.ExpensePK }, null)
+                        }
+                        else
+                        {
+
+                        }
+                    </td>
                 </tr>
             }
-            <tr><td></td><td></td><td>Total Amount : $AUD @ViewBag.TotalReportCost</td><td></td></tr>
+            <tr><td></td><td></td><td></td><td>Total Amount : $AUD @ViewBag.TotalReportCost</td><td></td><td></td></tr>
         </table>
     }
     else if (User.IsInRole("Staff") || User.IsInRole("Supervisor"))

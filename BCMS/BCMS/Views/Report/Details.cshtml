@@ -1,10 +1,10 @@
 ﻿@model BlueConsultingManagementSystem.Models.Report
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Report Expense Details";
 }
 
-<h2>Details</h2>
+<h2>Report Expense Details</h2>
 
 <div>
     <h4>Report: @Model.ReportName</h4>
@@ -29,7 +29,7 @@
             Date of Expense
         </th>
         <th>
-            PDF receipt
+            PDF Receipt
         </th>
             </tr>
             @foreach (var exp in Model.Expenses)
@@ -62,29 +62,33 @@
                     </td>
                 </tr>
             }
-            <tr><td></td><td></td><td>Total Amount : $AUD @ViewBag.TotalReportCost</td><td></td></tr>
+            <tr><td></td><td></td><td></td><td>Total Amount : $AUD @ViewBag.TotalReportCost</td><td></td><td></td></tr>
             </table>
 
         if (User.IsInRole("Supervisor"))
         {
             <div class="btn btn-info">
-                @Html.ActionLink("Approve Report", "Approve", "Report", new { id = Model.ReportPK }, null)
+                @Html.ActionLink("Approve Report", "Approve", "Report", new { id = Model.ReportPK }, new { @style = "color:#000000;" })
             </div>
-    <div class="btn btn-danger">
-        @Html.ActionLink("Reject Report", "Reject", "Report", new { id = Model.ReportPK }, null)
-    </div>
-      <p>@Html.ActionLink("Back to reports list", "SupervisorReports", "Report")</p>  
-    }
-     else if (User.IsInRole("Staff"))
-     {
-         @Html.ActionLink("Approve Report", "StaffApproval", "Report", new { id = Model.ReportPK }, null)
-        @Html.ActionLink("Reject Report", "StaffReject", "Report", new { id = Model.ReportPK }, null)
-     }
+            <div class="btn btn-danger">
+                @Html.ActionLink("Reject Report", "Reject", "Report", new { id = Model.ReportPK }, new { @style = "color:#000000;" })
+            </div>
+            <p>@Html.ActionLink("Back to reports list", "SupervisorReports", "Report")</p>  
+        }
+         else if (User.IsInRole("Staff"))
+         {
+             <div class="btn btn-info">
+             @Html.ActionLink("Approve Report", "StaffApproval", "Report", new { id = Model.ReportPK }, new { @style = "color:#000000;" })
+             </div>
+            <div class="btn btn-danger">
+                @Html.ActionLink("Reject Report", "StaffReject", "Report", new { id = Model.ReportPK }, new { @style = "color:#000000;" })
+            </div>
+            <p>@Html.ActionLink("Back to reports list", "StaffReports", "Report")</p>  
+         }
     }
     else if (User.IsInRole("Staff") || User.IsInRole("Supervisor"))
     {
         @: No expenses to approve
-
     }
 
     @if(User.IsInRole("Consultant")){

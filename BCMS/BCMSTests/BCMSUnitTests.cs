@@ -9,9 +9,11 @@ namespace BCMSTests
     [TestClass]
     public class BCMSUnitTests
     {
-
+        private BlueConsultingManagementSystem.Models.Report report = new BlueConsultingManagementSystem.Models.Report();
+        private BlueConsultingManagementSystem.Models.Expense expense = new BlueConsultingManagementSystem.Models.Expense();
+            
         [TestMethod]
-        public void CurrencyTest()
+        public void CurrencyConversionTest()
         {
             double expected;
             BCMS.Models.CurrencyConverter cc = new BCMS.Models.CurrencyConverter();
@@ -40,7 +42,7 @@ namespace BCMSTests
         }
 
         [TestMethod]
-        public void SupervisorListTest()
+        public void SupervisorExpenseListCreationTest()
         {
             BCMS.Models.SupervisorList sl = new BCMS.Models.SupervisorList();
             Assert.AreEqual(0, sl.ReturnSupervisors().Count);
@@ -56,7 +58,7 @@ namespace BCMSTests
         }
 
         [TestMethod]
-        public void SupervisorTest()
+        public void SupervisorAndExpensesPairingTest()
         {
             BCMS.Models.Supervisor super = new BCMS.Models.Supervisor("Bill", 500);
             Assert.AreEqual(500, super.ReturnAmount());
@@ -66,49 +68,60 @@ namespace BCMSTests
         }
 
         [TestMethod]
-        public void ReportTest()
+        public void ReportConsultantSubmissionTest()
         {
-            BlueConsultingManagementSystem.Models.Report report = new BlueConsultingManagementSystem.Models.Report();
-            BlueConsultingManagementSystem.Models.Expense expense = new BlueConsultingManagementSystem.Models.Expense();
             report.ReportPK = 999;
             Assert.AreEqual(999, report.ReportPK);
             report.ReportName = "The test report";
             Assert.AreEqual("The test report", report.ReportName);
             report.SetConsultantName("Bill");
             Assert.AreEqual("Bill", report.ConsultantName);
-            report.SetSupervisorName("Jeff");
-            Assert.AreEqual("Jeff",report.SupervisorName);
             report.type = BCMS.Models.DepartmentType.HigherEducation;
-            Assert.AreEqual("HigherEducation", BCMS.Models.DepartmentType.HigherEducation.ToString());           
+            Assert.AreEqual("HigherEducation", BCMS.Models.DepartmentType.HigherEducation.ToString());
             report.SetSupervisorStatusToSubmitted();
             Assert.AreEqual("Submitted", report.SupervisorApproved);
-            report.SetSupervisorStatusToApproved();
-            Assert.AreEqual("Approved", report.SupervisorApproved);
-            report.SetSupervisorStatusToRejected();
-            Assert.AreEqual("Rejected", report.SupervisorApproved);
-            report.SetStaffStatusToApproved();
-            Assert.AreEqual("Approved", report.StaffApproval);
-            report.SetStaffStatusToRejected();
-            Assert.AreEqual("Rejected", report.StaffApproval);
-            report.SetDateOfApproval();
-            Assert.AreEqual(DateTime.Now.Date, report.DateOfApproval);
-            //report.Expenses.Add(expense);
-            //Assert.IsNotNull(report.Expenses);
-            //Havent added an expense
         }
 
         [TestMethod]
-        public void ExpenseTest()
+        public void ReportSupervisorApproveTest()
         {
-            BlueConsultingManagementSystem.Models.Expense expense = new BlueConsultingManagementSystem.Models.Expense();
-            BlueConsultingManagementSystem.Models.Report report = new BlueConsultingManagementSystem.Models.Report();
+            report.SetSupervisorName("Jeff");
+            Assert.AreEqual("Jeff", report.SupervisorName);
+            report.SetSupervisorStatusToApproved();
+            Assert.AreEqual("Approved", report.SupervisorApproved);
+        }
+
+        [TestMethod]
+        public void ReportSupervisorRejectTest()
+        {
+            report.SetSupervisorStatusToRejected();
+            Assert.AreEqual("Rejected", report.SupervisorApproved);
+        }
+
+        [TestMethod]
+        public void ReportStaffApproveTest()
+        {
+            report.SetStaffStatusToApproved();
+            Assert.AreEqual("Approved", report.StaffApproval);
+            report.SetDateOfApproval();
+            Assert.AreEqual(DateTime.Now.Date, report.DateOfApproval);
+        }
+
+        public void ReportStaffRejectTest()
+        {
+            report.SetStaffStatusToRejected();
+            Assert.AreEqual("Rejected", report.StaffApproval);
+        }
+
+        [TestMethod]
+        public void ExpenseCreationTest()
+        {
             expense.ExpensePK = 999;
             Assert.AreEqual(999, expense.ExpensePK);
             expense.CType = BCMS.Models.CurrencyType.CNY;
             Assert.AreEqual("CNY", expense.CType.ToString());
             expense.Amount = 555.5;
             Assert.AreEqual(555.5, expense.Amount);
-            Assert.AreEqual(95.64,Convert.ToDouble(expense.ConvertedAmount.ToString("#.##")));
             expense.Description = "To the shops";
             Assert.AreEqual("To the shops", expense.Description);
             expense.Location = "Sydney";
@@ -116,20 +129,27 @@ namespace BCMSTests
             expense.Report = report;
             Assert.IsNotNull(expense.Report);
             expense.DateOfExpense = DateTime.Now.Date;
-            Assert.AreEqual(DateTime.Now.Date, expense.DateOfExpense);
-            
+            Assert.AreEqual(DateTime.Now.Date, expense.DateOfExpense);           
         }
 
         [TestMethod]
-        public void BCMSContextTest()
+        public void ExpenseConversionTest()
         {
-            //BCMS.Models.BCMSContext context = new BCMS.Models.BCMSContext();
-            
+            expense.CType = BCMS.Models.CurrencyType.CNY;
+            expense.Amount = 555.5;
+            double testAmount = Convert.ToDouble(expense.ConvertedAmount.ToString("#.##"));
+            Assert.AreEqual(95.64, testAmount);
+            Assert.AreNotSame(555.5, testAmount);
         }
 
-        public void DBLogicTests()
-        {
-            BCMS.Models.DBLogic DBL = new BCMS.Models.DBLogic();
+        [TestMethod]
+        public void ReportAddExpenseToReportTest()
+        {           
+            report.Expenses = new System.Collections.Generic.List<BlueConsultingManagementSystem.Models.Expense>();
+            Assert.AreEqual(0, report.Expenses.Count);
+            report.Expenses.Add(expense);
+            Assert.AreEqual(1, report.Expenses.Count);
+            Assert.IsNotNull(report.Expenses);
         }
     }
 }

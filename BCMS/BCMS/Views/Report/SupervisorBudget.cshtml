@@ -1,12 +1,11 @@
 ﻿@model string
 
 @{
-    ViewBag.Title = "Supervisor Budget";
+    ViewBag.Title = "Your Current Department Budget";
 }
 
 
-<h2>Supervisor Budget</h2>
+<h2>Your Current Department Budget</h2>
 
-
-
-<p>@Model</p>
+<p>The total expenses for your department is: $AUD @ViewBag.TotalExpenses</p>
+<p>The remaining budget for your department is: $AUD @ViewBag.RemainingBudget</p>

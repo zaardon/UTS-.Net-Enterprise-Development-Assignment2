@@ -1,22 +1,19 @@
 ﻿@model IEnumerable<BlueConsultingManagementSystem.Models.Report>
 
 @{
-    ViewBag.Title = "ViewReports";
+    ViewBag.Title = "Your Department Reports";
 }
 
-<h2>ViewReports</h2>
+<h2>Your Department Reports</h2>
 
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ReportName)
+            Report Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ConsultantName)
-        </th>
-        <th>
-            Department
+            Consultant Name
         </th>
         <th></th>
     </tr>
@@ -28,9 +25,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ConsultantName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.type)
         </td>
     </tr>
 }

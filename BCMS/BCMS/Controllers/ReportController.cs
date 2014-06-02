@@ -14,10 +14,12 @@ namespace BCMS.Controllers
 {
     public class ReportController : Controller
     {
-        readonly double DEFAULT_DEPT_BUDGET = Convert.ToDouble(ConfigurationManager.AppSettings["DefaultDepartmentBudget"]);
-        readonly double DEFAULT_TOTAL_BUDGET = Convert.ToDouble(ConfigurationManager.AppSettings["DefaultTotalBudget"]);
+        private readonly double DEFAULT_DEPT_BUDGET = Convert.ToDouble(ConfigurationManager.AppSettings["DefaultDepartmentBudget"]);
+        private readonly double DEFAULT_TOTAL_BUDGET = Convert.ToDouble(ConfigurationManager.AppSettings["DefaultTotalBudget"]);
+        private readonly DateTime START_OF_THIS_MONTH = DateTime.Today.AddDays(1 - DateTime.Today.Day);
         private BCMSContext db = new BCMSContext();
         private DBLogic DBL = new DBLogic();
+
         // GET: /Report/
         public ActionResult Index()
         {
@@ -60,8 +62,7 @@ namespace BCMS.Controllers
                 [Authorize(Roles = "Consultant")]
         // GET: /Report/Create
         public ActionResult Create()
-        {
-            
+        {          
             return View();
         }
 
@@ -78,13 +79,9 @@ namespace BCMS.Controllers
                 DBL.AddReport(report, User.Identity.Name.ToString());
                 return RedirectToAction("Details", new { id = report.ReportPK });
             }
-
             return View(report);
         }
 
-
-
-        //wtf is this ?
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -97,24 +94,20 @@ namespace BCMS.Controllers
         [Authorize(Roles="Consultant")]
         public ActionResult ConsultantSubmissions()
         {
-
             return View(db.Reports.Where(r => r.ConsultantName == User.Identity.Name).ToList());
         }
 
         [Authorize(Roles = "Consultant")]
         public ActionResult ConsultantApprovals()
         {
-
             return View(db.Reports.Where(r => r.ConsultantName == User.Identity.Name).Where(r => r.StaffApproval == "Approved").ToList());
         }
         [Authorize(Roles = "Consultant")]
         public ActionResult ConsultantAwaiting()
         {
-
             return View(db.Reports.Where(r => r.ConsultantName == User.Identity.Name && ( r.StaffApproval == null && r.SupervisorApproved != "Rejected")).ToList());
         }
 
-        //for supervisor/staff
         [Authorize(Roles = "Supervisor")]
         public ActionResult SupervisorReports()
         {
@@ -122,6 +115,7 @@ namespace BCMS.Controllers
 
             return View(db.Reports.Where(r => r.type == dept).Where(r => r.SupervisorApproved == "Submitted").ToList());         
         }
+
         [Authorize(Roles = "Supervisor")]
         public ActionResult SupervisorRejects()
         {
@@ -129,22 +123,24 @@ namespace BCMS.Controllers
 
             return View(db.Reports.Where(r => r.type == dept).Where(r => r.StaffApproval == "Rejected").ToList());
         }
+
         [Authorize(Roles = "Supervisor")]
         public ActionResult SupervisorBudget()
         {
             DepartmentType dept = DeptCheck();
-              double totalCurrency = 0;
-              //Add a 'for this month' part to the where part
-              foreach (var report in (db.Reports.Where(x => x.type == dept).Where(x => x.SupervisorApproved == "Approved" && x.StaffApproval != "Rejected")))
-             {
-                   foreach(var expense in report.Expenses)
-                 {                    
-                     totalCurrency = expense.ConvertedAmount + totalCurrency;
-                 }             
-            }
-            string budgetMessage = dept + " department expenses are: $" + totalCurrency +", with a remaining " + dept + " department budget of: $" + (10000.00 - totalCurrency);
-           
-            return View((object)budgetMessage);
+            double totalCurrency = 0;
+
+            foreach (var report in (db.Reports.Where(x => x.type == dept).Where(x => x.SupervisorApproved == "Approved" && x.StaffApproval != "Rejected").Where(x => x.DateOfApproval >= START_OF_THIS_MONTH || x.DateOfApproval == null)))
+            {
+                foreach(var expense in report.Expenses)
+                {                    
+                    totalCurrency = expense.ConvertedAmount + totalCurrency;
+                }             
+            }           
+            ViewBag.CurrentDepartment = dept;
+            ViewBag.TotalExpenses = totalCurrency;
+            ViewBag.RemainingBudget = (DEFAULT_DEPT_BUDGET - totalCurrency);
+            return View();
         }
 
         private DepartmentType DeptCheck()
@@ -172,13 +168,11 @@ namespace BCMS.Controllers
             double totalCurrency = 0;
             double supervisorCurrency = 0;
             //Add a 'for this month' part to the where part
-            foreach (var report in (db.Reports.Where(x => x.StaffApproval == "Approved")))
+            foreach (var report in (db.Reports.Where(x => x.StaffApproval == "Approved").Where(x => x.DateOfApproval >= START_OF_THIS_MONTH)))
             {
                 foreach (var expense in report.Expenses)
                 {
-                    //totalCurrency = expense.ConvertedAmount + totalCurrency;
                     totalCurrency += expense.ConvertedAmount;
-                    //supervisorCurrency = expense.ConvertedAmount + supervisorCurrency;
                     supervisorCurrency += expense.ConvertedAmount;
                 }
                 list.AddToList(report.SupervisorName, supervisorCurrency);
@@ -188,25 +182,23 @@ namespace BCMS.Controllers
             ViewBag.RemainingCompanyBudget = DEFAULT_TOTAL_BUDGET - totalCurrency;
             return View((object)list.ReturnSupervisors());
         }
+
         [Authorize(Roles = "Staff")]
         public ActionResult StaffReports()
         {
-            //double defaultBudget = Convert.ToDouble(ConfigurationManager.AppSettings["DefaultDepartmentBudget"]);
-            //I think this is for that colour thing
             ViewBag.HigherBudgetRemaining = (DEFAULT_DEPT_BUDGET - GetSpentBudgetForStaff(DepartmentType.HigherEducation));
             ViewBag.StateBudgetRemaining = (DEFAULT_DEPT_BUDGET - GetSpentBudgetForStaff(DepartmentType.State));
             ViewBag.LogisticsBudgetRemaining = (DEFAULT_DEPT_BUDGET - GetSpentBudgetForStaff(DepartmentType.Logistics));
 
             return View(db.Reports.Where(r => r.StaffApproval == null).Where(r => r.SupervisorApproved == "Approved").ToList());
         }
+
         [Authorize(Roles = "Supervisor")]
         [HttpGet]
         public ActionResult Approve(int? id)
         {
             if (GetReportCost(id) <= (DEFAULT_DEPT_BUDGET - GetSpentBudgetForSupervisor()))
             {
-                //db.Reports.Find(id).SupervisorName = User.Identity.Name;
-                //db.Reports.Find(id).SupervisorApproved = "Approved";
                 return RedirectToAction("ApproveCon", new {reportID = id});
             }
             else
@@ -225,15 +217,16 @@ namespace BCMS.Controllers
             {
                 amount = amount + exp.ConvertedAmount;
             }
-
             return amount;
         }
+
         [Authorize(Roles = "Supervisor")]
         public ActionResult ApproveCon(int? ReportID)
         {
             DBL.SupAppCon(ReportID, User.Identity.Name.ToString());
              return RedirectToAction("SupervisorReports");
         }
+
         [Authorize(Roles = "Supervisor")]
          public ActionResult Reject(int? id)
         {
@@ -245,12 +238,10 @@ namespace BCMS.Controllers
         {
             DepartmentType dept = DeptCheck();
             double totalCurrency = 0;
-            //Add a 'for this month' part to the where part
-            foreach (var report in (db.Reports.Where(x => x.type == dept).Where(x => x.SupervisorApproved == "Approved" && x.StaffApproval != "Rejected")))
+            foreach (var report in (db.Reports.Where(x => x.type == dept).Where(x => x.SupervisorApproved == "Approved" && x.StaffApproval != "Rejected").Where(x => x.DateOfApproval >= START_OF_THIS_MONTH || x.DateOfApproval == null)))
             {
                 foreach (var expense in report.Expenses)
                 {
-                    //totalCurrency = expense.ConvertedAmount + totalCurrency;
                     totalCurrency += expense.ConvertedAmount;
                 }
             }
@@ -263,8 +254,6 @@ namespace BCMS.Controllers
         {
             if (GetReportCost(id) <= (DEFAULT_DEPT_BUDGET - GetSpentBudgetForStaff(db.Reports.Find(id).type)))
             {
-                //db.Reports.Find(id).SupervisorName = User.Identity.Name;
-                //db.Reports.Find(id).SupervisorApproved = "Approved";
                 return RedirectToAction("StaffApprovalCon", new { id = id });
             }
             else
@@ -280,12 +269,10 @@ namespace BCMS.Controllers
         private double GetSpentBudgetForStaff(DepartmentType dept)
         {
             double totalCurrency = 0;
-            //Add a 'for this month' part to the where part
-            foreach (var report in (db.Reports.Where(x => x.type == dept).Where(x => x.StaffApproval == "Approved")))
+            foreach (var report in (db.Reports.Where(x => x.type == dept).Where(x => x.StaffApproval == "Approved").Where(x => x.DateOfApproval >= START_OF_THIS_MONTH)))
             {
                 foreach (var expense in report.Expenses)
                 {
-                    //totalCurrency = expense.ConvertedAmount + totalCurrency;
                     totalCurrency += expense.ConvertedAmount;
                 }
             }
@@ -305,6 +292,5 @@ namespace BCMS.Controllers
             DBL.StaffRej(id);
             return RedirectToAction("StaffReports");
         }
-
     }
 }

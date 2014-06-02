@@ -1,38 +1,31 @@
 ﻿@model IEnumerable<BlueConsultingManagementSystem.Models.Report>
 
 @{
-    ViewBag.Title = "ConsultantAwaiting";
+    ViewBag.Title = "Your Awaiting Reports";
 }
 
-<h2>ConsultantAwaiting</h2>
+<h2>Your Awaiting Reports</h2>
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ReportName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ConsultantName)
+            Report Name
         </th>
         <th>
             Department
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SupervisorApproved)
+            Supervisor Approval Status
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.StaffApproval)
+            Staff Approval Status
         </th>
-        <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-           @Html.ActionLink(item.ReportName, "Details", new { id = item.ReportPK })
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ConsultantName)
+           @Html.ActionLink(item.ReportName, "DetailsOnly", new { id = item.ReportPK })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.type)

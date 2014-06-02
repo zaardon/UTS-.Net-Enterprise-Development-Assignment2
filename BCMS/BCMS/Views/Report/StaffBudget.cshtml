@@ -1,14 +1,14 @@
 ﻿@model List<BCMS.Models.Supervisor>
 @{
-    ViewBag.Title = "StaffBudget";
+    ViewBag.Title = "Company Wide Budget";
 }
 
-<h2>StaffReports</h2>
+<h2>Company Wide Budget</h2>
 <p>
-    Total spent budget =$AUD @ViewBag.SpentCompanyBudget
+    Total spent budget = $AUD @ViewBag.SpentCompanyBudget
 </p>
 <p>
-    Total budget remaining =$AUD @ViewBag.RemainingCompanyBudget
+    Total budget remaining = $AUD @ViewBag.RemainingCompanyBudget
 </p>
 
 <table class="table">
@@ -17,9 +17,8 @@
             Name
         </th>
         <th>
-            Amount in $AUD
+            Amount ($AUD)
         </th>
-        <th></th>
     </tr>
 
     @foreach (BCMS.Models.Supervisor item in Model)
