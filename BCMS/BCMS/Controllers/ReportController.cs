@@ -128,14 +128,14 @@ namespace BCMS.Controllers
         public ActionResult SupervisorBudget()
         {
             DepartmentType dept = DeptCheck();
-              double totalCurrency = 0;
-              //Add a 'for this month' part to the where part
-              foreach (var report in (db.Reports.Where(x => x.type == dept).Where(x => x.SupervisorApproved == "Approved" && x.StaffApproval != "Rejected").Where(x => x.DateOfApproval >= START_OF_THIS_MONTH || x.DateOfApproval == null)))
-             {
-                   foreach(var expense in report.Expenses)
-                 {                    
-                     totalCurrency = expense.ConvertedAmount + totalCurrency;
-                 }             
+            double totalCurrency = 0;
+
+            foreach (var report in (db.Reports.Where(x => x.type == dept).Where(x => x.SupervisorApproved == "Approved" && x.StaffApproval != "Rejected").Where(x => x.DateOfApproval >= START_OF_THIS_MONTH || x.DateOfApproval == null)))
+            {
+                foreach(var expense in report.Expenses)
+                {                    
+                    totalCurrency = expense.ConvertedAmount + totalCurrency;
+                }             
             }           
             ViewBag.CurrentDepartment = dept;
             ViewBag.TotalExpenses = totalCurrency;

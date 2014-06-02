@@ -29,7 +29,7 @@
             Date of Expense
         </th>
         <th>
-            PDF receipt
+            PDF Receipt
         </th>
             </tr>
             @foreach (var exp in Model.Expenses)
@@ -62,7 +62,7 @@
                     </td>
                 </tr>
             }
-            <tr><td></td><td></td><td>Total Amount : $AUD @ViewBag.TotalReportCost</td><td></td></tr>
+            <tr><td></td><td></td><td></td><td>Total Amount : $AUD @ViewBag.TotalReportCost</td><td></td><td></td></tr>
             </table>
 
         if (User.IsInRole("Supervisor"))

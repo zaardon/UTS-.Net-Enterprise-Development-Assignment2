@@ -15,35 +15,59 @@
                     Description
                 </th>
                 <th>
+                    Location
+                </th>
+                <th>
                     Amount
                 </th>
                 <th>
                     Currency
                 </th>
-            </tr>
+                <th>
+                    Date of Expense
+                </th>
+                <th>
+                    PDF Receipt
+                </th>
+                </tr>
             @foreach (var exp in Model.Expenses)
             {
                 <tr>
                     <td>
-                        @Html.ActionLink(exp.Description, "Details", "Expense", new { id = exp.ExpensePK }, null)
+                        @exp.Description
+                    </td>
+                    <td>
+                        @exp.Location
                     </td>
                     <td>
                         @exp.Amount
-                        
                     </td>
                     <td>
                         @exp.CType
-                        
                     </td>
+                    <td>
+                        @exp.DateOfExpense
+                    </td>
+                    <td>
+                        @if (exp.PDFFile != null)
+                        {
+                            @Html.ActionLink("PDF", "PDFView", "Expense", new { id = exp.ExpensePK }, null)
+                        }
+                        else
+                        {
+
+                        }
+                    </td>
+
                 </tr>
             }
-            <tr><td></td><td>Total Amount : @ViewBag.TotalForReport</td><td></td></tr>
+            <tr><td></td><td></td><td></td><td>Total Amount : $AUD @ViewBag.TotalForReport</td><td></td><td></td></tr>
         </table>
     }
     
     <h2> Are you sure you wish to confirm this report </h2>
-    <p> it's over the @Model.type.ToString() total budget  of @ViewBag.TotalBudgetRemaining</p>
-    <p> this report is worth @ViewBag.TotalForReport and would be over budget</p>
+    <p> it's over the @Model.type.ToString() total budget of $AUD @ViewBag.TotalBudgetRemaining</p>
+    <p> this report is worth $AUD @ViewBag.TotalForReport and would be over budget</p>
 
     @Html.ActionLink("Confirm approval", "ApproveCon", "Report", new { ReportID = Model.ReportPK }, null)
     @Html.ActionLink("Reject Report", "Reject", "Report", new { id = Model.ReportPK }, null)

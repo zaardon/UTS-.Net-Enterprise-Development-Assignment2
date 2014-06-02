@@ -20,13 +20,15 @@
         <th>
             Staff Approval Status
         </th>
-        <th></th>
+        <th>
+            Date of Approval
+        </th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink(item.ReportName, "Details", new { id = item.ReportPK })
+            @Html.ActionLink(item.ReportName, "DetailsOnly", new { id = item.ReportPK })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.type)
@@ -36,6 +38,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.StaffApproval)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateOfApproval)
         </td>
     </tr>
 }
