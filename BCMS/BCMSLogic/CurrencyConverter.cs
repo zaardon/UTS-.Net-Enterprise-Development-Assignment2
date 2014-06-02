@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Configuration;
 
 namespace BCMS.Models
 {
     public class CurrencyConverter
     {
         private readonly double EUR = 1.49, CNY = 0.172175, AUD = 1.00;
-
         /*
          * Converts the foreign currency amount into AUD.
          */

@@ -7,7 +7,6 @@ namespace BCMS.Models
 {
     public class Supervisor
     {
-
         private string name;
         private double amount;
 
@@ -27,6 +26,7 @@ namespace BCMS.Models
             return name;
         }
 
+        //Replaces the current expense amount with an updated value
         public void SetAmount(double amount)
         {
             this.amount = amount;

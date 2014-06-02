@@ -60,6 +60,7 @@ namespace BCMS.Controllers
             return View(report);
         }
                 [Authorize(Roles = "Consultant")]
+
         // GET: /Report/Create
         public ActionResult Create()
         {          
@@ -67,8 +68,6 @@ namespace BCMS.Controllers
         }
 
         // POST: /Report/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize(Roles = "Consultant")]
         [HttpPost]
         [ValidateAntiForgeryToken]

@@ -15,9 +15,12 @@ namespace BCMS.Models
             list = new List<Supervisor>();
         }
 
+        /*
+         * This method creates a Supervisor object (based on a name and a total amount of expense spending)
+         * and adds them to a List of Supervisors.
+         */
         public void AddToList(string name, double amount)
         {
-
             if (list.Count() == 0)
             {
                 list.Add(new Supervisor(name, amount));
@@ -31,7 +34,6 @@ namespace BCMS.Models
                         list[i].SetAmount(amount + list[i].ReturnAmount());
                         break;
                     }
-
                     if (i == (list.Count()-1))
                     {
                         list.Add(new Supervisor(name, amount));

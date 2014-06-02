@@ -6,5 +6,5 @@ C:\Users\Alex\Documents\GitHub\DotNetAssign2\BCMS\BCMSLogic\bin\Debug\BCMSLogic.
 C:\Users\Alex\Documents\GitHub\DotNetAssign2\BCMS\BCMSLogic\bin\Debug\BCMSLogic.pdb
 C:\Users\Alex\Documents\GitHub\DotNetAssign2\BCMS\BCMSLogic\obj\Debug\BCMSLogic.dll
 C:\Users\Alex\Documents\GitHub\DotNetAssign2\BCMS\BCMSLogic\obj\Debug\BCMSLogic.pdb
-C:\Users\Alex\Documents\GitHub\DotNetAssign2\BCMS\BCMSLogic\obj\Debug\BCMSLogic.csprojResolveAssemblyReference.cache
 C:\Users\asmith\Documents\GitHub\DotNetAssign2\BCMS\BCMSLogic\obj\Debug\BCMSLogic.csprojResolveAssemblyReference.cache
+C:\Users\Alex\Documents\GitHub\DotNetAssign2\BCMS\BCMSLogic\bin\Debug\BCMSLogic.dll.config
