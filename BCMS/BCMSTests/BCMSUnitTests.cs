@@ -12,6 +12,9 @@ namespace BCMSTests
         private BlueConsultingManagementSystem.Models.Report report = new BlueConsultingManagementSystem.Models.Report();
         private BlueConsultingManagementSystem.Models.Expense expense = new BlueConsultingManagementSystem.Models.Expense();
             
+        /*
+         * This tests the programs ability to currency convert
+         */
         [TestMethod]
         public void CurrencyConversionTest()
         {
@@ -25,6 +28,9 @@ namespace BCMSTests
             Assert.AreEqual(0, expected);
         }
 
+        /*
+        * This tests the programs ability to use currency types
+        */
         [TestMethod]
         public void CurrencyTypeTest()
         {
@@ -33,6 +39,9 @@ namespace BCMSTests
             Assert.AreEqual("EUR", BCMS.Models.CurrencyType.EUR.ToString());
         }
 
+        /*
+        * This tests the programs ability to use department types
+        */
         [TestMethod]
         public void DepartmentTypeTest()
         {
@@ -41,6 +50,9 @@ namespace BCMSTests
             Assert.AreEqual("Logistics", BCMS.Models.DepartmentType.Logistics.ToString());
         }
 
+        /*
+        * This tests the functioanlity of creating a list of supervisor expenses
+        */
         [TestMethod]
         public void SupervisorExpenseListCreationTest()
         {
@@ -57,6 +69,9 @@ namespace BCMSTests
             Assert.AreEqual(8000, super.ReturnAmount());
         }
 
+        /*
+        * This tests the functionality of creating a Supervisor object for expense pairing
+        */
         [TestMethod]
         public void SupervisorAndExpensesPairingTest()
         {
@@ -67,6 +82,9 @@ namespace BCMSTests
             Assert.AreEqual(800, super.ReturnAmount());
         }
 
+        /*
+        * This tests the functionality of creating and submitting a report as a consultant
+        */
         [TestMethod]
         public void ReportConsultantSubmissionTest()
         {
@@ -82,6 +100,9 @@ namespace BCMSTests
             Assert.AreEqual("Submitted", report.SupervisorApproved);
         }
 
+        /*
+        * This tests the functionality of approving a report as a supervisor
+        */
         [TestMethod]
         public void ReportSupervisorApproveTest()
         {
@@ -91,6 +112,9 @@ namespace BCMSTests
             Assert.AreEqual("Approved", report.SupervisorApproved);
         }
 
+        /*
+        * This tests the functionality of rejecting a report as a supervisor
+        */
         [TestMethod]
         public void ReportSupervisorRejectTest()
         {
@@ -98,6 +122,9 @@ namespace BCMSTests
             Assert.AreEqual("Rejected", report.SupervisorApproved);
         }
 
+        /*
+        * This tests the functionality of approving a report as a staff member
+        */
         [TestMethod]
         public void ReportStaffApproveTest()
         {
@@ -107,12 +134,18 @@ namespace BCMSTests
             Assert.AreEqual(DateTime.Now.Date, report.DateOfApproval);
         }
 
+        /*
+        * This tests the functionality of rejecting a report as a staff member
+        */
         public void ReportStaffRejectTest()
         {
             report.SetStaffStatusToRejected();
             Assert.AreEqual("Rejected", report.StaffApproval);
         }
 
+        /*
+        * This tests the functionality of creating an expense as a consultant
+        */
         [TestMethod]
         public void ExpenseCreationTest()
         {
@@ -132,6 +165,9 @@ namespace BCMSTests
             Assert.AreEqual(DateTime.Now.Date, expense.DateOfExpense);           
         }
 
+        /*
+        * This tests the functionality of an expense converting is currency amount
+        */
         [TestMethod]
         public void ExpenseConversionTest()
         {
@@ -142,6 +178,9 @@ namespace BCMSTests
             Assert.AreNotSame(555.5, testAmount);
         }
 
+        /*
+        * This tests the functionality of adding an expense to the expense list on the report model
+        */
         [TestMethod]
         public void ReportAddExpenseToReportTest()
         {           
