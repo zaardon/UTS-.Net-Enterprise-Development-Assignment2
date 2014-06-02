@@ -27,36 +27,36 @@ namespace BCMS.Controllers
         }
 
         // GET: /Report/Details/5
-        public ActionResult Details(int? ReportID)
+        public ActionResult Details(int? id)
         {
-            if (ReportID == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Report report = db.Reports.Find(ReportID);
+            Report report = db.Reports.Find(id);
             if (report == null)
             {
                 return HttpNotFound();
             }
             Session["ReportID"] = null;
-            ViewBag.TotalReportCost = GetReportCost(ReportID);
+            ViewBag.TotalReportCost = GetReportCost(id);
             return View(report);
         }
 
         // GET: /Report/Details/5
-        public ActionResult DetailsOnly(int? ReportID)
+        public ActionResult DetailsOnly(int? id)
         {
-            if (ReportID == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Report report = db.Reports.Find(ReportID);
+            Report report = db.Reports.Find(id);
             if (report == null)
             {
                 return HttpNotFound();
             }
             Session["ReportID"] = null;
-            ViewBag.TotalReportCost = GetReportCost(ReportID);
+            ViewBag.TotalReportCost = GetReportCost(id);
             return View(report);
         }
                 [Authorize(Roles = "Consultant")]
@@ -76,7 +76,7 @@ namespace BCMS.Controllers
             if (ModelState.IsValid)
             {
                 DBL.AddReport(report, User.Identity.Name.ToString());
-                return RedirectToAction("Details", new { ReportID = report.ReportPK });
+                return RedirectToAction("Details", new { id = report.ReportPK });
             }
             return View(report);
         }
@@ -210,17 +210,17 @@ namespace BCMS.Controllers
         // this displays the report to be approved for supervisors 
         [Authorize(Roles = "Supervisor")]
         [HttpGet]
-        public ActionResult Approve(int? ReportID)
+        public ActionResult Approve(int? id)
         {
             // if it's over budget it sends to a confirmation page to be super approved(pun intended)
-            if (GetReportCost(ReportID) <= (DEFAULT_DEPT_BUDGET - GetSpentBudgetForSupervisor()))
+            if (GetReportCost(id) <= (DEFAULT_DEPT_BUDGET - GetSpentBudgetForSupervisor()))
             {
-                return RedirectToAction("ApproveCon", new {reportID = ReportID});
+                return RedirectToAction("ApproveCon", new {reportID = id});
             }
             else
             {
-                Report report = db.Reports.Find(ReportID);
-                ViewBag.TotalForReport = GetReportCost(ReportID);
+                Report report = db.Reports.Find(id);
+                ViewBag.TotalForReport = GetReportCost(id);
                 ViewBag.TotalBudgetRemaining = (DEFAULT_DEPT_BUDGET - GetSpentBudgetForSupervisor());
                 return View(report);
             }
@@ -246,9 +246,9 @@ namespace BCMS.Controllers
         //GET /REPORT/Reject/ReportID(7 etc)
         //  just rejects a report _ redirects
         [Authorize(Roles = "Supervisor")]
-         public ActionResult Reject(int? ReportID)
+         public ActionResult Reject(int? id)
         {
-            DBL.SupRej(ReportID, User.Identity.Name.ToString());
+            DBL.SupRej(id, User.Identity.Name.ToString());
             return RedirectToAction("SupervisorReports");
         }
         // this returns the spent budget for a supervisor in a department
@@ -270,17 +270,17 @@ namespace BCMS.Controllers
        // you get the report id you want to approve and check if it's over budget and then process it accordingly 
         [Authorize(Roles = "Staff")]
         [HttpGet]
-        public ActionResult StaffApproval(int? ReportID)
+        public ActionResult StaffApproval(int? id)
         {
-            if (GetReportCost(ReportID) <= (DEFAULT_DEPT_BUDGET - GetSpentBudgetForStaff(db.Reports.Find(ReportID).type)))
+            if (GetReportCost(id) <= (DEFAULT_DEPT_BUDGET - GetSpentBudgetForStaff(db.Reports.Find(id).type)))
             {
-                return RedirectToAction("StaffApprovalCon", new { ReportID = ReportID });
+                return RedirectToAction("StaffApprovalCon", new { id = id });
             }
             else
             {
-                Report report = db.Reports.Find(ReportID);
-                ViewBag.TotalForReport = GetReportCost(ReportID);
-                ViewBag.TotalBudgetRemaining = (DEFAULT_DEPT_BUDGET - GetSpentBudgetForStaff(db.Reports.Find(ReportID).type));
+                Report report = db.Reports.Find(id);
+                ViewBag.TotalForReport = GetReportCost(id);
+                ViewBag.TotalBudgetRemaining = (DEFAULT_DEPT_BUDGET - GetSpentBudgetForStaff(db.Reports.Find(id).type));
                 return View(report);
             }
         }
@@ -301,17 +301,17 @@ namespace BCMS.Controllers
         //GET /REPORT/StaffApprovalCon/ReportID(278 etc)
         // this approves a report on staff  level and redirects 
         [Authorize(Roles = "Staff")]
-        public ActionResult StaffApprovalCon(int? ReportID)
+        public ActionResult StaffApprovalCon(int? id)
         {
-            DBL.StaffAppCon(ReportID);
+            DBL.StaffAppCon(id);
             return RedirectToAction("StaffReports");
         }
         //GET /REPORT/StaffReject/ReportID(1337 , 9001, etc)
         // this rejects on staff level and redirects 
         [Authorize(Roles = "Staff")]
-        public ActionResult StaffReject(int? ReportID)
+        public ActionResult StaffReject(int? id)
         {
-            DBL.StaffRej(ReportID);
+            DBL.StaffRej(id);
             return RedirectToAction("StaffReports");
         }
     }

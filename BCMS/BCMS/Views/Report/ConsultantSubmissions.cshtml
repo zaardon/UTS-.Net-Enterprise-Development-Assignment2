@@ -28,7 +28,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink(item.ReportName, "DetailsOnly", new { ReportID = item.ReportPK })
+            @Html.ActionLink(item.ReportName, "DetailsOnly", new { id = item.ReportPK })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.type)
