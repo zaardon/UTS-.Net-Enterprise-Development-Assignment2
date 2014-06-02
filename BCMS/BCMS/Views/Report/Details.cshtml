@@ -68,18 +68,23 @@
         if (User.IsInRole("Supervisor"))
         {
             <div class="btn btn-info">
-                @Html.ActionLink("Approve Report", "Approve", "Report", new { id = Model.ReportPK }, null)
+                @Html.ActionLink("Approve Report", "Approve", "Report", new { id = Model.ReportPK }, new { @style = "color:#000000;" })
             </div>
-    <div class="btn btn-danger">
-        @Html.ActionLink("Reject Report", "Reject", "Report", new { id = Model.ReportPK }, null)
-    </div>
-      <p>@Html.ActionLink("Back to reports list", "SupervisorReports", "Report")</p>  
-    }
-     else if (User.IsInRole("Staff"))
-     {
-         @Html.ActionLink("Approve Report", "StaffApproval", "Report", new { id = Model.ReportPK }, null)
-        @Html.ActionLink("Reject Report", "StaffReject", "Report", new { id = Model.ReportPK }, null)
-     }
+            <div class="btn btn-danger">
+                @Html.ActionLink("Reject Report", "Reject", "Report", new { id = Model.ReportPK }, new { @style = "color:#000000;" })
+            </div>
+            <p>@Html.ActionLink("Back to reports list", "SupervisorReports", "Report")</p>  
+        }
+         else if (User.IsInRole("Staff"))
+         {
+             <div class="btn btn-info">
+             @Html.ActionLink("Approve Report", "StaffApproval", "Report", new { id = Model.ReportPK }, new { @style = "color:#000000;" })
+             </div>
+            <div class="btn btn-danger">
+                @Html.ActionLink("Reject Report", "StaffReject", "Report", new { id = Model.ReportPK }, new { @style = "color:#000000;" })
+            </div>
+            <p>@Html.ActionLink("Back to reports list", "StaffReports", "Report")</p>  
+         }
     }
     else if (User.IsInRole("Staff") || User.IsInRole("Supervisor"))
     {

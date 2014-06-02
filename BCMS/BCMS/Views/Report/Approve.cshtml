@@ -1,7 +1,7 @@
 ﻿@model BlueConsultingManagementSystem.Models.Report
 
 @{
-    ViewBag.Title = "Approve";
+    ViewBag.Title = "Confirm Your Approval";
 }
 <h2>Details</h2>
 <div>
@@ -65,11 +65,16 @@
         </table>
     }
     
-    <h2> Are you sure you wish to confirm this report </h2>
-    <p> it's over the @Model.type.ToString() total budget of $AUD @ViewBag.TotalBudgetRemaining</p>
-    <p> this report is worth $AUD @ViewBag.TotalForReport and would be over budget</p>
+    <h2> Are you sure you wish to confirm this report?</h2>
+    <p> This report is over the @Model.type.ToString() total budget of $AUD @ViewBag.TotalBudgetRemaining.</p>
+    <p> This report is worth $AUD @ViewBag.TotalForReport and would be over budget</p>
 
-    @Html.ActionLink("Confirm approval", "ApproveCon", "Report", new { ReportID = Model.ReportPK }, null)
-    @Html.ActionLink("Reject Report", "Reject", "Report", new { id = Model.ReportPK }, null)
-</div>
+    <div class="btn btn-info">
+        @Html.ActionLink("Confirm approval", "ApproveCon", "Report", new { ReportID = Model.ReportPK }, new { @style = "color:#000000;" })
+        </div>
+    <div class="btn btn-danger">
+        @Html.ActionLink("Reject Report", "Reject", "Report", new { id = Model.ReportPK }, new { @style = "color:#000000;" })
+        </div>
+    <p>@Html.ActionLink("Back to reports list", "SupervisorReports", "Report")</p>  
+    </div>
 
