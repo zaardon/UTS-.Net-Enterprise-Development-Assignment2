@@ -1,24 +1,24 @@
 ﻿@model IEnumerable<BlueConsultingManagementSystem.Models.Report>
 
 @{
-    ViewBag.Title = "ConsultantSubmissions";
+    ViewBag.Title = "Your Submitted Reports";
 }
 
-<h2>ConsultantSubmissions</h2>
+<h2>Your Submitted Reports</h2>
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ReportName)
+            Report Name
         </th>
         <th>
            Department
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SupervisorApproved)
+            Supervisor Approval Status
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.StaffApproval)
+            Staff Approval Status
         </th>
         <th></th>
     </tr>

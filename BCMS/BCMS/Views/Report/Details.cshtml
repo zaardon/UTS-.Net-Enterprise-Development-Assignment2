@@ -1,10 +1,10 @@
 ﻿@model BlueConsultingManagementSystem.Models.Report
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Report Expense Details";
 }
 
-<h2>Details</h2>
+<h2>Report Expense Details</h2>
 
 <div>
     <h4>Report: @Model.ReportName</h4>
@@ -84,7 +84,6 @@
     else if (User.IsInRole("Staff") || User.IsInRole("Supervisor"))
     {
         @: No expenses to approve
-
     }
 
     @if(User.IsInRole("Consultant")){

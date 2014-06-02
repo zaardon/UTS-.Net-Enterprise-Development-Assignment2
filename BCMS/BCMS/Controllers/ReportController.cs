@@ -62,8 +62,7 @@ namespace BCMS.Controllers
                 [Authorize(Roles = "Consultant")]
         // GET: /Report/Create
         public ActionResult Create()
-        {
-            
+        {          
             return View();
         }
 
@@ -140,10 +139,11 @@ namespace BCMS.Controllers
                  {                    
                      totalCurrency = expense.ConvertedAmount + totalCurrency;
                  }             
-            }
-            string budgetMessage = dept + " department expenses are: $" + totalCurrency +", with a remaining " + dept + " department budget of: $" + (10000.00 - totalCurrency);
-           
-            return View((object)budgetMessage);
+            }           
+            ViewBag.CurrentDepartment = dept;
+            ViewBag.TotalExpenses = totalCurrency;
+            ViewBag.RemainingBudget = (DEFAULT_DEPT_BUDGET - totalCurrency);
+            return View();
         }
 
         private DepartmentType DeptCheck()

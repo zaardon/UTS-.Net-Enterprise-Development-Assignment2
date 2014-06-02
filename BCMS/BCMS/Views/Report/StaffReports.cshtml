@@ -1,21 +1,21 @@
 ﻿@model IEnumerable<BlueConsultingManagementSystem.Models.Report>
 
 @{
-    ViewBag.Title = "StaffReports";
+    ViewBag.Title = "Pending Staff Approvals";
 }
 
-<h2>StaffReports</h2>
+<h2>Pending Staff Approvals</h2>
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ReportName)
+            Report Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ConsultantName)
+            Consultant Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.type)
+            Department
         </th>
         <th>
             Approved by
@@ -63,9 +63,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SupervisorName)
-            </td>
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.ReportPK }) |
             </td>
         </tr>
     }
