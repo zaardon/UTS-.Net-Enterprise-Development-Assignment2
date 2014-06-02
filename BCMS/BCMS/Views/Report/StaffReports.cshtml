@@ -35,7 +35,7 @@
     {
         <tr bgcolor="#BFEFFF">
             <td>
-                @Html.ActionLink(item.ReportName, "Details", new { id = item.ReportPK })
+                @Html.ActionLink(item.ReportName, "Details", new { ReportID = item.ReportPK })
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ConsultantName)
@@ -51,7 +51,7 @@
     {
         <tr>
             <td>
-                @Html.ActionLink(item.ReportName, "Details", new { id = item.ReportPK })
+                @Html.ActionLink(item.ReportName, "Details", new { ReportID = item.ReportPK })
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ConsultantName)

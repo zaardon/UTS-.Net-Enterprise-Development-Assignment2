@@ -74,7 +74,7 @@
         @Html.ActionLink("Confirm approval", "ApproveCon", "Report", new { ReportID = Model.ReportPK }, new { @style = "color:#000000;" })
         </div>
     <div class="btn btn-danger">
-        @Html.ActionLink("Reject Report", "Reject", "Report", new { id = Model.ReportPK }, new { @style = "color:#000000;" })
+        @Html.ActionLink("Reject Report", "Reject", "Report", new { ReportID = Model.ReportPK }, new { @style = "color:#000000;" })
         </div>
     <p>@Html.ActionLink("Back to reports list", "SupervisorReports", "Report")</p>  
     </div>
