@@ -13,7 +13,7 @@ namespace BCMSTests
         private BlueConsultingManagementSystem.Models.Expense expense = new BlueConsultingManagementSystem.Models.Expense();
             
         [TestMethod]
-        public void CurrencyTest()
+        public void CurrencyConversionTest()
         {
             double expected;
             BCMS.Models.CurrencyConverter cc = new BCMS.Models.CurrencyConverter();
@@ -42,7 +42,7 @@ namespace BCMSTests
         }
 
         [TestMethod]
-        public void SupervisorListTest()
+        public void SupervisorExpenseListCreationTest()
         {
             BCMS.Models.SupervisorList sl = new BCMS.Models.SupervisorList();
             Assert.AreEqual(0, sl.ReturnSupervisors().Count);
@@ -58,7 +58,7 @@ namespace BCMSTests
         }
 
         [TestMethod]
-        public void SupervisorTest()
+        public void SupervisorAndExpensesPairingTest()
         {
             BCMS.Models.Supervisor super = new BCMS.Models.Supervisor("Bill", 500);
             Assert.AreEqual(500, super.ReturnAmount());
@@ -114,7 +114,7 @@ namespace BCMSTests
         }
 
         [TestMethod]
-        public void ExpenseTest()
+        public void ExpenseCreationTest()
         {
             expense.ExpensePK = 999;
             Assert.AreEqual(999, expense.ExpensePK);
@@ -150,15 +150,6 @@ namespace BCMSTests
             report.Expenses.Add(expense);
             Assert.AreEqual(1, report.Expenses.Count);
             Assert.IsNotNull(report.Expenses);
-        }
-
-        public void DBLogicTests()
-        {
-            BCMS.Models.DBLogic DBL = new BCMS.Models.DBLogic();
-            DBL.AddReport(report, "bill");
-            Assert.IsNotNull(DBL.db.Reports);
-           
-
         }
     }
 }
