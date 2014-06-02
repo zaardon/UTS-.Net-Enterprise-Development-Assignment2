@@ -30,6 +30,7 @@
     {
         totalOfReport = exp.ConvertedAmount + totalOfReport;
     }
+    @* this checks to see if it goes over budget and then highlights   *@
     if (((totalOfReport > @ViewBag.HigherBudgetRemaining) && (item.type == BCMS.Models.DepartmentType.HigherEducation)) || ((totalOfReport > @ViewBag.StateBudgetRemaining) && (item.type == BCMS.Models.DepartmentType.State)) || ((totalOfReport > @ViewBag.LogisticsBudgetRemaining) && (item.type == BCMS.Models.DepartmentType.Logistics)))
     {
         <tr bgcolor="#BFEFFF">

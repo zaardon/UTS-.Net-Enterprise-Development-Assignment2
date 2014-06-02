@@ -31,6 +31,7 @@
                     PDF Receipt
                 </th>
             </tr>
+            @* just displaying the expenses *@
             @foreach (var exp in Model.Expenses)
             {
                 <tr>
@@ -64,6 +65,7 @@
             <tr><td></td><td></td><td></td><td>Total Amount : $AUD @ViewBag.TotalReportCost</td><td></td><td></td></tr>
         </table>
     }
+    @* more so for just displaying . *@
     else if (User.IsInRole("Staff") || User.IsInRole("Supervisor"))
     {
         @: No expenses to approve

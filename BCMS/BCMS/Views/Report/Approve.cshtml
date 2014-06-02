@@ -30,6 +30,7 @@
                     PDF Receipt
                 </th>
                 </tr>
+            @*Displays all the expenses from one report on this page  *@
             @foreach (var exp in Model.Expenses)
             {
                 <tr>
@@ -64,7 +65,7 @@
             <tr><td></td><td></td><td></td><td>Total Amount : $AUD @ViewBag.TotalForReport</td><td></td><td></td></tr>
         </table>
     }
-    
+    @* if this will force the budget to be negative this will appear  *@
     <h2> Are you sure you wish to confirm this report?</h2>
     <p> This report is over the @Model.type.ToString() total budget of $AUD @ViewBag.TotalBudgetRemaining.</p>
     <p> This report is worth $AUD @ViewBag.TotalForReport and would be over budget</p>

@@ -32,6 +32,7 @@
             PDF Receipt
         </th>
             </tr>
+            @* displays all the expenses in the report nothing crazy going on here *@
             @foreach (var exp in Model.Expenses)
             {
                 <tr>
@@ -64,9 +65,13 @@
             }
             <tr><td></td><td></td><td></td><td>Total Amount : $AUD @ViewBag.TotalReportCost</td><td></td><td></td></tr>
             </table>
-
+        @* This is split into three user options 
+            supervisor - approve or reject
+            staff - Approve or reject 
+            consultant - can just add more expenses *@
         if (User.IsInRole("Supervisor"))
         {
+           
             <div class="btn btn-info">
                 @Html.ActionLink("Approve Report", "Approve", "Report", new { id = Model.ReportPK }, new { @style = "color:#000000;" })
             </div>

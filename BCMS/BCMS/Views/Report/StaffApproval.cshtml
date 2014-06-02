@@ -1,5 +1,5 @@
 ﻿@model BlueConsultingManagementSystem.Models.Report
-
+@*this is the confirmation page for checking if you want to approve above budgets.  *@
 @{
     ViewBag.Title = "Confirm Your Approval";
 }
@@ -70,7 +70,7 @@
             <p> This report is worth $AUD @ViewBag.TotalForReport and would be over budget</p>
 
     <div class="btn btn-info">
-        
+        @* staff only options  *@
         @Html.ActionLink("Confirm Approval", "StaffApprovalCon", "Report", new { id = Model.ReportPK }, new { @style="color:#000000;"})
         </div>
     <div class="btn btn-danger">

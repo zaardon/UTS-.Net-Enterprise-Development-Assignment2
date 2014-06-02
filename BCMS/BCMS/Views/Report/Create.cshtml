@@ -27,19 +27,13 @@
         <div class="form-group">
     @Html.LabelFor(model => model.type, "Department Type:" ,new { @class = "control-label col-md-2" })
             <div class="col-md-10">
+                
                 @Html.DropDownListFor(model => model.type, new[]{
            new SelectListItem {Text = "Higher Education", Value = "HigherEducation"},
            new SelectListItem {Text = "Logistics", Value = "Logistics"},
            new SelectListItem {Text = "State", Value = "State"}})
             </div>
         </div>
-
-        @Html.ValidationMessageFor(model => model.SupervisorName)
-        @Html.ValidationMessageFor(model => model.StaffApproval)
-        @Html.ValidationMessageFor(model => model.SupervisorApproved)
-        @Html.ValidationMessageFor(model => model.ConsultantName)
-        @Html.ValidationMessageFor(model => model.DateOfApproval)
-        @Html.ValidationMessageFor(model => model.ReportPK)
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
