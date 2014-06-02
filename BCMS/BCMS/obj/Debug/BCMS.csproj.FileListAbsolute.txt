@@ -219,7 +219,6 @@ C:\Users\James\Desktop\Ent2\DotNetAssign2\BCMS\BCMS\obj\Debug\BCMS.csprojResolve
 C:\Users\asmith\Documents\GitHub\DotNetAssign2\BCMS\BCMS\obj\Debug\BCMS.csprojResolveAssemblyReference.cache
 C:\Users\asmith\Documents\GitHub\DotNetAssign2\BCMS\BCMS\bin\BCMSLogic.dll
 C:\Users\asmith\Documents\GitHub\DotNetAssign2\BCMS\BCMS\bin\BCMSLogic.pdb
-C:\Users\Alex\Documents\GitHub\DotNetAssign2\BCMS\BCMS\bin\BCMS.dll.config
 C:\Users\Alex\Documents\GitHub\DotNetAssign2\BCMS\BCMS\bin\BCMS.dll
 C:\Users\Alex\Documents\GitHub\DotNetAssign2\BCMS\BCMS\bin\BCMS.pdb
 C:\Users\Alex\Documents\GitHub\DotNetAssign2\BCMS\BCMS\bin\Antlr3.Runtime.dll
