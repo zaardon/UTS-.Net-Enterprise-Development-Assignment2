@@ -13,7 +13,7 @@ namespace BCMS.Models
 {
     public class DBLogic{
 
-        private BCMSContext db = new BCMSContext();
+        public BCMSContext db = new BCMSContext();
         public void StaffAppCon(int? ReportID)
         {
             //db.Reports.Find(ReportID).StaffApproval = "Approved";

@@ -14,9 +14,9 @@ namespace BCMS.Controllers
 {
     public class ReportController : Controller
     {
-        readonly double DEFAULT_DEPT_BUDGET = Convert.ToDouble(ConfigurationManager.AppSettings["DefaultDepartmentBudget"]);
-        readonly double DEFAULT_TOTAL_BUDGET = Convert.ToDouble(ConfigurationManager.AppSettings["DefaultTotalBudget"]);
-        private DateTime START_OF_THIS_MONTH = DateTime.Today.AddDays(1 - DateTime.Today.Day);
+        private readonly double DEFAULT_DEPT_BUDGET = Convert.ToDouble(ConfigurationManager.AppSettings["DefaultDepartmentBudget"]);
+        private readonly double DEFAULT_TOTAL_BUDGET = Convert.ToDouble(ConfigurationManager.AppSettings["DefaultTotalBudget"]);
+        private readonly DateTime START_OF_THIS_MONTH = DateTime.Today.AddDays(1 - DateTime.Today.Day);
         private BCMSContext db = new BCMSContext();
         private DBLogic DBL = new DBLogic();
 
