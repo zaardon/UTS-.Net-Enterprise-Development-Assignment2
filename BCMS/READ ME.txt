@@ -1,0 +1,29 @@
+Assignment 2
+
+Alexander Smith - 11303563
+James Chahwan - 11466188
+
+******************************************************************************************************
+Simply run the program and you will be presented with a welcome screen. To advance to any functionality,
+you are required to login with one of the below accounts. The functionality is presented in the top
+header bar buttons.
+
+*******************************************************************************************************
+
+---------ACCOUNTS---------
+** All passwords are "qwerty!" **
+
+Consultants:
+-Bill
+-Jeff
+
+Supervisors:
+-James (HigherEducation)
+-Alex (State)
+-Nicole (Logistics)
+-Higher (HigherEducation)
+-State (State)
+-Logistics (Logistics)
+
+Staff:
+-Staff
