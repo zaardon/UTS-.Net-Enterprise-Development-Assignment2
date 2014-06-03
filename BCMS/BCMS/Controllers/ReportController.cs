@@ -27,6 +27,7 @@ namespace BCMS.Controllers
         }
 
         // GET: /Report/Details/5
+        //This provides an expense details view that allows an consultant to add more expenses
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -44,6 +45,7 @@ namespace BCMS.Controllers
         }
 
         // GET: /Report/Details/5
+        //This provides an expense details view that does not allow the user to add more expenses
         public ActionResult DetailsOnly(int? id)
         {
             if (id == null)
@@ -59,7 +61,8 @@ namespace BCMS.Controllers
             ViewBag.TotalReportCost = GetReportCost(id);
             return View(report);
         }
-                [Authorize(Roles = "Consultant")]
+
+        [Authorize(Roles = "Consultant")]
         // GET: /Report/Create
         public ActionResult Create()
         {          
@@ -67,7 +70,7 @@ namespace BCMS.Controllers
         }
 
         // POST: /Report/Create
-      // this makes  report and posts the id for the redirct 
+        //This creates a report and posts the ID for the redirct 
         [Authorize(Roles = "Consultant")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -90,14 +93,14 @@ namespace BCMS.Controllers
             base.Dispose(disposing);
         }
         // GET /REPORT/ConsultantSubmissions
-        // this is just for user identified submissions
+        //This provides a list of user identified consultant submissions that have been submitted (a complete history)
         [Authorize(Roles="Consultant")]
         public ActionResult ConsultantSubmissions()
         {
             return View(db.Reports.Where(r => r.ConsultantName == User.Identity.Name).ToList());
         }
         // GET  /REPORT/ConsultantApprovals
-        // this for consultant user identified submission that have been approved 
+        //This provides a list of user identified consultant submissions that have been approved
         [Authorize(Roles = "Consultant")]
         public ActionResult ConsultantApprovals()
         {
@@ -105,14 +108,14 @@ namespace BCMS.Controllers
         }
 
         //GET /REPORT/ConsulantAwaiting 
-        // this just displays reports that the consultant submitted that is waiting to be approved.
+        //This provides a list of user identified consultant submissions that are pending to be reviewed
         [Authorize(Roles = "Consultant")]
         public ActionResult ConsultantAwaiting()
         {
             return View(db.Reports.Where(r => r.ConsultantName == User.Identity.Name && ( r.StaffApproval == null && r.SupervisorApproved != "Rejected")).ToList());
         }
         //GET /REPORT/SupervisorReports 
-        // gets  reports based on the users departments and if it's been submittied already.
+        //Provides a list of reports based on a user's department for reports that have been submitted for approval
         [Authorize(Roles = "Supervisor")]
         public ActionResult SupervisorReports()
         {
@@ -121,7 +124,7 @@ namespace BCMS.Controllers
             return View(db.Reports.Where(r => r.type == dept).Where(r => r.SupervisorApproved == "Submitted").ToList());         
         }
         //GET /REPORT/SupervisorRejects
-        // gets reports based on department and if it's been staff rejected 
+        //Provides a list of reports based on a user's department that have been rejected by Staff Accounts
         [Authorize(Roles = "Supervisor")]
         public ActionResult SupervisorRejects()
         {
@@ -130,7 +133,7 @@ namespace BCMS.Controllers
             return View(db.Reports.Where(r => r.type == dept).Where(r => r.StaffApproval == "Rejected").ToList());
         }
         //GET /REPORT/SupervisorBudgets 
-        // this gets the user department and checks 
+        //Provides the budget of a selected department
         [Authorize(Roles = "Supervisor")]
         public ActionResult SupervisorBudget()
         {
@@ -151,7 +154,7 @@ namespace BCMS.Controllers
             ViewBag.RemainingBudget = (DEFAULT_DEPT_BUDGET - totalCurrency);
             return View();
         }
-        // re useable method for dept checking
+        // This is a re-useable method for dept checking
         private DepartmentType DeptCheck()
         {
             DepartmentType dept = DepartmentType.HigherEducation;
@@ -170,15 +173,13 @@ namespace BCMS.Controllers
             return dept;
         }
         //GET /REPORT/StaffBudget
-        // displays the staff budget for all departments on the start of the month
+        //This displays the staff budget for all departments based on the start of the month
         [Authorize(Roles = "Staff")]
         public ActionResult StaffBudget()
         {
             SupervisorList list = new SupervisorList();
             double totalCurrency = 0;
             double supervisorCurrency = 0;
-            //Add a 'for this month' part to the where part
-
             // goes through reports and gets the total amount of converted and adds it to the list to display on the view page
             foreach (var report in (db.Reports.Where(x => x.StaffApproval == "Approved").Where(x => x.DateOfApproval >= START_OF_THIS_MONTH)))
             {
@@ -196,7 +197,7 @@ namespace BCMS.Controllers
             return View((object)list.ReturnSupervisors());
         }
         //GET /REPORT/StaffReports
-        // this gets the reports for the staff to approve that haven't done so yet
+        //This provides a list of reports that are awaiting staff approval
         [Authorize(Roles = "Staff")]
         public ActionResult StaffReports()
         {
@@ -207,7 +208,7 @@ namespace BCMS.Controllers
             return View(db.Reports.Where(r => r.StaffApproval == null).Where(r => r.SupervisorApproved == "Approved").ToList());
         }
         //GET /REPORT/Approve/id(5 etc)
-        // this displays the report to be approved for supervisors 
+        // this allows a report to be approved for supervisors 
         [Authorize(Roles = "Supervisor")]
         [HttpGet]
         public ActionResult Approve(int? id)
@@ -225,7 +226,7 @@ namespace BCMS.Controllers
                 return View(report);
             }
         }
-        // just a method for getting report cost of particular id nothing crazy 
+        //A method for getting report cost of particular ID - no real logic 
         private double GetReportCost(int? reportID)
         {
             double amount = 0;
@@ -236,7 +237,7 @@ namespace BCMS.Controllers
             return amount;
         }
         //GET /REPORT/ApproveCon/ReportID(6 etc)
-        // just approves a report for supervisor + redirects 
+        //This approves a report for a supervisor and also redirects the page
         [Authorize(Roles = "Supervisor")]
         public ActionResult ApproveCon(int? ReportID)
         {
@@ -244,14 +245,14 @@ namespace BCMS.Controllers
              return RedirectToAction("SupervisorReports");
         }
         //GET /REPORT/Reject/ReportID(7 etc)
-        //  just rejects a report _ redirects
+        //This rejects a report for a supervisor and also redirects the page
         [Authorize(Roles = "Supervisor")]
          public ActionResult Reject(int? id)
         {
             DBL.SupRej(id, User.Identity.Name.ToString());
             return RedirectToAction("SupervisorReports");
         }
-        // this returns the spent budget for a supervisor in a department
+        // This returns the spent budget for a supervisor
         private double GetSpentBudgetForSupervisor()
         {
             DepartmentType dept = DeptCheck();
@@ -266,8 +267,7 @@ namespace BCMS.Controllers
             return totalCurrency;
         }
         //GET /REPORT/StaffApproval
-        // this is similar to the supervis method 
-       // you get the report id you want to approve and check if it's over budget and then process it accordingly 
+        // this allows a report to be approved for staff  
         [Authorize(Roles = "Staff")]
         [HttpGet]
         public ActionResult StaffApproval(int? id)
@@ -284,7 +284,7 @@ namespace BCMS.Controllers
                 return View(report);
             }
         }
-        // this returns the staff budget for a dept
+        // this returns the budget for a department - according to what staff require
         [Authorize(Roles = "Staff")]
         private double GetSpentBudgetForStaff(DepartmentType dept)
         {
@@ -299,7 +299,7 @@ namespace BCMS.Controllers
             return totalCurrency;
         }
         //GET /REPORT/StaffApprovalCon/ReportID(278 etc)
-        // this approves a report on staff  level and redirects 
+        // this approves a report on a staff level and redirects 
         [Authorize(Roles = "Staff")]
         public ActionResult StaffApprovalCon(int? id)
         {
@@ -307,7 +307,7 @@ namespace BCMS.Controllers
             return RedirectToAction("StaffReports");
         }
         //GET /REPORT/StaffReject/ReportID(1337 , 9001, etc)
-        // this rejects on staff level and redirects 
+        // this rejects a report on a staff level and redirects 
         [Authorize(Roles = "Staff")]
         public ActionResult StaffReject(int? id)
         {

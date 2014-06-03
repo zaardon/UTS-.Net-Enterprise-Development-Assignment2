@@ -1,10 +1,10 @@
 ﻿@model BlueConsultingManagementSystem.Models.Report
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create a New Report";
 }
 
-<h2>Create</h2>
+<h2>Create a New Report</h2>
 
 
 @using (Html.BeginForm()) 
@@ -12,7 +12,6 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Report</h4>
         <hr />
         @Html.ValidationSummary(true)
 
