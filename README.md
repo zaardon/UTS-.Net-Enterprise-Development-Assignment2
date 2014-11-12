@@ -1,5 +1,4 @@
 .NET Programming Assignment 2
 =============
 
-Alexander Smith
-James Chahwan
+Authors: Alexander Smith & James Chahwan
