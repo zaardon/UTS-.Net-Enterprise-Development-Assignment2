@@ -4,5 +4,5 @@
 Authors: Alexander Smith & James Chahwan
 
 ### Technology/Technique Used ###
-*TTD 
-**unit tests
+* TTD 
+  * unit tests
