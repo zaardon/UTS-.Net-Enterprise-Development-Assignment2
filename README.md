@@ -1,8 +1,5 @@
-DotNetAssign2
+.NET Programming Assignment 2
 =============
 
-Second Assignment
-
-
-#rekining part 2 
-This time it's personal, check your code before you rekt yourself
+Alexander Smith
+James Chahwan
