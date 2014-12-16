@@ -11,4 +11,4 @@ Authors: Alexander Smith & James Chahwan
 * LINQ
 * Razor/Bootstrap
  
-Similar to [Assignment1 .net](https://github.com/zaardon/UTS-.Net-Enterprise-Development-Assignment1), however, with MVC.Net rather than ASP.Net
+Similar to [Assignment1 .net](https://github.com/zaardon/UTS-.Net-Enterprise-Development-Assignment1), however, it has moved from ASP.Net to MVC.Net
